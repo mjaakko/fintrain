@@ -4,6 +4,8 @@ Sovellus Helsingin avoimen yliopiston kurssille [Full stack -websovelluskehitys 
 
 Sovellus tarjoaa käyttöliittymän [rata.digitraffic.fi:n rajapintoihin](https://www.digitraffic.fi/rautatieliikenne/).
 
+* [Tuntikirjanpito](docs/tuntikirjanpito.md)
+
 ## Suunnitellut ominaisuudet
 
 * Asemat kartalla
