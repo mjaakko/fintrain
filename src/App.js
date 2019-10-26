@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { Dimmer, Loader } from 'semantic-ui-react';
 
 import { getPassengerStations } from './services/rataDigitrafficService';
+import Station from './components/pages/Station/Station';
 
 export const MetadataContext = React.createContext();
 
@@ -26,6 +27,9 @@ export default () => {
       >
         <Router>
           <Switch>
+            <Route path="/stations/:stationShortCode">
+              <Station />
+            </Route>
             <Route path="/">
               <FrontPage />
             </Route>
