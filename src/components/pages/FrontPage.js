@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import { Map, TileLayer, Marker, Popup } from 'react-leaflet';
+import { Link } from 'react-router-dom';
 
 import { MetadataContext } from '../../App';
 
@@ -22,7 +23,11 @@ export default () => {
             key={station.stationShortCode}
             position={{ lat: station.latitude, lng: station.longitude }}
           >
-            <Popup>{station.stationName}</Popup>
+            <Popup>
+              <Link to={`/stations/${station.stationShortCode}`}>
+                {station.stationName}
+              </Link>
+            </Popup>
           </Marker>
         ))}
     </Map>
