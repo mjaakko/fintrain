@@ -42,3 +42,46 @@ export const getPassengerStations = () => {
     cancel,
   };
 };
+
+export const getStationsTrains = stationShortCode => {
+  //TODO: figure out how to use (or is it even possible to use) query arguments to return only trains that have not passed the station
+  const { result, cancel } = graphQlFetch(`
+  {
+    viewer {
+      getStationsTrainsUsingGET(station: "${stationShortCode}", arrived_trains: 0, arriving_trains: 30, departing_trains: 30, departed_trains: 0, where: "[*trainCategory=Long-distance|trainCategory=Commuter]") {
+        version
+        trainCategory
+        trainNumber
+        trainType
+        cancelled
+        commuterLineID
+        departureDate
+        operatorShortCode
+        timeTableRows {
+          stationShortCode
+          type
+          liveEstimateTime
+          scheduledTime
+          actualTime
+          estimateSource
+          unknownDelay
+          cancelled
+          trainStopping
+          commercialStop
+          commercialTrack
+          causes {
+            categoryCode
+            detailedCategoryCode
+            thirdCategoryCode
+          }
+        }
+      }
+    }
+  }
+  `);
+
+  return {
+    result: result.then(result => result.viewer.getStationsTrainsUsingGET),
+    cancel,
+  };
+};
