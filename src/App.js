@@ -6,6 +6,8 @@ import { Dimmer, Loader } from 'semantic-ui-react';
 import { getPassengerStations } from './services/rataDigitrafficService';
 import Station from './components/pages/Station/Station';
 
+import Header from './components/Header';
+
 export const MetadataContext = React.createContext();
 
 export default () => {
@@ -29,18 +31,26 @@ export default () => {
   return (
     <MetadataContext.Provider value={{ stations }}>
       <Dimmer.Dimmable
-        style={{ width: '100%', height: '100%' }}
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          width: '100%',
+          height: '100%',
+        }}
         dimmed={!hasMetadata}
       >
         <Router>
-          <Switch>
-            <Route path="/station/:stationShortCode">
-              <Station />
-            </Route>
-            <Route path="/">
-              <FrontPage />
-            </Route>
-          </Switch>
+          <Header />
+          <div style={{ flexGrow: 1 }}>
+            <Switch>
+              <Route path="/station/:stationShortCode">
+                <Station />
+              </Route>
+              <Route path="/">
+                <FrontPage />
+              </Route>
+            </Switch>
+          </div>
         </Router>
 
         <Dimmer active={!hasMetadata}>
