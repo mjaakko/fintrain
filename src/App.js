@@ -27,7 +27,7 @@ export default () => {
       >
         <Router>
           <Switch>
-            <Route path="/stations/:stationShortCode">
+            <Route path="/station/:stationShortCode">
               <Station />
             </Route>
             <Route path="/">

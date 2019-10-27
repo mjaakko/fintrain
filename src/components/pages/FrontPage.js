@@ -24,7 +24,7 @@ export default () => {
             position={{ lat: station.latitude, lng: station.longitude }}
           >
             <Popup>
-              <Link to={`/stations/${station.stationShortCode}`}>
+              <Link to={`/station/${station.stationShortCode}`}>
                 {station.stationName}
               </Link>
             </Popup>
