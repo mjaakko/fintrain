@@ -18,7 +18,7 @@ export default () => {
         url="https://cdn.digitransit.fi/map/v1/hsl-map-256/{z}/{x}/{y}.png"
       />
       {metadata.stations &&
-        metadata.stations.map(station => (
+        metadata.stations.values().map(station => (
           <Marker
             key={station.stationShortCode}
             position={{ lat: station.latitude, lng: station.longitude }}

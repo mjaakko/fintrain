@@ -13,9 +13,7 @@ export default () => {
   const { stationShortCode } = useParams();
   const { trains, error } = useStationsTrains(stationShortCode);
 
-  const stationMetadata =
-    stations &&
-    stations.find(station => station.stationShortCode === stationShortCode);
+  const stationMetadata = stations && stations.get(stationShortCode);
 
   return (
     <Container>

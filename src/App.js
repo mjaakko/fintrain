@@ -12,7 +12,14 @@ export default () => {
   const [stations, setStations] = useState();
   useEffect(() => {
     const { result, cancel } = getPassengerStations();
-    result.then(stations => setStations(stations));
+    result.then(stations => {
+      setStations(
+        stations.reduce(
+          (map, station) => map.set(station.stationShortCode, station),
+          new Map()
+        )
+      );
+    });
 
     return () => cancel();
   }, []);
