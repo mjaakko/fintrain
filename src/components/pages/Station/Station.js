@@ -16,7 +16,7 @@ export default () => {
   const stationMetadata = stations && stations.get(stationShortCode);
 
   return (
-    <Container>
+    <Container as="main">
       <Header as="h1">{stationMetadata && stationMetadata.stationName}</Header>
       {trains && (
         <StationTimetable trains={trains} stationShortCode={stationShortCode} />
