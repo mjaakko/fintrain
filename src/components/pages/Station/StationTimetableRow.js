@@ -6,7 +6,7 @@ const formatTime = time => moment(time).format('HH:mm');
 
 const TrainTime = ({ timetableRow }) => {
   if (!timetableRow) {
-    return null;
+    return <span>{'--'}</span>;
   }
 
   const time = formatTime(
