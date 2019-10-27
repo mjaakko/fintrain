@@ -38,7 +38,7 @@ export default ({
   arrivalRow,
   departureRow,
 }) => (
-  <Table.Row>
+  <Table.Row className="stationTimetableRow">
     <Table.Cell
       style={{
         color: arrivalRow && arrivalRow.liveEstimateTime ? 'green' : undefined,
