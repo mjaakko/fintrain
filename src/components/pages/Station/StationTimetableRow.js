@@ -34,6 +34,7 @@ export default ({
   trainNumber,
   trainType,
   commuterLineID,
+  destination,
   arrivalRow,
   departureRow,
 }) => (
@@ -54,8 +55,9 @@ export default ({
       <TrainTime timetableRow={departureRow} />
     </Table.Cell>
     <Table.Cell>
-      {commuterLineID ? commuterLineID : `${trainType} ${trainNumber}`}
+      {commuterLineID ? commuterLineID : `${trainType}\u00a0${trainNumber}`}
     </Table.Cell>
+    <Table.Cell>{destination}</Table.Cell>
     <Table.Cell>{(arrivalRow || departureRow).commercialTrack}</Table.Cell>
   </Table.Row>
 );
