@@ -16,7 +16,16 @@ const graphQlFetch = (query, variables) => {
     }),
   });
   return {
-    result: result.then(result => result.json()).then(result => result.data),
+    result: result
+      .then(result => {
+        if (result.ok) {
+          return result.json();
+        }
+        return Promise.reject(
+          `Unsuccessful fetch (${result.status} ${result.statusText})`
+        );
+      })
+      .then(result => result.data),
     cancel,
   };
 };
