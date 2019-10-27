@@ -21,6 +21,7 @@ export default () => {
       {trains && (
         <StationTimetable trains={trains} stationShortCode={stationShortCode} />
       )}
+      {error && !trains && <p>Failed to load station data</p>}
     </Container>
   );
 };
