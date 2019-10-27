@@ -1,8 +1,34 @@
 import React from 'react';
-import { Table } from 'semantic-ui-react';
+import { Table, Popup } from 'semantic-ui-react';
 import moment from 'moment';
 
 const formatTime = time => moment(time).format('HH:mm');
+
+const TrainTime = ({ timetableRow }) => {
+  if (!timetableRow) {
+    return null;
+  }
+
+  const time = formatTime(
+    timetableRow.liveEstimateTime
+      ? timetableRow.liveEstimateTime
+      : timetableRow.scheduledTime
+  );
+  return (
+    <>
+      {timetableRow.unknownDelay ? (
+        <Popup
+          content={`Exact ${
+            timetableRow.type === 'ARRIVAL' ? 'arrival' : 'departure'
+          } time is unknown`}
+          trigger={<span>{`${time}\u00a0(?)`}</span>}
+        />
+      ) : (
+        <span>{time}</span>
+      )}
+    </>
+  );
+};
 
 export default ({
   trainNumber,
@@ -17,13 +43,7 @@ export default ({
         color: arrivalRow && arrivalRow.liveEstimateTime ? 'green' : undefined,
       }}
     >
-      {arrivalRow
-        ? formatTime(
-            arrivalRow.liveEstimateTime
-              ? arrivalRow.liveEstimateTime
-              : arrivalRow.scheduledTime
-          )
-        : '--'}
+      <TrainTime timetableRow={arrivalRow} />
     </Table.Cell>
     <Table.Cell
       style={{
@@ -31,13 +51,7 @@ export default ({
           departureRow && departureRow.liveEstimateTime ? 'green' : undefined,
       }}
     >
-      {departureRow
-        ? formatTime(
-            departureRow.liveEstimateTime
-              ? departureRow.liveEstimateTime
-              : departureRow.scheduledTime
-          )
-        : '--'}
+      <TrainTime timetableRow={departureRow} />
     </Table.Cell>
     <Table.Cell>
       {commuterLineID ? commuterLineID : `${trainType} ${trainNumber}`}
