@@ -94,3 +94,52 @@ export const getStationsTrains = stationShortCode => {
     cancel,
   };
 };
+
+export const getTrain = (trainNumber, departureDate) => {
+  const { result, cancel } = graphQlFetch(`
+  {
+    viewer {
+      getTrainByTrainNumberAndDepartureDateUsingGET(train_number: "${trainNumber}", departure_date: "${departureDate}") {
+        departureDate
+        trainNumber
+        trainType
+        trainCategory
+        commuterLineID
+        operatorShortCode
+        runningCurrently
+        cancelled
+        timeTableRows {
+          stationShortCode
+          type
+          liveEstimateTime
+          scheduledTime
+          actualTime
+          estimateSource
+          unknownDelay
+          cancelled
+          trainStopping
+          commercialStop
+          commercialTrack
+          causes {
+            categoryCode
+            detailedCategoryCode
+            thirdCategoryCode
+          }
+          trainReady {
+            accepted
+            source
+            timestamp
+          }
+        }
+      }
+    }
+  }
+  `);
+
+  return {
+    result: result.then(
+      result => result.viewer.getTrainByTrainNumberAndDepartureDateUsingGET[0]
+    ),
+    cancel,
+  };
+};
