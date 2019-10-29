@@ -1,16 +1,23 @@
-import { useState, useEffect } from 'react';
+import { useReducer, useEffect } from 'react';
+
+import loaderReducer from '../reducers/loaderReducer';
 
 import { getStationsTrains } from '../services/rataDigitrafficService';
 
 export default station => {
-  const [trains, setTrains] = useState();
-  const [error, setError] = useState();
+  const [state, dispatch] = useReducer(loaderReducer, {
+    loading: true,
+    data: null,
+    error: null,
+  });
   useEffect(() => {
     const { result, cancel } = getStationsTrains(station);
-    result.then(trains => setTrains(trains)).catch(error => setError(error));
+    result
+      .then(trains => dispatch({ type: 'data', data: trains }))
+      .catch(error => dispatch({ type: 'error', error }));
 
     return () => cancel();
   }, [station]);
 
-  return { trains, error };
+  return { loading: state.loading, trains: state.data, error: state.error };
 };
