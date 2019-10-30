@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Table, Popup } from 'semantic-ui-react';
 import moment from 'moment';
 
@@ -32,6 +33,7 @@ const TrainTime = ({ timetableRow }) => {
 
 export default ({
   trainNumber,
+  departureDate,
   trainType,
   commuterLineID,
   destination,
@@ -55,7 +57,9 @@ export default ({
       <TrainTime timetableRow={departureRow} />
     </Table.Cell>
     <Table.Cell>
-      {commuterLineID ? commuterLineID : `${trainType}\u00a0${trainNumber}`}
+      <Link to={`/train/${trainNumber}/${departureDate}`}>
+        {commuterLineID ? commuterLineID : `${trainType}\u00a0${trainNumber}`}
+      </Link>
     </Table.Cell>
     <Table.Cell>{destination}</Table.Cell>
     <Table.Cell>{(arrivalRow || departureRow).commercialTrack}</Table.Cell>

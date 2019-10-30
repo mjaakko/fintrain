@@ -80,6 +80,7 @@ export default ({ trains, stationShortCode }) => {
 
                 return {
                   trainNumber: train.trainNumber,
+                  departureDate: train.departureDate,
                   trainType: train.trainType,
                   commuterLineID: train.commuterLineID,
                   destination,
@@ -98,6 +99,7 @@ export default ({ trains, stationShortCode }) => {
 
               return {
                 trainNumber: train.trainNumber,
+                departureDate: train.departureDate,
                 trainType: train.trainType,
                 commuterLineID: train.commuterLineID,
                 destination,
