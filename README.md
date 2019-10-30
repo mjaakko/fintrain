@@ -1,4 +1,4 @@
-# fintrain
+# fintrain [![Build Status](https://travis-ci.org/mjaakko/fintrain.svg?branch=master)](https://travis-ci.org/mjaakko/fintrain)
 
 Sovellus Helsingin avoimen yliopiston kurssille [Full stack -websovelluskehitys harjoitustyö](https://courses.helsinki.fi/fi/aytkt21010/129098202).
 
