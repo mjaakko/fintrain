@@ -72,6 +72,7 @@ export const getStationsTrains = stationShortCode => {
           liveEstimateTime
           scheduledTime
           actualTime
+          differenceInMinutes
           estimateSource
           unknownDelay
           cancelled
@@ -114,6 +115,7 @@ export const getTrain = (trainNumber, departureDate) => {
           liveEstimateTime
           scheduledTime
           actualTime
+          differenceInMinutes
           estimateSource
           unknownDelay
           cancelled
