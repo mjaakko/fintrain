@@ -1,35 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Table, Popup } from 'semantic-ui-react';
-import moment from 'moment';
+import { Table } from 'semantic-ui-react';
 
-const formatTime = time => moment(time).format('HH:mm');
+import TrainTime from '../../TrainTime';
 
-const TrainTime = ({ timetableRow }) => {
-  if (!timetableRow) {
-    return <span>{'--'}</span>;
-  }
-
-  const time = formatTime(
-    timetableRow.liveEstimateTime
-      ? timetableRow.liveEstimateTime
-      : timetableRow.scheduledTime
-  );
-  return (
-    <>
-      {timetableRow.unknownDelay ? (
-        <Popup
-          content={`Exact ${
-            timetableRow.type === 'ARRIVAL' ? 'arrival' : 'departure'
-          } time is unknown`}
-          trigger={<span>{`${time}\u00a0(?)`}</span>}
-        />
-      ) : (
-        <span>{time}</span>
-      )}
-    </>
-  );
-};
+import { formatTrainNumber } from '../../../utils/format';
 
 export default ({
   trainNumber,
@@ -58,7 +33,7 @@ export default ({
     </Table.Cell>
     <Table.Cell>
       <Link to={`/train/${trainNumber}/${departureDate}`}>
-        {commuterLineID ? commuterLineID : `${trainType}\u00a0${trainNumber}`}
+        {formatTrainNumber({ commuterLineID, trainNumber, trainType })}
       </Link>
     </Table.Cell>
     <Table.Cell>{destination}</Table.Cell>
