@@ -113,6 +113,11 @@ export default ({ trains, stationShortCode }) => {
             }
           })
           .flat()
+          .filter(
+            ({ arrivalRow, departureRow }) =>
+              (arrivalRow && arrivalRow.commercialStop) ||
+              (departureRow && departureRow.commercialStop)
+          )
           .filter(timetableRow => {
             //Filter trains that have already passed the station
             return (
