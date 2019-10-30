@@ -4,7 +4,8 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { Dimmer, Loader } from 'semantic-ui-react';
 
 import { getPassengerStations } from './services/rataDigitrafficService';
-import Station from './components/pages/Station/Station';
+import Station from './components/pages/Station';
+import Train from './components/pages/Train';
 
 import Header from './components/Header';
 
@@ -45,6 +46,9 @@ export default () => {
             <Switch>
               <Route path="/station/:stationShortCode">
                 <Station />
+              </Route>
+              <Route path="/train/:trainNumber/:departureDate">
+                <Train />
               </Route>
               <Route path="/">
                 <FrontPage />
