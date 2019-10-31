@@ -11,3 +11,13 @@ git:
 script:
   - yarn test
   - yarn build
+
+before_deploy:
+  - yarn global add netlify-cli
+
+deploy:
+  provider: script
+  script: netlify deploy -s $NETLIFY_SITE_ID -t $NETLIFY_AUTH_TOKEN -p ./build
+  skip_cleanup: true
+  on:
+    tags: true
