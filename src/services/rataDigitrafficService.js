@@ -59,7 +59,7 @@ export const getStationsTrains = stationShortCode => {
     viewer {
       getStationsTrainsUsingGET(station: "${encodeURI(
         stationShortCode
-      )}", arrived_trains: 0, arriving_trains: 30, departing_trains: 30, departed_trains: 0, where: "[*trainCategory=Long-distance|trainCategory=Commuter]") {
+      )}", arrived_trains: 0, arriving_trains: 30, departing_trains: 30, departed_trains: 0, where: "[*trainCategory=Long-distance|trainCategory=Commuter&trainType!=MV&trainType!=HV&trainType!=HLV&trainType!=V]") {
         version
         trainCategory
         trainNumber
