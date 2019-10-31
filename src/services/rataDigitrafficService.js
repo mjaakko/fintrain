@@ -57,7 +57,9 @@ export const getStationsTrains = stationShortCode => {
   const { result, cancel } = graphQlFetch(`
   {
     viewer {
-      getStationsTrainsUsingGET(station: "${stationShortCode}", arrived_trains: 0, arriving_trains: 30, departing_trains: 30, departed_trains: 0, where: "[*trainCategory=Long-distance|trainCategory=Commuter]") {
+      getStationsTrainsUsingGET(station: "${encodeURI(
+        stationShortCode
+      )}", arrived_trains: 0, arriving_trains: 30, departing_trains: 30, departed_trains: 0, where: "[*trainCategory=Long-distance|trainCategory=Commuter]") {
         version
         trainCategory
         trainNumber
