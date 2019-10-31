@@ -40,6 +40,9 @@ export default ({ train }) => {
           ])
           .map(({ arrivalRow, departureRow }) => (
             <TrainTimetableRow
+              key={`${(arrivalRow || departureRow).stationShortCode}_${
+                (arrivalRow || departureRow).scheduledTime
+              }`}
               arrivalRow={arrivalRow}
               departureRow={departureRow}
             />

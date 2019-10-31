@@ -129,7 +129,13 @@ export default ({ trains, stationShortCode }) => {
           })
           .sort(sortByTime)
           .map(timetableRow => (
-            <StationTimetableRow {...timetableRow} />
+            <StationTimetableRow
+              key={`${timetableRow.trainNumber}_${timetableRow.departureDate}_${
+                (timetableRow.arrivalRow || timetableRow.departureRow)
+                  .scheduledTime
+              }`}
+              {...timetableRow}
+            />
           ))}
       </Table.Body>
     </Table>
