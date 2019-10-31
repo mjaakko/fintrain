@@ -8,22 +8,27 @@ import useTrain from '../../../hooks/useTrain';
 
 import { formatTrainNumber } from '../../../utils/format';
 import TrainTimetable from './TrainTimetable';
+import DocumentTitle from '../../DocumentTitle';
 
 export default () => {
   const { trainNumber, departureDate } = useParams();
   const { train, error } = useTrain(trainNumber, departureDate);
 
   return (
-    <Container as="main">
-      <Header as="h1">
-        {train && formatTrainNumber(train)}
-        <Header.Subheader>
-          {train && moment(new Date(train.departureDate)).format('DD.MM.YYYY')}
-        </Header.Subheader>
-      </Header>
+    <>
+      <DocumentTitle title={train && formatTrainNumber(train)} />
+      <Container as="main">
+        <Header as="h1">
+          {train && formatTrainNumber(train)}
+          <Header.Subheader>
+            {train &&
+              moment(new Date(train.departureDate)).format('DD.MM.YYYY')}
+          </Header.Subheader>
+        </Header>
 
-      {train && <TrainTimetable train={train} />}
-      {error && !train && <p>Failed to load train data</p>}
-    </Container>
+        {train && <TrainTimetable train={train} />}
+        {error && !train && <p>Failed to load train data</p>}
+      </Container>
+    </>
   );
 };

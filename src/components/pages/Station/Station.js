@@ -6,6 +6,7 @@ import { MetadataContext } from '../../../App';
 import useStationsTrains from '../../../hooks/useStationsTrains';
 
 import StationTimetable from './StationTimetable';
+import DocumentTitle from '../../DocumentTitle';
 
 export default () => {
   const { stations } = useContext(MetadataContext);
@@ -16,12 +17,20 @@ export default () => {
   const stationMetadata = stations && stations.get(stationShortCode);
 
   return (
-    <Container as="main">
-      <Header as="h1">{stationMetadata && stationMetadata.stationName}</Header>
-      {trains && (
-        <StationTimetable trains={trains} stationShortCode={stationShortCode} />
-      )}
-      {error && !trains && <p>Failed to load station data</p>}
-    </Container>
+    <>
+      <DocumentTitle title={stationMetadata && stationMetadata.stationName} />
+      <Container as="main">
+        <Header as="h1">
+          {stationMetadata && stationMetadata.stationName}
+        </Header>
+        {trains && (
+          <StationTimetable
+            trains={trains}
+            stationShortCode={stationShortCode}
+          />
+        )}
+        {error && !trains && <p>Failed to load station data</p>}
+      </Container>
+    </>
   );
 };
