@@ -7,3 +7,4 @@
 | 27.10.2019 | 2h   | Pieniä korjauksia. Ensimmäinen yksikkötesti. Sovelluksen tyylien kanssa kokeilua.
 | 29.10.2019 | 1h   | Hieman koodin siistimistä. Yksittäisen junan hakeminen rajapinnasta.
 | 30.10.2019 | 3h   | Yksittäisen junan näyttäminen käyttöliittymässä. Pientä refaktorointia ja korjauksia. Datan lisenssin näyttäminen. Travis CI pystytys.
+| 31.10.2019 | 2h   | React hook käyttäjän sijainnin hakemiseen. Pieniä korjauksia mm. vaihtotyöjunien filtteröinti. React Helmetin käyttö sivun otsikon vaihtamiseen. Automaattinen deployaus git tagien perusteella Netlifyyn.
