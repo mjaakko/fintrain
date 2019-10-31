@@ -5,6 +5,7 @@ Sovellus Helsingin avoimen yliopiston kurssille [Full stack -websovelluskehitys 
 Sovellus tarjoaa käyttöliittymän [rata.digitraffic.fi:n rajapintoihin](https://www.digitraffic.fi/rautatieliikenne/).
 
 * [Tuntikirjanpito](docs/tuntikirjanpito.md)
+* [Sovellus Netlifyssä](https://fintrain.malkki.xyz/)
 
 ## Suunnitellut ominaisuudet
 
