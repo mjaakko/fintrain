@@ -9,6 +9,8 @@ import TrainTime from '../../TrainTime';
 export default ({ arrivalRow, departureRow }) => {
   const { stations } = useContext(MetadataContext);
 
+  const stationShortCode = (arrivalRow || departureRow).stationShortCode;
+
   return (
     <Table.Row className="trainTimetableRow">
       <Table.Cell>
@@ -18,12 +20,13 @@ export default ({ arrivalRow, departureRow }) => {
         <TrainTime timetableRow={departureRow} />
       </Table.Cell>
       <Table.Cell>
-        <Link to={`/station/${(arrivalRow || departureRow).stationShortCode}`}>
-          {stations
-            ? stations.get((arrivalRow || departureRow).stationShortCode)
-                .stationName
-            : ''}
-        </Link>
+        {stations.has(stationShortCode) ? (
+          <Link to={`/station/${stationShortCode}`}>
+            {stations ? stations.get(stationShortCode).stationName : ''}
+          </Link>
+        ) : (
+          stationShortCode
+        )}
       </Table.Cell>
       <Table.Cell>{(arrivalRow || departureRow).commercialTrack}</Table.Cell>
     </Table.Row>
