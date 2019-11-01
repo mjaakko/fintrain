@@ -5,6 +5,8 @@ import { Container, Header } from 'semantic-ui-react';
 import { MetadataContext } from '../../../App';
 import useStationsTrains from '../../../hooks/useStationsTrains';
 
+import { formatStationName } from '../../../utils/format';
+
 import StationTimetable from './StationTimetable';
 import DocumentTitle from '../../DocumentTitle';
 
@@ -21,7 +23,7 @@ export default () => {
       <DocumentTitle title={stationMetadata && stationMetadata.stationName} />
       <Container as="main">
         <Header as="h1">
-          {stationMetadata && stationMetadata.stationName}
+          {stationMetadata && formatStationName(stationMetadata.stationName)}
         </Header>
         {trains && (
           <StationTimetable

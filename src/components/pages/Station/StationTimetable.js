@@ -3,6 +3,8 @@ import { Table } from 'semantic-ui-react';
 
 import { MetadataContext } from '../../../App';
 
+import { formatStationName } from '../../../utils/format';
+
 import StationTimetableRow from './StationTimetableRow';
 
 const sortByTime = (a, b) => {
@@ -41,10 +43,12 @@ export default ({ trains, stationShortCode }) => {
         {trains
           .map(train => {
             const destination = stations
-              ? stations.get(
-                  train.timeTableRows[train.timeTableRows.length - 1]
-                    .stationShortCode
-                ).stationName
+              ? formatStationName(
+                  stations.get(
+                    train.timeTableRows[train.timeTableRows.length - 1]
+                      .stationShortCode
+                  ).stationName
+                )
               : '';
 
             const timetableRowIndices = [];

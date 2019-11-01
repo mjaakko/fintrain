@@ -6,6 +6,8 @@ import { MetadataContext } from '../../../App';
 
 import TrainTime from '../../TrainTime';
 
+import { formatStationName } from '../../../utils/format';
+
 export default ({ arrivalRow, departureRow }) => {
   const { stations } = useContext(MetadataContext);
 
@@ -22,7 +24,9 @@ export default ({ arrivalRow, departureRow }) => {
       <Table.Cell>
         {stations.has(stationShortCode) ? (
           <Link to={`/station/${stationShortCode}`}>
-            {stations ? stations.get(stationShortCode).stationName : ''}
+            {stations
+              ? formatStationName(stations.get(stationShortCode).stationName)
+              : ''}
           </Link>
         ) : (
           stationShortCode
