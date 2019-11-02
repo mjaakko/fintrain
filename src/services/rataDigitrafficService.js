@@ -147,3 +147,55 @@ export const getTrain = (trainNumber, departureDate) => {
     cancel,
   };
 };
+
+export const getTrainComposition = (trainNumber, departureDate) => {
+  const { result, cancel } = graphQlFetch(`
+  {
+    viewer {
+      getCompositionByTrainNumberAndDepartureDateUsingGET(train_number: "${trainNumber}", departure_date: "${departureDate}") {
+        trainType
+        trainNumber
+        trainCategory
+        departureDate
+        operatorShortCode
+        journeySections {
+          beginTimeTableRow {
+            stationShortCode
+          }
+          endTimeTableRow {
+            stationShortCode
+          }
+          locomotives {
+            location
+            locomotiveType
+            powerType
+          }
+          wagons {
+            location
+            salesNumber
+            length
+            catering
+            disabled
+            luggage
+            pet
+            playground
+            smoking
+            video
+            wagonType
+          }
+          maximumSpeed
+          totalLength
+        }
+      }
+    }
+  }
+  `);
+
+  return {
+    result: result.then(
+      result =>
+        result.viewer.getCompositionByTrainNumberAndDepartureDateUsingGET
+    ),
+    cancel,
+  };
+};
