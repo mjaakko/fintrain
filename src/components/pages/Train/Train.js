@@ -9,6 +9,7 @@ import useTrain from '../../../hooks/useTrain';
 import { formatTrainNumber } from '../../../utils/format';
 import TrainTimetable from './TrainTimetable';
 import DocumentTitle from '../../DocumentTitle';
+import TrainComposition from '../../TrainComposition';
 
 export default () => {
   const { trainNumber, departureDate } = useParams();
@@ -28,6 +29,10 @@ export default () => {
 
         {train && <TrainTimetable train={train} />}
         {error && !train && <p>Failed to load train data</p>}
+        <TrainComposition
+          trainNumber={trainNumber}
+          departureDate={departureDate}
+        />
       </Container>
     </>
   );
