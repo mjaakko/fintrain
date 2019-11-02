@@ -22,7 +22,7 @@ export default ({ arrivalRow, departureRow }) => {
         <TrainTime timetableRow={departureRow} />
       </Table.Cell>
       <Table.Cell>
-        {stations.has(stationShortCode) ? (
+        {stations && stations.has(stationShortCode) ? (
           <Link to={`/station/${stationShortCode}`}>
             {stations
               ? formatStationName(stations.get(stationShortCode).stationName)
