@@ -20,8 +20,8 @@ export default ({ trainNumber, departureDate }) => {
     setOpenIndex(openIndex === index ? -1 : index);
   };
 
-  {
-    !trainComposition && error && <p>Failed to load train composition</p>;
+  if (!trainComposition && error) {
+    return <p>Failed to load train composition</p>;
   }
 
   return (
