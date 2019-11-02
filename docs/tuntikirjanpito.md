@@ -9,3 +9,4 @@
 | 30.10.2019 | 3h   | Yksittäisen junan näyttäminen käyttöliittymässä. Pientä refaktorointia ja korjauksia. Datan lisenssin näyttäminen. Travis CI pystytys.
 | 31.10.2019 | 2h   | React hook käyttäjän sijainnin hakemiseen. Pieniä korjauksia mm. vaihtotyöjunien filtteröinti. React Helmetin käyttö sivun otsikon vaihtamiseen. Automaattinen deployaus git tagien perusteella Netlifyyn.
 | 1.11.2019  | 0.5h | Asemien nimet siistimmin. Käyttäjän sijainnin näyttäminen kartalla. Käyttöliittymän suunnittelua. rata.digitraffic.fi:n MQTT-rajapinnan tutkimista.
+| 2.11.2019  | 1.5h | Junan kokoonpanon hakeminen rajapinnasta ja näyttäminen käyttöliittymässä. Käyttöliittymän kanssa kokeiluja. 
