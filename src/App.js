@@ -1,32 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import FrontPage from './components/pages/FrontPage';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { Dimmer, Loader } from 'semantic-ui-react';
 
-import { getPassengerStations } from './services/rataDigitrafficService';
 import Station from './components/pages/Station';
 import Train from './components/pages/Train';
 
 import DocumentTitle from './components/DocumentTitle';
 import Header from './components/Header';
 
+import usePassengerStations from './hooks/usePassengerStations';
+
 export const MetadataContext = React.createContext();
 
 export default () => {
-  const [stations, setStations] = useState();
-  useEffect(() => {
-    const { result, cancel } = getPassengerStations();
-    result.then(stations => {
-      setStations(
-        stations.reduce(
-          (map, station) => map.set(station.stationShortCode, station),
-          new Map()
-        )
-      );
-    });
-
-    return () => cancel();
-  }, []);
+  const { stations } = usePassengerStations();
 
   const hasMetadata = !!stations;
 
