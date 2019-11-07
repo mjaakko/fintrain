@@ -52,6 +52,30 @@ export const getPassengerStations = () => {
   };
 };
 
+export const getDetailedCauses = () => {
+  const { result, cancel } = graphQlFetch(`
+    {
+      viewer {
+        getDetailedCauseResourcesUsingGET {
+          detailedCategoryCode
+          detailedCategoryName
+          passengerTerm {
+            fi
+            en
+          }
+        }
+      }
+    }
+  `);
+
+  return {
+    result: result.then(
+      result => result.viewer.getDetailedCauseResourcesUsingGET
+    ),
+    cancel,
+  };
+};
+
 export const getStationsTrains = stationShortCode => {
   //TODO: figure out how to use (or is it even possible to use) query arguments to return only trains that have not passed the station
   const { result, cancel } = graphQlFetch(`
