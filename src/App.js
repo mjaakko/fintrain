@@ -10,18 +10,20 @@ import DocumentTitle from './components/DocumentTitle';
 import Header from './components/Header';
 
 import usePassengerStations from './hooks/usePassengerStations';
+import useDetailedCauses from './hooks/useDetailedCauses';
 
 export const MetadataContext = React.createContext();
 
 export default () => {
   const { stations } = usePassengerStations();
+  const { detailedCauses } = useDetailedCauses();
 
-  const hasMetadata = !!stations;
+  const hasMetadata = !!stations && !!detailedCauses;
 
   return (
     <>
       <DocumentTitle />
-      <MetadataContext.Provider value={{ stations }}>
+      <MetadataContext.Provider value={{ stations, detailedCauses }}>
         <Dimmer.Dimmable
           style={{
             display: 'flex',
