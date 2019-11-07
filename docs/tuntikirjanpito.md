@@ -11,3 +11,4 @@
 | 1.11.2019  | 0.5h | Asemien nimet siistimmin. Käyttäjän sijainnin näyttäminen kartalla. Käyttöliittymän suunnittelua. rata.digitraffic.fi:n MQTT-rajapinnan tutkimista.
 | 2.11.2019  | 1.5h | Junan kokoonpanon hakeminen rajapinnasta ja näyttäminen käyttöliittymässä. Käyttöliittymän kanssa kokeiluja. 
 | 4.11.2019  | 0.5h | Metatietojen hakeminen siistimmin. Tyylien kanssa kokeilua.
+| 7.11.2019  | 0.5h | Myöhästymistietojen hakeminen rajapinnasta. Pientä refaktorointia.
