@@ -8,6 +8,7 @@ import useStationsTrains from '../../../hooks/useStationsTrains';
 import { formatStationName } from '../../../utils/format';
 
 import StationTimetable from './StationTimetable';
+import StationName from '../../StationName';
 import DocumentTitle from '../../DocumentTitle';
 
 export default () => {
@@ -20,10 +21,14 @@ export default () => {
 
   return (
     <>
-      <DocumentTitle title={stationMetadata && stationMetadata.stationName} />
+      <DocumentTitle
+        title={
+          stationMetadata && formatStationName(stationMetadata.stationName)
+        }
+      />
       <Container as="main">
         <Header as="h1">
-          {stationMetadata && formatStationName(stationMetadata.stationName)}
+          <StationName stationShortCode={stationShortCode} />
         </Header>
         {trains && (
           <StationTimetable

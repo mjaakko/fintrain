@@ -1,16 +1,12 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { Table } from 'semantic-ui-react';
 
-import { MetadataContext } from '../../../App';
-
 import TrainTime from '../../TrainTime';
 
-import { formatStationName } from '../../../utils/format';
+import StationName from '../../StationName';
 
 export default ({ arrivalRow, departureRow }) => {
-  const { stations } = useContext(MetadataContext);
-
   const stationShortCode = (arrivalRow || departureRow).stationShortCode;
 
   return (
@@ -22,15 +18,9 @@ export default ({ arrivalRow, departureRow }) => {
         <TrainTime timetableRow={departureRow} />
       </Table.Cell>
       <Table.Cell>
-        {stations && stations.has(stationShortCode) ? (
-          <Link to={`/station/${stationShortCode}`}>
-            {stations
-              ? formatStationName(stations.get(stationShortCode).stationName)
-              : ''}
-          </Link>
-        ) : (
-          stationShortCode
-        )}
+        <Link to={`/station/${stationShortCode}`}>
+          <StationName stationShortCode={stationShortCode} />
+        </Link>
       </Table.Cell>
       <Table.Cell>{(arrivalRow || departureRow).commercialTrack}</Table.Cell>
     </Table.Row>

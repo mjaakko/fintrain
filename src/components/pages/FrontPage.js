@@ -6,6 +6,8 @@ import { MetadataContext } from '../../App';
 
 import useGeolocation from '../../hooks/useGeolocation';
 
+import StationName from '../StationName';
+
 export default () => {
   const metadata = useContext(MetadataContext);
   const [zoom, setZoom] = useState(8);
@@ -30,7 +32,7 @@ export default () => {
           >
             <Popup>
               <Link to={`/station/${station.stationShortCode}`}>
-                {station.stationName}
+                <StationName stationShortCode={station.stationShortCode} />
               </Link>
             </Popup>
           </Marker>
