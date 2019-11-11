@@ -6,6 +6,9 @@ import { formatTime } from '../utils/format';
 const MINOR_DELAY = 2;
 const MAJOR_DELAY = 15;
 
+const TIMEZONE_FINLAND = 'Europe/Helsinki';
+const TIMEZONE_RUSSIA = 'Europe/Moscow'; //In Russia trains run on Moscow time
+
 export default ({ timetableRow }) => {
   if (!timetableRow) {
     return <time>--</time>;
@@ -28,7 +31,10 @@ export default ({ timetableRow }) => {
       }`}
       dateTime={time}
     >
-      {formatTime(time)}
+      {formatTime(
+        time,
+        timetableRow.countryCode === 'RU' ? TIMEZONE_RUSSIA : TIMEZONE_FINLAND
+      )}
       {timetableRow.unknownDelay ? '\u00a0(?)' : ''}
     </time>
   );
