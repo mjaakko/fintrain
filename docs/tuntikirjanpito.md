@@ -12,3 +12,4 @@
 | 2.11.2019  | 1.5h | Junan kokoonpanon hakeminen rajapinnasta ja näyttäminen käyttöliittymässä. Käyttöliittymän kanssa kokeiluja. 
 | 4.11.2019  | 0.5h | Metatietojen hakeminen siistimmin. Tyylien kanssa kokeilua.
 | 7.11.2019  | 0.5h | Myöhästymistietojen hakeminen rajapinnasta. Pientä refaktorointia.
+| 11.11.2019 | 1.5h | Pientä refaktorointia. Venäjän asemien oikean sijainnin näyttäminen (rajapinnasta tulee väärät koordinaatit). Venäjälle menevien junien aikataulujen näyttäminen paikallisessa ajassa. Nappi, jolla voi siirtyä kartalla omaan sijaintiin.
