@@ -1,5 +1,13 @@
 import React, { useContext, useState } from 'react';
-import { Map, TileLayer, Marker, Popup, CircleMarker } from 'react-leaflet';
+import {
+  Map,
+  TileLayer,
+  Marker,
+  Popup,
+  CircleMarker,
+  useLeaflet,
+} from 'react-leaflet';
+import Control from 'react-leaflet-control';
 import { Link } from 'react-router-dom';
 
 import { MetadataContext } from '../../App';
@@ -7,6 +15,8 @@ import { MetadataContext } from '../../App';
 import useGeolocation from '../../hooks/useGeolocation';
 
 import StationName from '../StationName';
+import { Icon } from 'semantic-ui-react';
+import BorderedButton from '../BorderedButton';
 
 export default () => {
   const metadata = useContext(MetadataContext);
@@ -43,22 +53,43 @@ export default () => {
 
 const UserLocation = ({ zoom }) => {
   const { position } = useGeolocation();
-
-  if (!position) {
-    return null;
-  }
+  const { map } = useLeaflet();
 
   return (
-    <CircleMarker
-      center={{ lat: position.coords.latitude, lng: position.coords.longitude }}
-      radius={metersToPixels(
-        position.coords.latitude,
-        position.coords.accuracy,
-        zoom
+    <>
+      {position && (
+        <CircleMarker
+          center={{
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+          }}
+          radius={metersToPixels(
+            position.coords.latitude,
+            position.coords.accuracy,
+            zoom
+          )}
+        >
+          <Popup>Your location</Popup>
+        </CircleMarker>
       )}
-    >
-      <Popup>Your location</Popup>
-    </CircleMarker>
+      <Control position="topright">
+        <BorderedButton
+          color="white"
+          compact
+          icon
+          onClick={() => {
+            if (position) {
+              map.flyTo({
+                lat: position.coords.latitude,
+                lng: position.coords.longitude,
+              });
+            }
+          }}
+        >
+          <Icon name="location arrow" color="grey" fitted />
+        </BorderedButton>
+      </Control>
+    </>
   );
 };
 
