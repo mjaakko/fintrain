@@ -16,19 +16,10 @@ export default ({
   departureRow,
 }) => (
   <Table.Row className="stationTimetableRow">
-    <Table.Cell
-      style={{
-        color: arrivalRow && arrivalRow.liveEstimateTime ? 'green' : undefined,
-      }}
-    >
+    <Table.Cell>
       <TrainTime timetableRow={arrivalRow} />
     </Table.Cell>
-    <Table.Cell
-      style={{
-        color:
-          departureRow && departureRow.liveEstimateTime ? 'green' : undefined,
-      }}
-    >
+    <Table.Cell>
       <TrainTime timetableRow={departureRow} />
     </Table.Cell>
     <Table.Cell>
