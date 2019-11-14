@@ -22,7 +22,7 @@ const mergeTimetableRows = (mergedTimetableRows, timetableRow) => {
 
 export default ({ train }) => {
   return (
-    <Table>
+    <Table singleLine unstackable>
       <Table.Header>
         <Table.Row>
           <Table.HeaderCell collapsing>Arrival</Table.HeaderCell>

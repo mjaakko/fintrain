@@ -29,7 +29,7 @@ export default ({ trains, stationShortCode }) => {
   const { stations } = useContext(MetadataContext);
 
   return (
-    <Table>
+    <Table singleLine unstackable>
       <Table.Header>
         <Table.Row>
           <Table.HeaderCell collapsing>Arrival</Table.HeaderCell>
