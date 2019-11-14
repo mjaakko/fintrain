@@ -1,4 +1,5 @@
 import moment from 'moment';
+import 'moment-timezone/builds/moment-timezone-with-data-10-year-range';
 
 export const formatTrainNumber = ({ trainType, trainNumber, commuterLineID }) =>
   commuterLineID ? commuterLineID : `${trainType}\u00a0${trainNumber}`;

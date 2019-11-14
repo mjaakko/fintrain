@@ -6,7 +6,6 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import L from 'leaflet';
-import 'moment-timezone/builds/moment-timezone-with-data-10-year-range';
 
 //Fix Leaflet default icon not being visible
 delete L.Icon.Default.prototype._getIconUrl;
