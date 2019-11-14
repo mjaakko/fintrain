@@ -6,6 +6,7 @@ import { MetadataContext } from '../../../../App';
 import Train from '..';
 
 jest.mock('../../../../hooks/useTrain');
+jest.mock('../../../../hooks/useTrainComposition');
 
 const stations = [
   { stationShortCode: 'TEST1', stationName: 'Test_1' },
