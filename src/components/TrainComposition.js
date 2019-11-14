@@ -25,7 +25,8 @@ export default ({ trainNumber, departureDate }) => {
   }
 
   return (
-    trainComposition && (
+    trainComposition &&
+    trainComposition.journeySections && (
       <Accordion styled fluid>
         {trainComposition.journeySections.map((journeySection, i) => (
           <React.Fragment
