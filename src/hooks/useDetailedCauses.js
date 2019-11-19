@@ -1,4 +1,4 @@
-import { useReducer, useEffect } from 'react';
+import { useReducer, useEffect, useRef } from 'react';
 
 import loaderReducer from '../reducers/loaderReducer';
 
@@ -10,9 +10,17 @@ export default () => {
     data: null,
     error: null,
   });
-  useEffect(() => {
-    const { result, cancel } = getDetailedCauses();
-    result
+
+  const promise = useRef(null);
+
+  const loadData = () => {
+    if (promise.current) {
+      promise.current.cancel();
+    }
+
+    dispatch({ type: 'loading' });
+    promise.current = getDetailedCauses();
+    promise.current.result
       .then(detailedCauses =>
         dispatch({
           type: 'data',
@@ -24,13 +32,18 @@ export default () => {
         })
       )
       .catch(error => dispatch({ type: 'error', error }));
+  };
 
-    return () => cancel();
+  useEffect(() => {
+    loadData();
+
+    return () => promise.current.cancel();
   }, []);
 
   return {
     loading: state.loading,
     detailedCauses: state.data,
     error: state.error,
+    retry: loadData,
   };
 };
