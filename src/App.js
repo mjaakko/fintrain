@@ -1,7 +1,7 @@
 import React from 'react';
 import FrontPage from './components/pages/FrontPage';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import { Dimmer, Loader } from 'semantic-ui-react';
+import { Dimmer, Loader, Button, Icon } from 'semantic-ui-react';
 
 import Station from './components/pages/Station';
 import Train from './components/pages/Train';
@@ -15,10 +15,19 @@ import useDetailedCauses from './hooks/useDetailedCauses';
 export const MetadataContext = React.createContext();
 
 export default () => {
-  const { stations } = usePassengerStations();
-  const { detailedCauses } = useDetailedCauses();
+  const {
+    loading: loadingStations,
+    stations,
+    retry: retryStations,
+  } = usePassengerStations();
+  const {
+    loading: loadingDetailedCauses,
+    detailedCauses,
+    retry: retryDetailedCauses,
+  } = useDetailedCauses();
 
   const hasMetadata = !!stations && !!detailedCauses;
+  const isLoadingMetadata = loadingStations || loadingDetailedCauses;
 
   return (
     <>
@@ -51,7 +60,22 @@ export default () => {
           </Router>
 
           <Dimmer active={!hasMetadata}>
-            <Loader>Loading...</Loader>
+            {isLoadingMetadata && <Loader>Loading...</Loader>}
+            {!isLoadingMetadata && (
+              <Button
+                onClick={() => {
+                  if (!stations) {
+                    retryStations();
+                  }
+                  if (!detailedCauses) {
+                    retryDetailedCauses();
+                  }
+                }}
+              >
+                <Icon name="redo" />
+                Retry
+              </Button>
+            )}
           </Dimmer>
         </Dimmer.Dimmable>
       </MetadataContext.Provider>
