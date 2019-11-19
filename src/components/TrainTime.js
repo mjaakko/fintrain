@@ -5,6 +5,8 @@ import { MetadataContext } from '../App';
 
 import { formatTime } from '../utils/format';
 
+import './TrainTime.css';
+
 const MINOR_DELAY = 2;
 const MAJOR_DELAY = 15;
 

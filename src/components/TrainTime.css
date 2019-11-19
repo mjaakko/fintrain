@@ -1,0 +1,15 @@
+.ontime {
+  color: green;
+}
+
+.minordelay {
+  color: orange;
+}
+
+.majordelay {
+  color: red;
+}
+
+.actual {
+  font-weight: bold;
+}
