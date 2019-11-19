@@ -13,3 +13,8 @@
 .actual {
   font-weight: bold;
 }
+
+.cancelled {
+  text-decoration: line-through;
+  color: red;
+}

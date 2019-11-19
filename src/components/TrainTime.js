@@ -57,18 +57,28 @@ export default ({ timetableRow }) => {
   return (
     <Popup
       positionFixed
-      content={`Delayed ${
-        timetableRow.unknownDelay
-          ? 'by unknown time'
-          : `${timetableRow.differenceInMinutes}min`
+      content={`${
+        timetableRow.cancelled
+          ? 'Cancelled'
+          : `Delayed ${
+              timetableRow.unknownDelay
+                ? 'by unknown time'
+                : `${timetableRow.differenceInMinutes}min`
+            }`
       }${causes ? ` due to ${causes}` : ''}`}
       disabled={
-        !(timetableRow.unknownDelay || timetableRow.differenceInMinutes > 0)
+        !(
+          timetableRow.unknownDelay ||
+          timetableRow.differenceInMinutes > 0 ||
+          timetableRow.cancelled
+        )
       }
       trigger={
         <time
           className={`${timetableRow.actualTime ? 'actual' : ''} ${
-            timetableRow.differenceInMinutes
+            timetableRow.cancelled
+              ? 'cancelled'
+              : timetableRow.differenceInMinutes
               ? timetableRow.differenceInMinutes <= MINOR_DELAY
                 ? 'ontime'
                 : timetableRow.differenceInMinutes <= MAJOR_DELAY
