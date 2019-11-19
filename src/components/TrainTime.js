@@ -78,7 +78,7 @@ export default ({ timetableRow }) => {
           className={`${timetableRow.actualTime ? 'actual' : ''} ${
             timetableRow.cancelled
               ? 'cancelled'
-              : timetableRow.differenceInMinutes
+              : timetableRow.differenceInMinutes !== null
               ? timetableRow.differenceInMinutes <= MINOR_DELAY
                 ? 'ontime'
                 : timetableRow.differenceInMinutes <= MAJOR_DELAY
