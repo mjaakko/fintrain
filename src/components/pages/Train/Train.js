@@ -1,6 +1,6 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import { Container, Header } from 'semantic-ui-react';
+import { Container, Header, Loader } from 'semantic-ui-react';
 
 import moment from 'moment';
 
@@ -13,7 +13,7 @@ import TrainComposition from '../../TrainComposition';
 
 export default () => {
   const { trainNumber, departureDate } = useParams();
-  const { train, error } = useTrain(trainNumber, departureDate);
+  const { loading, train, error } = useTrain(trainNumber, departureDate);
 
   return (
     <>
@@ -27,6 +27,7 @@ export default () => {
           </Header.Subheader>
         </Header>
 
+        {loading && <Loader indeterminate active />}
         {train && <TrainTimetable train={train} />}
         {error && !train && <p>Failed to load train data</p>}
         <TrainComposition

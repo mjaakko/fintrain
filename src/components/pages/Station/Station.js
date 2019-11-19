@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { useParams } from 'react-router-dom';
-import { Container, Header } from 'semantic-ui-react';
+import { Container, Header, Loader } from 'semantic-ui-react';
 
 import { MetadataContext } from '../../../App';
 import useStationsTrains from '../../../hooks/useStationsTrains';
@@ -15,7 +15,7 @@ export default () => {
   const { stations } = useContext(MetadataContext);
 
   const { stationShortCode } = useParams();
-  const { trains, error } = useStationsTrains(stationShortCode);
+  const { loading, trains, error } = useStationsTrains(stationShortCode);
 
   const stationMetadata = stations && stations.get(stationShortCode);
 
@@ -30,6 +30,7 @@ export default () => {
         <Header as="h1">
           <StationName stationShortCode={stationShortCode} />
         </Header>
+        {loading && <Loader indeterminate active />}
         {trains && (
           <StationTimetable
             trains={trains}
