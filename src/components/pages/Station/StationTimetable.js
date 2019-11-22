@@ -61,7 +61,7 @@ export default ({ trains, stationShortCode }) => {
             }
 
             //If train stops more than once at the station (e.g. Kehärata trains in Pasila), create multiple timetable rows by pairing arrival and departure rows of each stop
-            if (timetableRowIndices.length > 2) {
+            if (timetableRowIndices.length >= 2) {
               const timetableRowPairsForStation = timetableRowIndices.reduce(
                 (pairs, index) => {
                   const pair = pairs.find(pair =>
