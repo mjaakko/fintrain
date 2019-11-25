@@ -15,3 +15,4 @@
 | 11.11.2019 | 1.5h | Pientä refaktorointia. Venäjän asemien oikean sijainnin näyttäminen (rajapinnasta tulee väärät koordinaatit). Venäjälle menevien junien aikataulujen näyttäminen paikallisessa ajassa. Nappi, jolla voi siirtyä kartalla omaan sijaintiin.
 | 14.11.2019 | 2h   | Junan myöhästymisen syyn näyttäminen. Taulukot paremmin näkyviin mobiilissa. Pieniä bugikorjauksia. Netlifyn säätöä.
 | 19.11.2019 | 3h   | Junien reaaliaikainen sijaintitieto rata.digitraffic.fi:n MQTT-rajapinnasta. Perutun pysähdyksen näyttäminen. Mahdollisuus yrittää metatietojen lataamista uudelleen virhetilanteessa. Yksikkötestejä.
+| 25.11.2019 | 2h   | Bugikorjauksia. Vain päivittyneen tiedon hakeminen rajapinnasta `version`-parametrilla.
