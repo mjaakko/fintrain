@@ -1,14 +1,11 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { Accordion, List, Icon } from 'semantic-ui-react';
-
-import { MetadataContext } from '../App';
 
 import useTrainComposition from '../hooks/useTrainComposition';
 
-import { formatStationName } from '../utils/format';
+import StationName from './StationName';
 
 export default ({ trainNumber, departureDate }) => {
-  const { stations } = useContext(MetadataContext);
   const { trainComposition, error } = useTrainComposition(
     trainNumber,
     departureDate
@@ -37,23 +34,17 @@ export default ({ trainNumber, departureDate }) => {
               index={i}
               onClick={handleClick}
             >
-              {stations &&
-              stations.has(journeySection.beginTimeTableRow.stationShortCode)
-                ? formatStationName(
-                    stations.get(
-                      journeySection.beginTimeTableRow.stationShortCode
-                    ).stationName
-                  )
-                : journeySection.beginTimeTableRow.stationShortCode}
+              <StationName
+                stationShortCode={
+                  journeySection.beginTimeTableRow.stationShortCode
+                }
+              />
               {' - '}
-              {stations &&
-              stations.has(journeySection.endTimeTableRow.stationShortCode)
-                ? formatStationName(
-                    stations.get(
-                      journeySection.endTimeTableRow.stationShortCode
-                    ).stationName
-                  )
-                : journeySection.endTimeTableRow.stationShortCode}
+              <StationName
+                stationShortCode={
+                  journeySection.endTimeTableRow.stationShortCode
+                }
+              />
             </Accordion.Title>
             <Accordion.Content active={openIndex === i}>
               <List horizontal>
