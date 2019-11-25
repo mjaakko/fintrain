@@ -58,17 +58,24 @@ export default ({ trainNumber, departureDate }) => {
             <Accordion.Content active={openIndex === i}>
               <List horizontal>
                 {journeySection.wagons.map(wagon => (
-                  <List.Item key={wagon.location}>
-                    <List.Content verticalAlign="top">
-                      <List.Header>{`Wagon ${wagon.salesNumber}`}</List.Header>
-                      {`${wagon.wagonType ? wagon.wagonType : ''}`}{' '}
-                      {wagon.disabled && (
-                        <Icon size="small" name="wheelchair" />
-                      )}
-                      {wagon.luggage && <Icon size="small" name="suitcase" />}
-                      {wagon.playground && <Icon size="small" name="child" />}
-                      {wagon.pet && <Icon size="small" name="paw" />}
-                      {wagon.catering && <Icon size="small" name="utensils" />}
+                  <List.Item
+                    key={wagon.location}
+                    style={{ verticalAlign: 'top' }}
+                  >
+                    <List.Content>
+                      <List.Header>Wagon {wagon.salesNumber}</List.Header>
+                      <List.Description>
+                        {wagon.wagonType && wagon.wagonType + ' '}
+                        {wagon.disabled && (
+                          <Icon size="small" name="wheelchair" />
+                        )}
+                        {wagon.luggage && <Icon size="small" name="suitcase" />}
+                        {wagon.playground && <Icon size="small" name="child" />}
+                        {wagon.pet && <Icon size="small" name="paw" />}
+                        {wagon.catering && (
+                          <Icon size="small" name="utensils" />
+                        )}
+                      </List.Description>
                     </List.Content>
                   </List.Item>
                 ))}
