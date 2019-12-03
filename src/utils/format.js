@@ -14,7 +14,8 @@ export const formatTime = (time, timezone) => {
 export const formatStationName = stationName => {
   const formattedStationName = stationName.replace('_', ' ');
 
-  return formattedStationName.endsWith(' asema')
-    ? formattedStationName.substring(0, stationName.indexOf(' asema'))
+  return formattedStationName.endsWith(' asema') ||
+    formattedStationName.endsWith(' Asema')
+    ? formattedStationName.substring(0, stationName.indexOf(' '))
     : formattedStationName;
 };
