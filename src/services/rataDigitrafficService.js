@@ -1,5 +1,8 @@
 import cancellableFetch from '../utils/cancellableFetch';
 
+const passengerTrainsFilter =
+  'trainCategory=Long-distance|trainCategory=Commuter&trainType!=MV&trainType!=HV&trainType!=HLV&trainType!=V';
+
 const backendUrl =
   process.env.REACT_APP_BACKEND_URL ||
   'https://rata.digitraffic.fi/api/v1/graphql/graphiql';
@@ -83,7 +86,7 @@ export const getStationsTrains = stationShortCode => {
     viewer {
       getStationsTrainsUsingGET(station: "${encodeURI(
         stationShortCode
-      )}", arrived_trains: 0, arriving_trains: 30, departing_trains: 30, departed_trains: 0, where: "[*trainCategory=Long-distance|trainCategory=Commuter&trainType!=MV&trainType!=HV&trainType!=HLV&trainType!=V]") {
+      )}", arrived_trains: 0, arriving_trains: 30, departing_trains: 30, departed_trains: 0, where: "[*${passengerTrainsFilter}]") {
         version
         trainCategory
         trainNumber
@@ -118,6 +121,26 @@ export const getStationsTrains = stationShortCode => {
 
   return {
     result: result.then(result => result.viewer.getStationsTrainsUsingGET),
+    cancel,
+  };
+};
+
+export const getCurrentlyRunningTrains = () => {
+  const { result, cancel } = graphQlFetch(`
+  {
+    viewer {
+      getLiveTrainsByVersionUsingGET(where: "[*runningCurrently=true&${passengerTrainsFilter}]") {
+        trainType
+        trainNumber
+        departureDate
+        runningCurrently
+      }
+    }
+  }
+  `);
+
+  return {
+    result: result.then(result => result.viewer.getLiveTrainsByVersionUsingGET),
     cancel,
   };
 };
