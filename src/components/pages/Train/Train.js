@@ -5,6 +5,7 @@ import { Container, Header, Loader } from 'semantic-ui-react';
 import moment from 'moment';
 
 import useTrain from '../../../hooks/useTrain';
+import useTrainComposition from '../../../hooks/useTrainComposition';
 
 import { formatTrainNumber } from '../../../utils/format';
 import TrainTimetable from './TrainTimetable';
@@ -13,7 +14,18 @@ import TrainComposition from '../../TrainComposition';
 
 export default () => {
   const { trainNumber, departureDate } = useParams();
-  const { loading, train, error } = useTrain(trainNumber, departureDate);
+  const { loading: loadingTrain, train, error: errorTrain } = useTrain(
+    trainNumber,
+    departureDate
+  );
+  const {
+    loading: loadingTrainComposition,
+    trainComposition,
+    error: errorTrainComposition,
+  } = useTrainComposition(trainNumber, departureDate);
+
+  const loading = loadingTrain || loadingTrainComposition;
+  const error = errorTrain || errorTrainComposition;
 
   return (
     <>
@@ -28,12 +40,14 @@ export default () => {
         </Header>
 
         {loading && <Loader indeterminate active />}
-        {train && <TrainTimetable train={train} />}
-        {error && !train && <p>Failed to load train data</p>}
-        <TrainComposition
-          trainNumber={trainNumber}
-          departureDate={departureDate}
-        />
+        {!loading && train && <TrainTimetable train={train} />}
+        {!loading && trainComposition && trainComposition.journeySections && (
+          <>
+            <Header as="h2">Composition</Header>
+            <TrainComposition trainComposition={trainComposition} />
+          </>
+        )}
+        {!loading && error && <p>Failed to load train data</p>}
       </Container>
     </>
   );

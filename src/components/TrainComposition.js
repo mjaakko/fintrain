@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { Accordion, List, Icon, Popup } from 'semantic-ui-react';
 
-import useTrainComposition from '../hooks/useTrainComposition';
-
 import StationName from './StationName';
 
 const WagonFeature = ({ feature }) => {
@@ -44,24 +42,14 @@ const WagonFeature = ({ feature }) => {
   );
 };
 
-export default ({ trainNumber, departureDate }) => {
-  const { trainComposition, error } = useTrainComposition(
-    trainNumber,
-    departureDate
-  );
-
+export default ({ trainComposition }) => {
   const [openIndex, setOpenIndex] = useState(-1);
 
   const handleClick = (_, { index }) => {
     setOpenIndex(openIndex === index ? -1 : index);
   };
 
-  if (!trainComposition && error) {
-    return <p>Failed to load train composition</p>;
-  }
-
   return (
-    trainComposition &&
     trainComposition.journeySections && (
       <Accordion styled fluid>
         {trainComposition.journeySections.map((journeySection, i) => (
