@@ -76,16 +76,14 @@ export const getDetailedCauses = () => {
   };
 };
 
-export const getStationsTrains = (stationShortCode, version) => {
+export const getStationsTrains = stationShortCode => {
   //TODO: figure out how to use (or is it even possible to use) query arguments to return only trains that have not passed the station
   const { result, cancel } = graphQlFetch(`
   {
     viewer {
       getStationsTrainsUsingGET(station: "${encodeURI(
         stationShortCode
-      )}", arrived_trains: 0, arriving_trains: 30, departing_trains: 30, departed_trains: 0, where: "[*trainCategory=Long-distance|trainCategory=Commuter&trainType!=MV&trainType!=HV&trainType!=HLV&trainType!=V]"${
-    version ? `, version: "${version}"` : ''
-  }) {
+      )}", arrived_trains: 0, arriving_trains: 30, departing_trains: 30, departed_trains: 0, where: "[*trainCategory=Long-distance|trainCategory=Commuter&trainType!=MV&trainType!=HV&trainType!=HLV&trainType!=V]") {
         version
         trainCategory
         trainNumber
@@ -124,13 +122,11 @@ export const getStationsTrains = (stationShortCode, version) => {
   };
 };
 
-export const getTrain = (trainNumber, departureDate, version) => {
+export const getTrain = (trainNumber, departureDate) => {
   const { result, cancel } = graphQlFetch(`
   {
     viewer {
-      getTrainByTrainNumberAndDepartureDateUsingGET(train_number: "${trainNumber}", departure_date: "${departureDate}"${
-    version ? `, version: "${version}"` : ''
-  }) {
+      getTrainByTrainNumberAndDepartureDateUsingGET(train_number: "${trainNumber}", departure_date: "${departureDate}") {
         departureDate
         trainNumber
         trainType
@@ -176,13 +172,11 @@ export const getTrain = (trainNumber, departureDate, version) => {
   };
 };
 
-export const getTrainComposition = (trainNumber, departureDate, version) => {
+export const getTrainComposition = (trainNumber, departureDate) => {
   const { result, cancel } = graphQlFetch(`
   {
     viewer {
-      getCompositionByTrainNumberAndDepartureDateUsingGET(train_number: "${trainNumber}", departure_date: "${departureDate}"${
-    version ? `, version: "${version}"` : ''
-  }) {
+      getCompositionByTrainNumberAndDepartureDateUsingGET(train_number: "${trainNumber}", departure_date: "${departureDate}") {
         trainType
         trainNumber
         trainCategory
