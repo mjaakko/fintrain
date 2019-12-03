@@ -55,7 +55,9 @@ export default ({ trainNumber, departureDate }) => {
                   >
                     <List.Content>
                       <List.Header>Wagon {wagon.salesNumber}</List.Header>
-                      <List.Description>
+                      <List.Description
+                        style={{ display: 'flex-inline', alignItems: 'center' }}
+                      >
                         {wagon.wagonType && wagon.wagonType + ' '}
                         {wagon.disabled && (
                           <Icon size="small" name="wheelchair" />
