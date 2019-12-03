@@ -1,9 +1,48 @@
 import React, { useState } from 'react';
-import { Accordion, List, Icon } from 'semantic-ui-react';
+import { Accordion, List, Icon, Popup } from 'semantic-ui-react';
 
 import useTrainComposition from '../hooks/useTrainComposition';
 
 import StationName from './StationName';
+
+const WagonFeature = ({ feature }) => {
+  const description =
+    feature === 'disabled'
+      ? 'Wagon has space for wheelchairs'
+      : feature === 'luggage'
+      ? 'Wagon has space for luggage'
+      : feature === 'playground'
+      ? 'Wagon has a playground'
+      : feature === 'pet'
+      ? 'Wagon has space for pets'
+      : feature === 'catering'
+      ? 'Wagon has a restaurant'
+      : null;
+  const icon =
+    feature === 'disabled'
+      ? 'wheelchair'
+      : feature === 'luggage'
+      ? 'suitcase'
+      : feature === 'playground'
+      ? 'child'
+      : feature === 'pet'
+      ? 'paw'
+      : feature === 'catering'
+      ? 'utensils'
+      : null;
+
+  if (!description || !icon) {
+    return null;
+  }
+
+  return (
+    <Popup
+      position="bottom center"
+      trigger={<Icon size="small" name={icon} />}
+      content={description}
+    />
+  );
+};
 
 export default ({ trainNumber, departureDate }) => {
   const { trainComposition, error } = useTrainComposition(
@@ -59,15 +98,11 @@ export default ({ trainNumber, departureDate }) => {
                         style={{ display: 'flex-inline', alignItems: 'center' }}
                       >
                         {wagon.wagonType && wagon.wagonType + ' '}
-                        {wagon.disabled && (
-                          <Icon size="small" name="wheelchair" />
-                        )}
-                        {wagon.luggage && <Icon size="small" name="suitcase" />}
-                        {wagon.playground && <Icon size="small" name="child" />}
-                        {wagon.pet && <Icon size="small" name="paw" />}
-                        {wagon.catering && (
-                          <Icon size="small" name="utensils" />
-                        )}
+                        {Object.entries(wagon)
+                          .filter(([_, value]) => typeof value === 'boolean')
+                          .map(([key, _]) => (
+                            <WagonFeature key={key} feature={key} />
+                          ))}
                       </List.Description>
                     </List.Content>
                   </List.Item>
