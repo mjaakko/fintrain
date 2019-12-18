@@ -19,3 +19,7 @@ export const formatStationName = stationName => {
     ? formattedStationName.substring(0, stationName.indexOf(' '))
     : formattedStationName;
 };
+
+export const formatTrack = track => {
+  return track.replace(/^0+/, '');
+};
