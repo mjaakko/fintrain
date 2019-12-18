@@ -17,3 +17,4 @@
 | 19.11.2019 | 3h   | Junien reaaliaikainen sijaintitieto rata.digitraffic.fi:n MQTT-rajapinnasta. Perutun pysähdyksen näyttäminen. Mahdollisuus yrittää metatietojen lataamista uudelleen virhetilanteessa. Yksikkötestejä.
 | 25.11.2019 | 2h   | Bugikorjauksia. Vain päivittyneen tiedon hakeminen rajapinnasta `version`-parametrilla.
 | 3.12.2019  | 1.5h | Datan hakemisen korjaus (`version`-parametri ei toimi halutulla tavalla). Selitykset vaunujen ominaisuuksille. Pieniä korjauksia ja parannuksia. Tällä hetkellä kulussa olevien junien hakeminen rajapinnasta.
+| 18.12.2019 | 1.5h | Pieniä korjauksia (asemien sijainnit, puuttuva asema, laiturinumerosta etunollat pois). Jatkoa reaaliaikaisen paikkatiedon näyttämiselle.
