@@ -6,6 +6,8 @@ import TrainTime from '../../TrainTime';
 
 import StationName from '../../StationName';
 
+import { formatTrack } from '../../../utils/format';
+
 export default ({ arrivalRow, departureRow }) => {
   const stationShortCode = (arrivalRow || departureRow).stationShortCode;
 
@@ -22,7 +24,9 @@ export default ({ arrivalRow, departureRow }) => {
           <StationName stationShortCode={stationShortCode} />
         </Link>
       </Table.Cell>
-      <Table.Cell>{(arrivalRow || departureRow).commercialTrack}</Table.Cell>
+      <Table.Cell>
+        {formatTrack((arrivalRow || departureRow).commercialTrack)}
+      </Table.Cell>
     </Table.Row>
   );
 };

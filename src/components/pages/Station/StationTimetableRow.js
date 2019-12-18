@@ -4,7 +4,7 @@ import { Table } from 'semantic-ui-react';
 
 import TrainTime from '../../TrainTime';
 
-import { formatTrainNumber } from '../../../utils/format';
+import { formatTrainNumber, formatTrack } from '../../../utils/format';
 
 export default ({
   trainNumber,
@@ -28,6 +28,8 @@ export default ({
       </Link>
     </Table.Cell>
     <Table.Cell>{destination}</Table.Cell>
-    <Table.Cell>{(arrivalRow || departureRow).commercialTrack}</Table.Cell>
+    <Table.Cell>
+      {formatTrack((arrivalRow || departureRow).commercialTrack)}
+    </Table.Cell>
   </Table.Row>
 );
