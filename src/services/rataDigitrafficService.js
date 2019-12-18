@@ -37,7 +37,7 @@ export const getPassengerStations = () => {
   const { result, cancel } = graphQlFetch(`
     {
       viewer {
-        getStationsUsingGET(where: "[*passengerTraffic=true]") {
+        getStationsUsingGET(where: "[*passengerTraffic=true|stationShortCode=KML]") {
           countryCode
           latitude
           longitude
