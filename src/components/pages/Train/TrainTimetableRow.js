@@ -25,7 +25,10 @@ export default ({ arrivalRow, departureRow }) => {
         </Link>
       </Table.Cell>
       <Table.Cell>
-        {formatTrack((arrivalRow || departureRow).commercialTrack)}
+        {formatTrack(
+          (arrivalRow && arrivalRow.commercialTrack) ||
+            (departureRow && departureRow.commercialTrack)
+        )}
       </Table.Cell>
     </Table.Row>
   );

@@ -29,7 +29,10 @@ export default ({
     </Table.Cell>
     <Table.Cell>{destination}</Table.Cell>
     <Table.Cell>
-      {formatTrack((arrivalRow || departureRow).commercialTrack)}
+      {formatTrack(
+        (arrivalRow && arrivalRow.commercialTrack) ||
+          (departureRow && departureRow.commercialTrack)
+      )}
     </Table.Cell>
   </Table.Row>
 );
