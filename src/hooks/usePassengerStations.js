@@ -14,6 +14,14 @@ const RUSSIAN_STATIONS = {
     latitude: 59.95601,
     longitude: 30.35704,
   },
+  PTL: {
+    latitude: 59.93175,
+    longitude: 30.44178,
+  },
+  TVE: {
+    latitude: 56.83557,
+    longitude: 35.89269,
+  },
   MVA: {
     latitude: 55.77789,
     longitude: 37.65535,
