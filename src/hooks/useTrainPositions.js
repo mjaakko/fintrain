@@ -1,41 +1,33 @@
 import { useReducer, useEffect } from 'react';
-import mqtt from 'mqtt';
+
+import useMqttClient from './useMqttClient';
+
+const endpoint = 'wss://rata.digitraffic.fi:443/mqtt';
+const options = {
+  clientId: 'FinTrain_' + parseInt(Math.random() * 10000, 10),
+  protocolId: 'MQIsdp',
+  protocolVersion: 3,
+  reconnectPeriod: 5 * 1000,
+};
 
 export default (maxAgeSecs, trains) => {
-  const [{ trainPositions, error }, dispatch] = useReducer(
+  const [trainPositions, dispatch] = useReducer(
     (state, action) => {
       switch (action.type) {
-        case 'error':
-          return {
-            error: action.error,
-            trainPositions: state.trainPositions,
-          };
         case 'update_train_position':
           return {
-            error: state.error,
-            trainPositions: {
-              ...state.trainPositions,
-              [`${action.trainPosition.trainNumber}-${action.trainPosition.departureDate}`]: action.trainPosition,
-            },
+            ...state,
+            [`${action.trainPosition.trainNumber}-${action.trainPosition.departureDate}`]: action.trainPosition,
           };
         case 'delete_old_entries':
           const now = new Date();
-          return {
-            error: state.error,
-            trainPositions: Object.keys(state.trainPositions).reduce(
-              (result, key) => {
-                if (
-                  now - new Date(state.trainPositions[key].timestamp) <
-                  maxAgeSecs * 1000
-                ) {
-                  result[key] = state.trainPositions[key];
-                }
+          return Object.keys(state).reduce((result, key) => {
+            if (now - new Date(state[key].timestamp) < maxAgeSecs * 1000) {
+              result[key] = state[key];
+            }
 
-                return result;
-              },
-              {}
-            ),
-          };
+            return result;
+          }, {});
         default:
           return state;
       }
@@ -43,14 +35,18 @@ export default (maxAgeSecs, trains) => {
     { trainPositions: {}, error: null }
   );
 
+  const { client, error } = useMqttClient(endpoint, options);
+
   useEffect(() => {
-    const client = mqtt.connect('wss://rata.digitraffic.fi:443/mqtt', {
-      clientId: 'FinTrain_' + parseInt(Math.random() * 10000, 10),
-      protocolId: 'MQIsdp',
-      protocolVersion: 3,
-      reconnectPeriod: 5 * 1000,
-    });
-    client.on('connect', () => {
+    if (client) {
+      client.on('message', (_, message) => {
+        const trainPosition = JSON.parse(message.toString());
+        dispatch({ type: 'update_train_position', trainPosition });
+      });
+    }
+  }, [client]);
+  useEffect(() => {
+    if (client) {
       if (Array.isArray(trains) && trains.length > 0) {
         trains.forEach(train =>
           client.subscribe(
@@ -60,18 +56,8 @@ export default (maxAgeSecs, trains) => {
       } else {
         client.subscribe('train-locations/#');
       }
-    });
-    client.on('error', error => {
-      dispatch({ type: 'error', error });
-    });
-    client.on('message', (_, message) => {
-      const trainPosition = JSON.parse(message.toString());
-      dispatch({ type: 'update_train_position', trainPosition });
-    });
-
-    return () => client.end(true);
-  }, [trains]);
-
+    }
+  }, [client, trains]);
   useEffect(() => {
     const timer = setInterval(
       () => dispatch({ type: 'delete_old_entries' }),
