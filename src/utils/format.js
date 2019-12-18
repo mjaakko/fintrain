@@ -21,5 +21,9 @@ export const formatStationName = stationName => {
 };
 
 export const formatTrack = track => {
+  if (!track) {
+    return '';
+  }
+
   return track.replace(/^0+/, '');
 };
