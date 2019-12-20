@@ -21,6 +21,19 @@ const mergeTimetableRows = (mergedTimetableRows, timetableRow) => {
 };
 
 export default ({ train }) => {
+  let firstUnknownDelay = -1;
+  const fixedTimetableRows = train.timeTableRows.map((timetableRow, index) => {
+    if (timetableRow.unknownDelay && firstUnknownDelay === -1) {
+      firstUnknownDelay = index;
+    }
+
+    if (firstUnknownDelay !== -1 && firstUnknownDelay < index) {
+      return { ...timetableRow, unknownDelay: true };
+    } else {
+      return timetableRow;
+    }
+  });
+
   return (
     <Table singleLine unstackable>
       <Table.Header>
@@ -32,7 +45,7 @@ export default ({ train }) => {
         </Table.Row>
       </Table.Header>
       <Table.Body>
-        {train.timeTableRows
+        {fixedTimetableRows
           .filter(
             timetableRow =>
               timetableRow.trainStopping && timetableRow.commercialStop

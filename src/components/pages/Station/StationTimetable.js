@@ -52,7 +52,15 @@ export default ({ trains, stationShortCode }) => {
               : '';
 
             const timetableRowIndices = [];
+            let firstUnknownDelay = -1; //Unknown delay should propagate to following stations
             for (let i = 0; i < train.timeTableRows.length; i++) {
+              if (
+                train.timeTableRows[i].unknownDelay &&
+                firstUnknownDelay === -1
+              ) {
+                firstUnknownDelay = 1;
+              }
+
               if (
                 train.timeTableRows[i].stationShortCode === stationShortCode
               ) {
@@ -78,8 +86,10 @@ export default ({ trains, stationShortCode }) => {
               );
 
               return timetableRowPairsForStation.map(timetableRowPair => {
-                const timetableRowsForStation = timetableRowPair.map(
-                  index => train.timeTableRows[index]
+                const timetableRowsForStation = timetableRowPair.map(index =>
+                  firstUnknownDelay !== -1 && firstUnknownDelay < index
+                    ? { ...train.timeTableRows[index], unknownDelay: true }
+                    : train.timeTableRows[index]
                 );
 
                 return {
@@ -97,8 +107,10 @@ export default ({ trains, stationShortCode }) => {
                 };
               });
             } else {
-              const timetableRowsForStation = timetableRowIndices.map(
-                index => train.timeTableRows[index]
+              const timetableRowsForStation = timetableRowIndices.map(index =>
+                firstUnknownDelay !== -1 && firstUnknownDelay < index
+                  ? { ...train.timeTableRows[index], unknownDelay: true }
+                  : train.timeTableRows[index]
               );
 
               return {
