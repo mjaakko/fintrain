@@ -33,8 +33,10 @@ export default ({ train }) => {
       </Table.Header>
       <Table.Body>
         {train.timeTableRows
-          .filter(timetableRow => timetableRow.trainStopping)
-          .filter(timetableRow => timetableRow.commercialStop)
+          .filter(
+            timetableRow =>
+              timetableRow.trainStopping && timetableRow.commercialStop
+          )
           .reduce(mergeTimetableRows, [
             { departureRow: null, arrivalRow: null },
           ])
