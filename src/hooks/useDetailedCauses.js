@@ -4,6 +4,8 @@ import loaderReducer from '../reducers/loaderReducer';
 
 import { getDetailedCauses } from '../services/rataDigitrafficService';
 
+import cacheWithSessionStorage from '../utils/cacheWithSessionStorage';
+
 export default () => {
   const [state, dispatch] = useReducer(loaderReducer, {
     loading: true,
@@ -19,7 +21,10 @@ export default () => {
     }
 
     dispatch({ type: 'loading' });
-    promise.current = getDetailedCauses();
+    promise.current = cacheWithSessionStorage(
+      'metadata_detailed_causes',
+      getDetailedCauses
+    );
     promise.current.result
       .then(detailedCauses =>
         dispatch({

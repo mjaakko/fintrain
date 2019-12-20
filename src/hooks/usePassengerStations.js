@@ -4,6 +4,8 @@ import loaderReducer from '../reducers/loaderReducer';
 
 import { getPassengerStations } from '../services/rataDigitrafficService';
 
+import cacheWithSessionStorage from '../utils/cacheWithSessionStorage';
+
 //Russian stations have incorrect coordinates in the API
 const RUSSIAN_STATIONS = {
   VYB: {
@@ -43,7 +45,10 @@ export default () => {
     }
 
     dispatch({ type: 'loading' });
-    promise.current = getPassengerStations();
+    promise.current = cacheWithSessionStorage(
+      'metadata_passenger_stations',
+      getPassengerStations
+    );
     promise.current.result
       .then(stations =>
         dispatch({
