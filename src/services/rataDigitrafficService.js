@@ -129,7 +129,7 @@ export const getCurrentlyRunningTrains = () => {
   const { result, cancel } = graphQlFetch(`
   {
     viewer {
-      getLiveTrainsByVersionUsingGET(where: "[*runningCurrently=true&${passengerTrainsFilter}]") {
+      getLiveTrainsByVersionUsingGET(where: "[*${passengerTrainsFilter}&runningCurrently=true]") {
         trainType
         trainNumber
         departureDate
