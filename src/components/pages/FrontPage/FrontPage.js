@@ -10,13 +10,13 @@ import {
 import Control from 'react-leaflet-control';
 import { Link } from 'react-router-dom';
 
-import { MetadataContext } from '../../App';
+import { MetadataContext } from '../../../App';
 
-import useGeolocation from '../../hooks/useGeolocation';
+import useGeolocation from '../../../hooks/useGeolocation';
 
-import StationName from '../StationName';
+import StationName from '../../StationName';
 import { Icon } from 'semantic-ui-react';
-import BorderedButton from '../BorderedButton';
+import BorderedButton from '../../BorderedButton';
 
 export default () => {
   const metadata = useContext(MetadataContext);
