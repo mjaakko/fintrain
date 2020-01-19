@@ -134,6 +134,7 @@ export const getCurrentlyRunningTrains = () => {
         trainNumber
         departureDate
         runningCurrently
+        commuterLineID
       }
     }
   }
