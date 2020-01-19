@@ -37,7 +37,7 @@ const UserLocation = ({ zoom }) => {
       )}
       <Control position="topright">
         <BorderedButton
-          color="white"
+          style={{ backgroundColor: '#f4f4f4' }}
           compact
           icon
           onClick={() => {
