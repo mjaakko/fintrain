@@ -10,7 +10,7 @@ class CustomMarker extends React.Component {
 
     this.Icon = Icon.extend({
       options: {
-        iconSize: [12, 12],
+        iconSize: [34, 34], //TODO: this should be a prop
         element: false,
         className: 'leaflet-div-icon',
       },
