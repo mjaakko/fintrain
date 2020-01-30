@@ -14,9 +14,11 @@ const metersToPixels = (latitude, meters, zoom) => {
   );
 };
 
-const UserLocation = ({ zoom }) => {
+const UserLocation = () => {
   const { position } = useGeolocation();
   const { map } = useLeaflet();
+
+  const zoom = map._zoom;
 
   return (
     <>
