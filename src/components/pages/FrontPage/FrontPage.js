@@ -10,8 +10,10 @@ import TrainPositions from './TrainPositions';
 import BorderedButton from '../../BorderedButton';
 import usePersistedState from '../../../hooks/usePersistedState';
 
+const DEFAULT_ZOOM = 6;
+
 export default () => {
-  const [zoom, setZoom] = useState(8);
+  const [zoom, setZoom] = useState(DEFAULT_ZOOM);
   const [showTrainPositions, setShowTrainPositions] = usePersistedState(
     'show_train_positions',
     window.sessionStorage,
@@ -20,8 +22,8 @@ export default () => {
 
   return (
     <Map
-      center={{ lat: 60.17108, lng: 24.94199 }}
-      zoom={8}
+      center={{ lat: 62.91, lng: 26.32 }}
+      zoom={DEFAULT_ZOOM}
       onViewportChanged={({ zoom }) => setZoom(zoom)}
       style={{ height: '100%', width: '100%' }}
     >
