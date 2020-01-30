@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Map, TileLayer } from 'react-leaflet';
 import Control from 'react-leaflet-control';
 import { Icon, Checkbox, Popup } from 'semantic-ui-react';
@@ -8,12 +8,42 @@ import StationMarkers from './StationMarkers';
 import TrainPositions from './TrainPositions';
 
 import BorderedButton from '../../BorderedButton';
+
+import useCachedGeolocation from '../../../hooks/useCachedGeolocation';
 import usePersistedState from '../../../hooks/usePersistedState';
 
+const GEOLOCATION_OPTIONS = {
+  maximumAge: 10 * 60 * 1000, // accept locations up to 10 minutes old
+  timeout: 30 * 1000, // 30 second timeout
+  enableHighAccuracy: false,
+};
+
+const DEFAULT_CENTER = [62.91, 26.32];
 const DEFAULT_ZOOM = 6;
 
+const DEFAULT_ZOOM_IF_USER_LOCATION = 10;
+
 export default () => {
-  const [zoom, setZoom] = useState(DEFAULT_ZOOM);
+  const [viewport, setViewport] = useState({
+    center: DEFAULT_CENTER,
+    zoom: DEFAULT_ZOOM,
+  });
+  const [mapInteractedWith, setMapInteractedWith] = useState(false);
+
+  const cachedGeolocation = useCachedGeolocation(GEOLOCATION_OPTIONS);
+
+  useEffect(() => {
+    if (!mapInteractedWith && !!cachedGeolocation) {
+      setViewport({
+        center: [
+          cachedGeolocation.coords.latitude,
+          cachedGeolocation.coords.longitude,
+        ],
+        zoom: DEFAULT_ZOOM_IF_USER_LOCATION,
+      });
+    }
+  }, [mapInteractedWith, cachedGeolocation]);
+
   const [showTrainPositions, setShowTrainPositions] = usePersistedState(
     'show_train_positions',
     window.sessionStorage,
@@ -22,9 +52,11 @@ export default () => {
 
   return (
     <Map
-      center={{ lat: 62.91, lng: 26.32 }}
-      zoom={DEFAULT_ZOOM}
-      onViewportChanged={({ zoom }) => setZoom(zoom)}
+      viewport={viewport}
+      onViewportChange={() => setMapInteractedWith(true)}
+      onViewportChanged={viewport => {
+        setViewport(viewport);
+      }}
       style={{ height: '100%', width: '100%' }}
     >
       <TileLayer
@@ -50,7 +82,7 @@ export default () => {
           </Popup.Content>
         </Popup>
       </Control>
-      <UserLocation zoom={zoom} />
+      <UserLocation />
       <StationMarkers />
       {showTrainPositions && <TrainPositions />}
     </Map>
