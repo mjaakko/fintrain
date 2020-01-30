@@ -21,3 +21,4 @@
 | 20.12.2019 | 0.5h | Metatietojen tallentaminen välimuistiin. Tuntemattoman myöhästymisen näyttäminen kaikilla seuraavilla asemilla.
 | 16.1.2020  | 2.5h | Refaktorointia, korjauksia reaaliaikaisen paikkatiedon hakemiseen. React-komponentteja paikkatiedon näyttämiseen kartalla.
 | 19.1.2020  | 1.5h | Junien sijainnit näkymään kartalle
+| 30.1.2020  | 2.5h | Asetuksien tallentaminen sessionStorageen. Kartan keskittäminen käyttäjän sijaintiin, kun sovellus avataan. Pieniä korjauksia.
