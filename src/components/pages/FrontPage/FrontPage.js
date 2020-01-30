@@ -8,10 +8,15 @@ import StationMarkers from './StationMarkers';
 import TrainPositions from './TrainPositions';
 
 import BorderedButton from '../../BorderedButton';
+import usePersistedState from '../../../hooks/usePersistedState';
 
 export default () => {
   const [zoom, setZoom] = useState(8);
-  const [showTrainPositions, setShowTrainPositions] = useState(false);
+  const [showTrainPositions, setShowTrainPositions] = usePersistedState(
+    'show_train_positions',
+    window.sessionStorage,
+    false
+  );
 
   return (
     <Map
