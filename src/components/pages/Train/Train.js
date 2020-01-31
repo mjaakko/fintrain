@@ -31,23 +31,38 @@ export default () => {
     <>
       <DocumentTitle title={train && formatTrainNumber(train)} />
       <Container as="main">
-        <Header as="h1">
-          {train && formatTrainNumber(train)}
-          <Header.Subheader>
-            {train &&
-              moment(new Date(train.departureDate)).format('DD.MM.YYYY')}
-          </Header.Subheader>
-        </Header>
-
-        {loading && <Loader indeterminate active />}
-        {!loading && train && <TrainTimetable train={train} />}
-        {!loading && trainComposition && trainComposition.journeySections && (
-          <>
-            <Header as="h2">Composition</Header>
-            <TrainComposition trainComposition={trainComposition} />
-          </>
+        {loading ? (
+          <Loader indeterminate active />
+        ) : !error ? (
+          train ? (
+            <>
+              <Header as="h1">
+                {train && formatTrainNumber(train)}
+                <Header.Subheader>
+                  {train &&
+                    moment(new Date(train.departureDate)).format('DD.MM.YYYY')}
+                </Header.Subheader>
+              </Header>
+              {train && <TrainTimetable train={train} />}
+              {trainComposition && trainComposition.journeySections && (
+                <>
+                  <Header as="h2">Composition</Header>
+                  <TrainComposition trainComposition={trainComposition} />
+                </>
+              )}
+            </>
+          ) : (
+            <>
+              <Header as="h1">Train not found</Header>
+              Train <strong>{trainNumber}</strong> is not running on{' '}
+              <strong>
+                {moment(new Date(departureDate)).format('DD.MM.YYYY')}
+              </strong>
+            </>
+          )
+        ) : (
+          <Header as="h1">Failed to load train data</Header>
         )}
-        {!loading && error && <p>Failed to load train data</p>}
       </Container>
     </>
   );
