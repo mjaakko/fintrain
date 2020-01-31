@@ -136,12 +136,11 @@ export default ({ trains, stationShortCode }) => {
           )
           .filter(timetableRow => {
             //Filter trains that have already passed the station
-            return (
-              (!timetableRow.arrivalRow ||
-                !timetableRow.arrivalRow.actualTime) &&
-              (!timetableRow.departureRow ||
-                !timetableRow.departureRow.actualTime)
-            );
+            return !timetableRow.arrivalRow
+              ? !timetableRow.departureRow.actualTime
+              : !timetableRow.arrivalRow.actualTime ||
+                  (timetableRow.departureRow &&
+                    !timetableRow.departureRow.actualTime);
           })
           .sort(sortByTime)
           .map(timetableRow => (
