@@ -22,3 +22,4 @@
 | 16.1.2020  | 2.5h | Refaktorointia, korjauksia reaaliaikaisen paikkatiedon hakemiseen. React-komponentteja paikkatiedon näyttämiseen kartalla.
 | 19.1.2020  | 1.5h | Junien sijainnit näkymään kartalle
 | 30.1.2020  | 2.5h | Asetuksien tallentaminen sessionStorageen. Kartan keskittäminen käyttäjän sijaintiin, kun sovellus avataan. Pieniä korjauksia.
+| 1.2.2020   | 0.5h | Korjaus aseman ohittaneiden junien filtteröintiin. Selkeämpi viesti, jos junaa ei löydy tai lataamisessa tapahtuu virhe.
