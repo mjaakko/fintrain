@@ -1,6 +1,6 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import { Container, Header, Loader } from 'semantic-ui-react';
+import { Container, Header, Loader, Message, Icon } from 'semantic-ui-react';
 
 import moment from 'moment';
 
@@ -43,6 +43,16 @@ export default () => {
                     moment(new Date(train.departureDate)).format('DD.MM.YYYY')}
                 </Header.Subheader>
               </Header>
+              {train && train.cancelled && (
+                <Message warning>
+                  <Message.Header
+                    style={{ display: 'flex', alignItems: 'center' }}
+                  >
+                    <Icon name="warning circle" size="large" />
+                    The train has been cancelled
+                  </Message.Header>
+                </Message>
+              )}
               {train && <TrainTimetable train={train} />}
               {trainComposition && trainComposition.journeySections && (
                 <>
