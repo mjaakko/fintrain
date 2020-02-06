@@ -2,6 +2,7 @@ import React from 'react';
 import { CircleMarker, Popup, useLeaflet } from 'react-leaflet';
 import Control from 'react-leaflet-control';
 import { Icon } from 'semantic-ui-react';
+import { useTranslation } from 'react-i18next';
 
 import useGeolocation from '../../../hooks/useGeolocation';
 
@@ -17,6 +18,7 @@ const metersToPixels = (latitude, meters, zoom) => {
 const UserLocation = () => {
   const { position } = useGeolocation();
   const { map } = useLeaflet();
+  const { t } = useTranslation();
 
   const zoom = map._zoom;
 
@@ -34,7 +36,7 @@ const UserLocation = () => {
             zoom
           )}
         >
-          <Popup>Your location</Popup>
+          <Popup>{t('map.yourLocation')}</Popup>
         </CircleMarker>
       )}
       <Control position="topright">

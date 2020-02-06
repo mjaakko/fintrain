@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import { Container, Header, Loader } from 'semantic-ui-react';
+import { useTranslation } from 'react-i18next';
 
 import { MetadataContext } from '../../../App';
 import useStationsTrains from '../../../hooks/useStationsTrains';
@@ -12,6 +13,7 @@ import StationName from '../../StationName';
 import DocumentTitle from '../../DocumentTitle';
 
 export default () => {
+  const { t } = useTranslation();
   const { stations } = useContext(MetadataContext);
 
   const { stationShortCode } = useParams();
@@ -37,7 +39,7 @@ export default () => {
             stationShortCode={stationShortCode}
           />
         )}
-        {error && !trains && <p>Failed to load station data</p>}
+        {error && !trains && <p>{t('station.failedToLoad')}</p>}
       </Container>
     </>
   );

@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import { Popup } from 'semantic-ui-react';
+import { useTranslation } from 'react-i18next';
 
 import { MetadataContext } from '../App';
 
@@ -13,32 +14,45 @@ const MAJOR_DELAY = 15;
 const TIMEZONE_FINLAND = 'Europe/Helsinki';
 const TIMEZONE_RUSSIA = 'Europe/Moscow'; //In Russia trains run on Moscow time
 
-const generateCausesString = (detailedCauseCodes, detailedCauses) => {
+const generateCausesString = (
+  detailedCauseCodes,
+  detailedCauses,
+  language,
+  andTranslation
+) => {
   if (!detailedCauses) {
     return null;
   }
+
+  const simplifiedLanguage = language.split('-')[0];
+
   const passengerTerms = detailedCauseCodes
     .map(detailedCauseCode => detailedCauses.get(detailedCauseCode))
     .map(detailedCause => {
       if (
         !detailedCause ||
         !detailedCause.passengerTerm ||
-        !detailedCause.passengerTerm.en
+        !detailedCause.passengerTerm[simplifiedLanguage]
       ) {
         return null;
       }
-      return detailedCause.passengerTerm.en.toLocaleLowerCase('en');
+      return detailedCause.passengerTerm[simplifiedLanguage].toLocaleLowerCase(
+        simplifiedLanguage
+      );
     })
     .filter(x => !!x);
   return passengerTerms.length !== 0
     ? passengerTerms.reduce((acc, cur, index, { length }) => {
-        return acc + (index === length - 1 ? ' and ' : ', ') + cur;
+        return (
+          acc + (index === length - 1 ? ` ${andTranslation} ` : ', ') + cur
+        );
       })
     : null;
 };
 
 export default ({ timetableRow }) => {
   const { detailedCauses } = useContext(MetadataContext);
+  const { t, i18n } = useTranslation();
 
   if (!timetableRow) {
     return <time>--</time>;
@@ -51,7 +65,9 @@ export default ({ timetableRow }) => {
 
   const causes = generateCausesString(
     timetableRow.causes.map(cause => cause.detailedCategoryCode),
-    detailedCauses
+    detailedCauses,
+    i18n.language,
+    t('common.and')
   );
 
   return (
@@ -59,13 +75,15 @@ export default ({ timetableRow }) => {
       positionFixed
       content={`${
         timetableRow.cancelled
-          ? 'Cancelled'
-          : `Delayed ${
+          ? t('trainTime.cancelled')
+          : `${t('trainTime.delayed')} ${
               timetableRow.unknownDelay
-                ? 'by unknown time'
-                : `${timetableRow.differenceInMinutes}min`
+                ? t('trainTime.byUnknownTime')
+                : t('trainTime.timeInMinutes', {
+                    time: timetableRow.differenceInMinutes,
+                  })
             }`
-      }${causes ? ` due to ${causes}` : ''}`}
+      }${causes ? t('trainTime.delayCause', { causes }) : ''}`}
       disabled={
         !(
           timetableRow.unknownDelay ||

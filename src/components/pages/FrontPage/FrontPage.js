@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Map, TileLayer } from 'react-leaflet';
 import Control from 'react-leaflet-control';
 import { Icon, Checkbox, Popup } from 'semantic-ui-react';
+import { useTranslation } from 'react-i18next';
 
 import UserLocation from './UserLocation';
 import StationMarkers from './StationMarkers';
@@ -24,6 +25,8 @@ const DEFAULT_ZOOM = 6;
 const DEFAULT_ZOOM_IF_USER_LOCATION = 10;
 
 export default () => {
+  const { t } = useTranslation();
+
   const [viewport, setViewport] = useState({
     center: DEFAULT_CENTER,
     zoom: DEFAULT_ZOOM,
@@ -72,11 +75,11 @@ export default () => {
             </BorderedButton>
           }
         >
-          <Popup.Header>Settings</Popup.Header>
+          <Popup.Header>{t('frontPageSettings.settings')}</Popup.Header>
           <Popup.Content>
             <Checkbox
               checked={showTrainPositions}
-              label="Show train positions"
+              label={t('frontPageSettings.showTrainPositions')}
               onChange={() => setShowTrainPositions(!showTrainPositions)}
             />
           </Popup.Content>

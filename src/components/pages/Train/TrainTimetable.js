@@ -1,5 +1,6 @@
 import React from 'react';
 import { Table } from 'semantic-ui-react';
+import { useTranslation } from 'react-i18next';
 
 import TrainTimetableRow from './TrainTimetableRow';
 
@@ -21,6 +22,8 @@ const mergeTimetableRows = (mergedTimetableRows, timetableRow) => {
 };
 
 export default ({ train }) => {
+  const { t } = useTranslation();
+
   let firstUnknownDelay = -1;
   const fixedTimetableRows = train.timeTableRows.map((timetableRow, index) => {
     if (timetableRow.unknownDelay && firstUnknownDelay === -1) {
@@ -38,10 +41,16 @@ export default ({ train }) => {
     <Table singleLine unstackable>
       <Table.Header>
         <Table.Row>
-          <Table.HeaderCell collapsing>Arrival</Table.HeaderCell>
-          <Table.HeaderCell collapsing>Departure</Table.HeaderCell>
-          <Table.HeaderCell>Station</Table.HeaderCell>
-          <Table.HeaderCell collapsing>Track</Table.HeaderCell>
+          <Table.HeaderCell collapsing>
+            {t('trainTimetable.arrives')}
+          </Table.HeaderCell>
+          <Table.HeaderCell collapsing>
+            {t('trainTimetable.departs')}
+          </Table.HeaderCell>
+          <Table.HeaderCell>{t('trainTimetable.station')}</Table.HeaderCell>
+          <Table.HeaderCell collapsing>
+            {t('trainTimetable.track')}
+          </Table.HeaderCell>
         </Table.Row>
       </Table.Header>
       <Table.Body>

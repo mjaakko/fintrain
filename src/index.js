@@ -4,6 +4,7 @@ import 'semantic-ui-css/semantic.min.css';
 import 'leaflet/dist/leaflet.css';
 import './index.css';
 import App from './App';
+import './i18n';
 import * as serviceWorker from './serviceWorker';
 import L from 'leaflet';
 

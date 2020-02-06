@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import { Table } from 'semantic-ui-react';
+import { useTranslation } from 'react-i18next';
 
 import { MetadataContext } from '../../../App';
 
@@ -26,17 +27,26 @@ const sortByTime = (a, b) => {
 };
 
 export default ({ trains, stationShortCode }) => {
+  const { t } = useTranslation();
   const { stations } = useContext(MetadataContext);
 
   return (
     <Table singleLine unstackable>
       <Table.Header>
         <Table.Row>
-          <Table.HeaderCell collapsing>Arrival</Table.HeaderCell>
-          <Table.HeaderCell collapsing>Departure</Table.HeaderCell>
-          <Table.HeaderCell collapsing>Train</Table.HeaderCell>
-          <Table.HeaderCell>Destination</Table.HeaderCell>
-          <Table.HeaderCell collapsing>Track</Table.HeaderCell>
+          <Table.HeaderCell collapsing>
+            {t('trainTimetable.arrives')}
+          </Table.HeaderCell>
+          <Table.HeaderCell collapsing>
+            {t('trainTimetable.departs')}
+          </Table.HeaderCell>
+          <Table.HeaderCell collapsing>
+            {t('trainTimetable.train')}
+          </Table.HeaderCell>
+          <Table.HeaderCell>{t('trainTimetable.destination')}</Table.HeaderCell>
+          <Table.HeaderCell collapsing>
+            {t('trainTimetable.track')}
+          </Table.HeaderCell>
         </Table.Row>
       </Table.Header>
       <Table.Body>

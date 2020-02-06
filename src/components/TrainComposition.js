@@ -1,20 +1,23 @@
 import React, { useState } from 'react';
 import { Accordion, List, Icon, Popup } from 'semantic-ui-react';
+import { useTranslation } from 'react-i18next';
 
 import StationName from './StationName';
 
 const WagonFeature = ({ feature }) => {
+  const { t } = useTranslation();
+
   const description =
     feature === 'disabled'
-      ? 'Wagon has space for wheelchairs'
+      ? t('trainComposition.wagonDisabled')
       : feature === 'luggage'
-      ? 'Wagon has space for luggage'
+      ? t('trainComposition.wagonLuggage')
       : feature === 'playground'
-      ? 'Wagon has a playground'
+      ? t('trainComposition.wagonPlayground')
       : feature === 'pet'
-      ? 'Wagon has space for pets'
+      ? t('trainComposition.wagonPet')
       : feature === 'catering'
-      ? 'Wagon has a restaurant'
+      ? t('trainComposition.wagonCatering')
       : null;
   const icon =
     feature === 'disabled'
@@ -43,6 +46,7 @@ const WagonFeature = ({ feature }) => {
 };
 
 export default ({ trainComposition }) => {
+  const { t } = useTranslation();
   const [openIndex, setOpenIndex] = useState(-1);
 
   const handleClick = (_, { index }) => {
@@ -81,7 +85,9 @@ export default ({ trainComposition }) => {
                     style={{ verticalAlign: 'top' }}
                   >
                     <List.Content>
-                      <List.Header>Wagon {wagon.salesNumber}</List.Header>
+                      <List.Header>
+                        {t('trainComposition.wagon')} {wagon.salesNumber}
+                      </List.Header>
                       <List.Description
                         style={{ display: 'flex-inline', alignItems: 'center' }}
                       >
@@ -97,8 +103,10 @@ export default ({ trainComposition }) => {
                 ))}
               </List>
               <p>
-                Total length {journeySection.totalLength}m, maximum speed{' '}
-                {journeySection.maximumSpeed}km/h
+                {t('trainComposition.compositionDescription', {
+                  length: journeySection.totalLength,
+                  speed: journeySection.maximumSpeed,
+                })}
               </p>
             </Accordion.Content>
           </React.Fragment>

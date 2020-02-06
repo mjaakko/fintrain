@@ -2,6 +2,7 @@ import React from 'react';
 import FrontPage from './components/pages/FrontPage';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { Dimmer, Loader, Button, Icon } from 'semantic-ui-react';
+import { useTranslation } from 'react-i18next';
 
 import Station from './components/pages/Station';
 import Train from './components/pages/Train';
@@ -15,6 +16,7 @@ import useDetailedCauses from './hooks/useDetailedCauses';
 export const MetadataContext = React.createContext();
 
 export default () => {
+  const { t } = useTranslation();
   const {
     loading: loadingStations,
     stations,
@@ -60,7 +62,9 @@ export default () => {
           </Router>
 
           <Dimmer active={!hasMetadata}>
-            {isLoadingMetadata && <Loader>Loading...</Loader>}
+            {isLoadingMetadata && (
+              <Loader>{t('common.loading') + '...'}</Loader>
+            )}
             {!isLoadingMetadata && (
               <Button
                 onClick={() => {
@@ -73,7 +77,7 @@ export default () => {
                 }}
               >
                 <Icon name="redo" />
-                Retry
+                {t('common.retry')}
               </Button>
             )}
           </Dimmer>

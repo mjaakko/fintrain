@@ -1,6 +1,7 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import { Container, Header, Loader, Message, Icon } from 'semantic-ui-react';
+import { useTranslation, Trans } from 'react-i18next';
 
 import moment from 'moment';
 
@@ -13,6 +14,7 @@ import DocumentTitle from '../../DocumentTitle';
 import TrainComposition from '../../TrainComposition';
 
 export default () => {
+  const { t } = useTranslation();
   const { trainNumber, departureDate } = useParams();
   const { loading: loadingTrain, train, error: errorTrain } = useTrain(
     trainNumber,
@@ -49,29 +51,33 @@ export default () => {
                     style={{ display: 'flex', alignItems: 'center' }}
                   >
                     <Icon name="warning circle" size="large" />
-                    The train has been cancelled
+                    {t('train.cancelled')}
                   </Message.Header>
                 </Message>
               )}
               {train && <TrainTimetable train={train} />}
               {trainComposition && trainComposition.journeySections && (
                 <>
-                  <Header as="h2">Composition</Header>
+                  <Header as="h2">{t('trainComposition.composition')}</Header>
                   <TrainComposition trainComposition={trainComposition} />
                 </>
               )}
             </>
           ) : (
             <>
-              <Header as="h1">Train not found</Header>
-              Train <strong>{trainNumber}</strong> is not running on{' '}
-              <strong>
-                {moment(new Date(departureDate)).format('DD.MM.YYYY')}
-              </strong>
+              <Header as="h1">{t('train.notFoundTitle')}</Header>
+              <Trans
+                i18nKey="train.notFoundDescription"
+                values={{
+                  trainNumber: trainNumber,
+                  date: moment(new Date(departureDate)).format('DD.MM.YYYY'),
+                }}
+                components={[<strong></strong>, <strong></strong>]}
+              ></Trans>
             </>
           )
         ) : (
-          <Header as="h1">Failed to load train data</Header>
+          <Header as="h1">{t('train.failedToLoad')}</Header>
         )}
       </Container>
     </>
