@@ -24,3 +24,4 @@
 | 30.1.2020  | 2.5h | Asetuksien tallentaminen sessionStorageen. Kartan keskittäminen käyttäjän sijaintiin, kun sovellus avataan. Pieniä korjauksia.
 | 1.2.2020   | 0.5h | Korjaus aseman ohittaneiden junien filtteröintiin. Selkeämpi viesti, jos junaa ei löydy tai lataamisessa tapahtuu virhe.
 | 5.2.2020   | 2.5h | Ilmoitus, jos juna on kokonaan peruttu. Käännösten tekeminen ja `react-i18next`:iin tutustumista.
+| 6.2.2020   | 1h   | Komponenttien tekstien lataaminen käännöksistä.
