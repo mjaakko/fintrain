@@ -20,8 +20,8 @@ export default () => {
         <Trans
           i18nKey="appInfo.copyrightText"
           components={[
-            <a href="https://www.digitraffic.fi" />,
-            <a href="https://creativecommons.org/licenses/by/4.0/" />,
+            <a href="https://www.digitraffic.fi" />, // eslint-disable-line jsx-a11y/anchor-has-content
+            <a href="https://creativecommons.org/licenses/by/4.0/" />, // eslint-disable-line jsx-a11y/anchor-has-content
           ]}
         />
       </Modal.Content>
