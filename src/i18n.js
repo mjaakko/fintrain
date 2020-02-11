@@ -8,6 +8,7 @@ const resources = {
         and: 'and',
         loading: 'Loading',
         retry: 'Retry',
+        language: 'Language',
       },
       appInfo: {
         info: 'Info',
@@ -66,6 +67,7 @@ const resources = {
         and: 'ja',
         loading: 'Ladataan',
         retry: 'Yritä uudestaan',
+        language: 'Kieli',
       },
       appInfo: {
         info: 'Info',
@@ -120,14 +122,39 @@ const resources = {
   },
 };
 
+const getDefaultLanguage = () => {
+  if (window.navigator.languages && window.navigator.languages.length > 0) {
+    for (const language in window.navigator.languages) {
+      const simplifiedLanguage = language.slice(0, 2);
+
+      if (simplifiedLanguage === 'en' || simplifiedLanguage === 'fi') {
+        return simplifiedLanguage;
+      }
+    }
+  }
+
+  const userLanguage =
+    window.navigator.userLanguage && window.navigator.userLanguage.slice(0, 2);
+
+  if (userLanguage === 'en' || userLanguage === 'fi') {
+    return userLanguage;
+  }
+
+  return 'en';
+};
+
 i18n.use(initReactI18next).init({
   debug: process.env.NODE_ENV === 'development',
   resources,
-  lng: 'en',
+  lng: window.localStorage.getItem('language') || getDefaultLanguage(),
   nonExplicitWhitelist: true,
   interpolation: {
     escapeValue: false,
   },
 });
+
+i18n.on('languageChanged', language =>
+  localStorage.setItem('language', language)
+);
 
 export default i18n;
