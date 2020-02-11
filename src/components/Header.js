@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Menu, Sticky } from 'semantic-ui-react';
 
 import Information from './Information';
+import LanguageSwitcher from './LanguageSwitcher';
 
 export default () => (
   <Sticky>
@@ -18,6 +19,7 @@ export default () => (
       </Menu.Item>
       <Menu.Menu position="right">
         <Information />
+        <LanguageSwitcher />
       </Menu.Menu>
     </Menu>
   </Sticky>
