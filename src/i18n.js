@@ -61,6 +61,13 @@ const resources = {
         cancelled: 'Cancelled',
         delayCause: ' due to {{causes}}',
       },
+      searchTrains: {
+        search: 'Search',
+        trainNumber: 'Train number',
+        departureDate: 'Departure date',
+        failedToSearch: 'Failed to load search results',
+        noResults: 'No trains found',
+      },
     },
   },
   fi: {
@@ -122,6 +129,13 @@ const resources = {
         timeInMinutes: '{{time}}min',
         cancelled: 'Peruttu',
         delayCause: ', syynä {{causes}}',
+      },
+      searchTrains: {
+        search: 'Haku',
+        trainNumber: 'Junan numero',
+        departureDate: 'Lähtöpäivä',
+        failedToSearch: 'Hakutulosten lataaminen epäonnistui',
+        noResults: 'Junia ei löytynyt',
       },
     },
   },
