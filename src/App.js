@@ -12,6 +12,7 @@ import Header from './components/Header';
 
 import useStations from './hooks/useStations';
 import useDetailedCauses from './hooks/useDetailedCauses';
+import useOperators from './hooks/useOperators';
 
 export const MetadataContext = React.createContext();
 
@@ -27,14 +28,20 @@ export default () => {
     detailedCauses,
     retry: retryDetailedCauses,
   } = useDetailedCauses();
+  const {
+    loading: loadingOperators,
+    operators,
+    retry: retryOperators,
+  } = useOperators();
 
-  const hasMetadata = !!stations && !!detailedCauses;
-  const isLoadingMetadata = loadingStations || loadingDetailedCauses;
+  const hasMetadata = !!stations && !!detailedCauses && !!operators;
+  const isLoadingMetadata =
+    loadingStations || loadingDetailedCauses || loadingOperators;
 
   return (
     <>
       <DocumentTitle />
-      <MetadataContext.Provider value={{ stations, detailedCauses }}>
+      <MetadataContext.Provider value={{ stations, detailedCauses, operators }}>
         <Dimmer.Dimmable
           style={{
             display: 'flex',
@@ -73,6 +80,9 @@ export default () => {
                   }
                   if (!detailedCauses) {
                     retryDetailedCauses();
+                  }
+                  if (!operators) {
+                    retryOperators();
                   }
                 }}
               >
