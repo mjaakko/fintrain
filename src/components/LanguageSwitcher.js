@@ -2,6 +2,8 @@ import React from 'react';
 import { Dropdown } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
 
+import './LanguageSwitcher.css';
+
 const languages = [
   {
     code: 'en',
@@ -23,7 +25,7 @@ const LanguageSwitcher = () => {
   const changeLanguage = (_, { value }) => i18n.changeLanguage(value);
 
   return (
-    <Dropdown item text={t('common.language')}>
+    <Dropdown item text={t('common.language')} className="languageswitcher">
       <Dropdown.Menu>
         {languages.map(language => (
           <Dropdown.Item
