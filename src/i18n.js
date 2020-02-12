@@ -33,6 +33,7 @@ const resources = {
       },
       station: {
         failedToLoad: 'Failed to load station data',
+        noPassengerTraffic: 'Station does not have regular passenger traffic',
       },
       train: {
         notFoundTitle: 'Train not found',
@@ -92,6 +93,8 @@ const resources = {
       },
       station: {
         failedToLoad: 'Aseman tietojen lataaminen epäonnistui',
+        noPassengerTraffic:
+          'Asemalla ei ole säännöllistä matkustajaliikennettä',
       },
       train: {
         notFoundTitle: 'Junaa ei löytynyt',

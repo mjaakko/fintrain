@@ -33,16 +33,17 @@ const graphQlFetch = (query, variables) => {
   };
 };
 
-export const getPassengerStations = () => {
+export const getStations = () => {
   const { result, cancel } = graphQlFetch(`
     {
       viewer {
-        getStationsUsingGET(where: "[*passengerTraffic=true|stationShortCode=KML]") {
+        getStationsUsingGET {
           countryCode
           latitude
           longitude
           stationName
           stationShortCode
+          passengerTraffic
           type
         }
       }
