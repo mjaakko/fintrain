@@ -56,6 +56,24 @@ export const getStations = () => {
   };
 };
 
+export const getOperators = () => {
+  const { result, cancel } = graphQlFetch(`
+    {
+      viewer {
+        getOperatorsUsingGET {
+          operatorName
+          operatorShortCode
+        }
+      }
+    }
+  `);
+
+  return {
+    result: result.then(result => result.viewer.getOperatorsUsingGET),
+    cancel,
+  };
+};
+
 export const getDetailedCauses = () => {
   const { result, cancel } = graphQlFetch(`
     {
