@@ -32,14 +32,20 @@ export default () => {
         <Header as="h1">
           <StationName stationShortCode={stationShortCode} />
         </Header>
-        {loading && <Loader indeterminate active />}
-        {trains && (
-          <StationTimetable
-            trains={trains}
-            stationShortCode={stationShortCode}
-          />
+        {stationMetadata && !stationMetadata.passengerTraffic ? (
+          <p>{t('station.noPassengerTraffic')}</p>
+        ) : (
+          <>
+            {loading && <Loader indeterminate active />}
+            {trains && (
+              <StationTimetable
+                trains={trains}
+                stationShortCode={stationShortCode}
+              />
+            )}
+            {error && !trains && <p>{t('station.failedToLoad')}</p>}
+          </>
         )}
-        {error && !trains && <p>{t('station.failedToLoad')}</p>}
       </Container>
     </>
   );
