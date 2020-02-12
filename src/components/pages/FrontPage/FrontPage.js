@@ -56,7 +56,11 @@ export default () => {
   return (
     <Map
       viewport={viewport}
-      onViewportChange={() => setMapInteractedWith(true)}
+      onViewportChange={() => {
+        if (!mapInteractedWith) {
+          setMapInteractedWith(true);
+        }
+      }}
       onViewportChanged={viewport => {
         setViewport(viewport);
       }}
