@@ -12,6 +12,7 @@ import { formatTrainNumber } from '../../../utils/format';
 import TrainTimetable from './TrainTimetable';
 import DocumentTitle from '../../DocumentTitle';
 import TrainComposition from '../../TrainComposition';
+import OperatorName from '../../OperatorName';
 
 export default () => {
   const { t } = useTranslation();
@@ -40,9 +41,22 @@ export default () => {
             <>
               <Header as="h1">
                 {train && formatTrainNumber(train)}
-                <Header.Subheader>
-                  {train &&
-                    moment(new Date(train.departureDate)).format('DD.MM.YYYY')}
+                <Header.Subheader
+                  style={{ display: 'flex', justifyContent: 'space-between' }}
+                >
+                  <span>
+                    {train &&
+                      moment(new Date(train.departureDate)).format(
+                        'DD.MM.YYYY'
+                      )}
+                  </span>
+                  <span style={{ fontSize: '0.75em' }}>
+                    {train && (
+                      <OperatorName
+                        operatorShortCode={train.operatorShortCode}
+                      />
+                    )}
+                  </span>
                 </Header.Subheader>
               </Header>
               {train && train.cancelled && (
