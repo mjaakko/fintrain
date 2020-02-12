@@ -13,18 +13,20 @@ const StationMarkers = () => {
     return null;
   }
 
-  return Array.from(metadata.stations.values()).map(station => (
-    <Marker
-      key={station.stationShortCode}
-      position={{ lat: station.latitude, lng: station.longitude }}
-    >
-      <Popup>
-        <Link to={`/station/${station.stationShortCode}`}>
-          <StationName stationShortCode={station.stationShortCode} />
-        </Link>
-      </Popup>
-    </Marker>
-  ));
+  return Array.from(metadata.stations.values())
+    .filter(station => station.passengerTraffic)
+    .map(station => (
+      <Marker
+        key={station.stationShortCode}
+        position={{ lat: station.latitude, lng: station.longitude }}
+      >
+        <Popup>
+          <Link to={`/station/${station.stationShortCode}`}>
+            <StationName stationShortCode={station.stationShortCode} />
+          </Link>
+        </Popup>
+      </Marker>
+    ));
 };
 
 export default StationMarkers;

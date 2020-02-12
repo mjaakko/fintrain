@@ -10,7 +10,7 @@ import Train from './components/pages/Train';
 import DocumentTitle from './components/DocumentTitle';
 import Header from './components/Header';
 
-import usePassengerStations from './hooks/usePassengerStations';
+import useStations from './hooks/useStations';
 import useDetailedCauses from './hooks/useDetailedCauses';
 
 export const MetadataContext = React.createContext();
@@ -21,7 +21,7 @@ export default () => {
     loading: loadingStations,
     stations,
     retry: retryStations,
-  } = usePassengerStations();
+  } = useStations();
   const {
     loading: loadingDetailedCauses,
     detailedCauses,

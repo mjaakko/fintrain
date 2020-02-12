@@ -2,12 +2,16 @@ import { useReducer, useEffect, useRef } from 'react';
 
 import loaderReducer from '../reducers/loaderReducer';
 
-import { getPassengerStations } from '../services/rataDigitrafficService';
+import { getStations } from '../services/rataDigitrafficService';
 
 import cacheWithSessionStorage from '../utils/cacheWithSessionStorage';
 
-//Russian stations have incorrect coordinates in the API
-const RUSSIAN_STATIONS = {
+const FIXED_DATA = {
+  //Kempele has passenger traffic
+  KML: {
+    passengerTraffic: true,
+  },
+  //Russian stations have incorrect coordinates in the API
   VYB: {
     latitude: 60.71585,
     longitude: 28.75142,
@@ -45,18 +49,15 @@ export default () => {
     }
 
     dispatch({ type: 'loading' });
-    promise.current = cacheWithSessionStorage(
-      'metadata_passenger_stations',
-      getPassengerStations
-    );
+    promise.current = cacheWithSessionStorage('metadata_stations', getStations);
     promise.current.result
       .then(stations =>
         dispatch({
           type: 'data',
           data: stations
             .map(station => {
-              return station.stationShortCode in RUSSIAN_STATIONS
-                ? { ...station, ...RUSSIAN_STATIONS[station.stationShortCode] }
+              return station.stationShortCode in FIXED_DATA
+                ? { ...station, ...FIXED_DATA[station.stationShortCode] }
                 : station;
             })
             .reduce(
