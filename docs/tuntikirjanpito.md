@@ -26,3 +26,4 @@
 | 5.2.2020   | 2.5h | Ilmoitus, jos juna on kokonaan peruttu. Käännösten tekeminen ja `react-i18next`:iin tutustumista.
 | 6.2.2020   | 1h   | Komponenttien tekstien lataaminen käännöksistä.
 | 11.2.2020  | 1h   | Oletuskielen valinta, komponentti kielen vaihtamiseen.
+| 12.2.2020  | 5.5h | Bugikorjauksia. Junan operaattorin nimen näyttäminen. Matkustajakäytössä olemattomien asemien nimen näyttäminen (esim. museojunia varten). Ilmoitus, jos juna on epäsäännöllistä liikennettä. Sivu junien hakemiseen.
