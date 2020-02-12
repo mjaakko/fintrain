@@ -6,12 +6,12 @@ import './LanguageSwitcher.css';
 
 const languages = [
   {
-    code: 'en',
+    code: 'en-US',
     flag: 'gb',
     name: 'English',
   },
   {
-    code: 'fi',
+    code: 'fi-FI',
     flag: 'fi',
     name: 'Suomi',
   },
