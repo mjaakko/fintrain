@@ -178,6 +178,7 @@ export const getTrain = (trainNumber, departureDate) => {
         operatorShortCode
         runningCurrently
         cancelled
+        timetableType
         timeTableRows {
           stationShortCode
           type

@@ -69,6 +69,16 @@ export default () => {
                   </Message.Header>
                 </Message>
               )}
+              {train && !train.cancelled && train.timetableType === 'ADHOC' && (
+                <Message color="purple" size="tiny">
+                  <Message.Header
+                    style={{ display: 'flex', alignItems: 'center' }}
+                  >
+                    <Icon name="info" size="small" />
+                    {t('train.nonregular')}
+                  </Message.Header>
+                </Message>
+              )}
               {train && <TrainTimetable train={train} />}
               {trainComposition && trainComposition.journeySections && (
                 <>

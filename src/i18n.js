@@ -39,6 +39,7 @@ const resources = {
         notFoundTitle: 'Train not found',
         notFoundDescription:
           'Train <1>{{ trainNumber }}</1> is not running on <3>{{ date }}</3>',
+        nonregular: 'The train is not in regular schedule',
         cancelled: 'The train has been cancelled',
         failedToLoad: 'Failed to load train data',
       },
@@ -100,6 +101,7 @@ const resources = {
         notFoundTitle: 'Junaa ei löytynyt',
         notFoundDescription:
           'Juna <1>{{ trainNumber }}</1> ei ole kulussa <3>{{ date }}</3>',
+        nonregular: 'Juna ei ole säännöllisesti liikenteessä',
         cancelled: 'Juna on peruttu',
         failedToLoad: 'Junan tietojen lataaminen epäonnistui',
       },
