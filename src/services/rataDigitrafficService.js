@@ -267,3 +267,25 @@ export const getTrainComposition = (trainNumber, departureDate) => {
     cancel,
   };
 };
+
+export const getTrainsByDepartureDate = departureDate => {
+  const { result, cancel } = graphQlFetch(`
+  {
+    viewer {
+      getTrainsByDepartureDateUsingGET(departure_date: "${departureDate}", where: "[*trainCategory=Long-distance|trainCategory=Commuter&trainType!=MV&trainType!=HV&trainType!=HLV&trainType!=V]") {
+        trainType
+        trainNumber
+        departureDate
+        commuterLineID
+      }
+    }
+  }
+  `);
+
+  return {
+    result: result.then(
+      result => result.viewer.getTrainsByDepartureDateUsingGET
+    ),
+    cancel,
+  };
+};
