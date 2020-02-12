@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 
 import Station from './components/pages/Station';
 import Train from './components/pages/Train';
+import SearchTrain from './components/pages/SearchTrain';
 
 import DocumentTitle from './components/DocumentTitle';
 import Header from './components/Header';
@@ -60,6 +61,9 @@ export default () => {
                 </Route>
                 <Route path="/train/:trainNumber/:departureDate">
                   <Train />
+                </Route>
+                <Route path="/searchtrain">
+                  <SearchTrain />
                 </Route>
                 <Route path="/">
                   <FrontPage />
