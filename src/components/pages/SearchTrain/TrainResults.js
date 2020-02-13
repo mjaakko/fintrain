@@ -5,7 +5,19 @@ import { useTranslation } from 'react-i18next';
 
 import useTrainsByDepartureDate from '../../../hooks/useTrainsByDepartureDate';
 
-import longestCommonSubsequence from '../../../utils/longestCommonSubsequence';
+export const sortByMatchDistance = trainNumber => {
+  return (a, b) => {
+    return (
+      a.trainNumber.indexOf(trainNumber) - b.trainNumber.indexOf(trainNumber) ||
+      a.trainNumber.length -
+        a.trainNumber.indexOf(trainNumber) +
+        trainNumber.length -
+        (b.trainNumber.length -
+          b.trainNumber.indexOf(trainNumber) +
+          trainNumber.length)
+    );
+  };
+};
 
 const TrainResults = ({ trainNumber, departureDate }) => {
   const { t } = useTranslation();
@@ -21,14 +33,7 @@ const TrainResults = ({ trainNumber, departureDate }) => {
 
   const filteredAndSortedTrains = (trains || [])
     .filter(train => train.trainNumber.includes(trainNumber))
-    .sort((a, b) => {
-      return (
-        a.trainNumber.length -
-        longestCommonSubsequence(a.trainNumber, trainNumber) -
-        (b.trainNumber.length -
-          longestCommonSubsequence(b.trainNumber, trainNumber))
-      );
-    });
+    .sort(sortByMatchDistance(trainNumber));
 
   if (filteredAndSortedTrains.length === 0) {
     return <p>{t('searchTrains.noResults')}</p>;
