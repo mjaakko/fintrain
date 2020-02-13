@@ -62,6 +62,7 @@ const resources = {
         delayCause: ' due to {{causes}}',
       },
       searchTrains: {
+        headerText: 'Search trains',
         search: 'Search',
         trainNumber: 'Train number',
         departureDate: 'Departure date',
@@ -131,6 +132,7 @@ const resources = {
         delayCause: ', syynä {{causes}}',
       },
       searchTrains: {
+        headerText: 'Hae junaa',
         search: 'Haku',
         trainNumber: 'Junan numero',
         departureDate: 'Lähtöpäivä',
