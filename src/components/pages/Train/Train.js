@@ -3,12 +3,10 @@ import { useParams } from 'react-router-dom';
 import { Container, Header, Loader, Message, Icon } from 'semantic-ui-react';
 import { useTranslation, Trans } from 'react-i18next';
 
-import moment from 'moment';
-
 import useTrain from '../../../hooks/useTrain';
 import useTrainComposition from '../../../hooks/useTrainComposition';
 
-import { formatTrainNumber } from '../../../utils/format';
+import { formatTrainNumber, formatDate } from '../../../utils/format';
 import TrainTimetable from './TrainTimetable';
 import DocumentTitle from '../../DocumentTitle';
 import TrainComposition from '../../TrainComposition';
@@ -45,10 +43,7 @@ export default () => {
                   style={{ display: 'flex', justifyContent: 'space-between' }}
                 >
                   <span>
-                    {train &&
-                      moment(new Date(train.departureDate)).format(
-                        'DD.MM.YYYY'
-                      )}
+                    {train && formatDate(new Date(train.departureDate))}
                   </span>
                   <span style={{ fontSize: '0.75em' }}>
                     {train && (
@@ -94,7 +89,7 @@ export default () => {
                 i18nKey="train.notFoundDescription"
                 values={{
                   trainNumber: trainNumber,
-                  date: moment(new Date(departureDate)).format('DD.MM.YYYY'),
+                  date: formatDate(new Date(departureDate)),
                 }}
                 components={[<strong></strong>, <strong></strong>]}
               ></Trans>
