@@ -27,3 +27,4 @@
 | 6.2.2020   | 1h   | Komponenttien tekstien lataaminen käännöksistä.
 | 11.2.2020  | 1h   | Oletuskielen valinta, komponentti kielen vaihtamiseen.
 | 12.2.2020  | 5.5h | Bugikorjauksia. Junan operaattorin nimen näyttäminen. Matkustajakäytössä olemattomien asemien nimen näyttäminen (esim. museojunia varten). Ilmoitus, jos juna on epäsäännöllistä liikennettä. Sivu junien hakemiseen.
+| 13.2.2020  | 1h   | Junahaun parantamista, linkki hakuun yläpalkkiin. Aikojen ja päivien muotoilu valitun lokaalin mukaisesti. Pientä testien säätöä.
