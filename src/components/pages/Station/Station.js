@@ -33,7 +33,9 @@ export default () => {
           <StationName stationShortCode={stationShortCode} />
         </Header>
         {stationMetadata && !stationMetadata.passengerTraffic ? (
-          <p>{t('station.noPassengerTraffic')}</p>
+          <p className="noPassengerTraffic">
+            {t('station.noPassengerTraffic')}
+          </p>
         ) : (
           <>
             {loading && <Loader indeterminate active />}
