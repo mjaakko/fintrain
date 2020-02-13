@@ -1,10 +1,7 @@
 import React from 'react';
-import {
-  render,
-  getByText,
-  fireEvent,
-  prettyDOM,
-} from '@testing-library/react';
+import { render, getByText } from '@testing-library/react';
+
+import moment from 'moment';
 
 import { MetadataContext } from '../../App';
 import TrainTime from '../TrainTime';
@@ -19,6 +16,14 @@ const detailedCauseCodes = [
 );
 
 describe('<TrainTime />', () => {
+  beforeAll(() => {
+    moment.locale('fi');
+  });
+
+  afterAll(() => {
+    moment.locale('en');
+  });
+
   test('renders correct time for Finnish station', () => {
     const timetableRow = {
       scheduledTime: '2019-11-19T10:00:00.000Z',
@@ -32,7 +37,7 @@ describe('<TrainTime />', () => {
       </MetadataContext.Provider>
     );
 
-    expect(component.container).toHaveTextContent('12:00');
+    expect(component.container).toHaveTextContent('12.00');
   });
   test('renders correct time for Russian station', () => {
     const timetableRow = {
@@ -47,7 +52,7 @@ describe('<TrainTime />', () => {
       </MetadataContext.Provider>
     );
 
-    expect(component.container).toHaveTextContent('13:00');
+    expect(component.container).toHaveTextContent('13.00');
   });
   test('renders with strikethrough if stop is cancelled', () => {
     const timetableRow = {
@@ -63,7 +68,7 @@ describe('<TrainTime />', () => {
       </MetadataContext.Provider>
     );
 
-    expect(getByText(component.container, '12:00')).toHaveClass('cancelled');
+    expect(getByText(component.container, '12.00')).toHaveClass('cancelled');
   });
   test('renders with correct styling if train is not delayed', () => {
     const timetableRow = {
@@ -79,7 +84,7 @@ describe('<TrainTime />', () => {
       </MetadataContext.Provider>
     );
 
-    expect(getByText(component.container, '12:00')).toHaveClass('ontime');
+    expect(getByText(component.container, '12.00')).toHaveClass('ontime');
   });
   test('renders with correct styling if train is delayed by 5min', () => {
     const timetableRow = {
@@ -95,7 +100,7 @@ describe('<TrainTime />', () => {
       </MetadataContext.Provider>
     );
 
-    expect(getByText(component.container, '12:00')).toHaveClass('minordelay');
+    expect(getByText(component.container, '12.00')).toHaveClass('minordelay');
   });
   test('renders with correct styling if train is delayed by 20min', () => {
     const timetableRow = {
@@ -111,7 +116,7 @@ describe('<TrainTime />', () => {
       </MetadataContext.Provider>
     );
 
-    expect(getByText(component.container, '12:00')).toHaveClass('majordelay');
+    expect(getByText(component.container, '12.00')).toHaveClass('majordelay');
   });
   test('renders with question mark if train delay is unknown', () => {
     const timetableRow = {
@@ -127,6 +132,6 @@ describe('<TrainTime />', () => {
       </MetadataContext.Provider>
     );
 
-    expect(component.container).toHaveTextContent('12:00 ?');
+    expect(component.container).toHaveTextContent('12.00 ?');
   });
 });
