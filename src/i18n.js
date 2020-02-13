@@ -1,5 +1,7 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
+import moment from 'moment';
+import 'moment/locale/fi';
 
 const resources = {
   en: {
@@ -174,8 +176,9 @@ i18n.use(initReactI18next).init({
   },
 });
 
-i18n.on('languageChanged', language =>
-  localStorage.setItem('language', language)
-);
+i18n.on('languageChanged', language => {
+  localStorage.setItem('language', language);
+  moment.locale(language);
+});
 
 export default i18n;

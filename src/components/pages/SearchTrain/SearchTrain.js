@@ -5,7 +5,6 @@ import { Container, Header, Form, Divider } from 'semantic-ui-react';
 import SemanticDatepicker from 'react-semantic-ui-datepickers';
 import 'react-semantic-ui-datepickers/dist/react-semantic-ui-datepickers.css';
 import moment from 'moment';
-import 'moment/locale/fi';
 
 import DocumentTitle from '../../DocumentTitle';
 import TrainResults from './TrainResults';
@@ -70,7 +69,7 @@ const SearchTrain = () => {
             value={new Date(departureDate)}
             date={new Date(departureDate)}
             required
-            firstDayOfWeek={moment.localeData(i18n.language).firstDayOfWeek()}
+            firstDayOfWeek={moment.localeData().firstDayOfWeek()}
             onChange={onChangeDepartureDate}
           />
           <Form.Button>{t('searchTrains.search')}</Form.Button>
