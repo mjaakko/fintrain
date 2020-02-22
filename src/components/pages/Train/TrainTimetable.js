@@ -3,6 +3,7 @@ import { Table } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
 
 import TrainTimetableRow from './TrainTimetableRow';
+import fixMissingActualTimes from '../../../utils/fixMissingActualTimes';
 
 //Merges corresponding arrival and departure rows to one object
 const mergeTimetableRows = (mergedTimetableRows, timetableRow) => {
@@ -23,6 +24,9 @@ const mergeTimetableRows = (mergedTimetableRows, timetableRow) => {
 
 export default ({ train }) => {
   const { t } = useTranslation();
+
+  //Add missing actual times
+  fixMissingActualTimes(train.timeTableRows);
 
   let firstUnknownDelay = -1;
   const fixedTimetableRows = train.timeTableRows.map((timetableRow, index) => {

@@ -7,6 +7,7 @@ import { MetadataContext } from '../../../App';
 import { formatStationName } from '../../../utils/format';
 
 import StationTimetableRow from './StationTimetableRow';
+import fixMissingActualTimes from '../../../utils/fixMissingActualTimes';
 
 const sortByTime = (a, b) => {
   const timetableRowA = a.arrivalRow ? a.arrivalRow : a.departureRow;
@@ -60,6 +61,9 @@ export default ({ trains, stationShortCode }) => {
                   ).stationName
                 )
               : '';
+
+            //Add missing actual times
+            fixMissingActualTimes(train.timeTableRows);
 
             const timetableRowIndices = [];
             let firstUnknownDelay = -1; //Unknown delay should propagate to following stations
