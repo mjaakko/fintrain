@@ -18,15 +18,13 @@ export default () => {
         size="large"
         style={{ borderRadius: 0 }}
       >
-        <Menu.Item header>
-          <Link to="/">FinTrain</Link>
+        <Menu.Item header as={Link} to="/">
+          FinTrain
         </Menu.Item>
         <Menu.Menu position="right">
-          <Menu.Item>
-            <Link to="/searchtrain">
-              <Icon name="search" />
-              {t('searchTrains.headerText')}
-            </Link>
+          <Menu.Item as={Link} to="/searchtrain">
+            <Icon name="search" />
+            {t('searchTrains.headerText')}
           </Menu.Item>
           <LanguageSwitcher />
           <Information />
