@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Accordion, List, Icon, Popup } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
+import deepEquals from 'fast-deep-equal';
 
 import StationName from './StationName';
 
@@ -45,6 +46,59 @@ const WagonFeature = ({ feature }) => {
   );
 };
 
+//Merge journey sections if they have exactly compositions
+export const mergeJourneySections = journeySections => {
+  const mergedJourneySections = [];
+  let beginTimeTableRow = null;
+  let endTimeTableRow = null;
+
+  let wagons = null;
+  let totalLength = null;
+  let maximumSpeed = null;
+
+  for (let i = 0; i < journeySections.length; i++) {
+    const journeySection = journeySections[i];
+    if (!beginTimeTableRow) {
+      beginTimeTableRow = journeySection.beginTimeTableRow;
+      endTimeTableRow = journeySection.endTimeTableRow;
+
+      wagons = journeySection.wagons;
+      totalLength = journeySection.totalLength;
+      maximumSpeed = journeySection.maximumSpeed;
+    } else if (
+      deepEquals(wagons, journeySection.wagons) &&
+      totalLength === journeySection.totalLength &&
+      maximumSpeed === journeySection.maximumSpeed
+    ) {
+      endTimeTableRow = journeySection.endTimeTableRow;
+    } else {
+      mergedJourneySections.push({
+        beginTimeTableRow,
+        endTimeTableRow,
+        wagons,
+        totalLength,
+        maximumSpeed,
+      });
+
+      beginTimeTableRow = journeySection.beginTimeTableRow;
+      endTimeTableRow = journeySection.endTimeTableRow;
+
+      wagons = journeySection.wagons;
+      totalLength = journeySection.totalLength;
+      maximumSpeed = journeySection.maximumSpeed;
+    }
+  }
+
+  mergedJourneySections.push({
+    beginTimeTableRow,
+    endTimeTableRow,
+    wagons,
+    totalLength,
+    maximumSpeed,
+  });
+  return mergedJourneySections;
+};
+
 export default ({ trainComposition }) => {
   const { t } = useTranslation();
   const [openIndex, setOpenIndex] = useState(-1);
@@ -56,61 +110,66 @@ export default ({ trainComposition }) => {
   return (
     trainComposition.journeySections && (
       <Accordion styled fluid>
-        {trainComposition.journeySections.map((journeySection, i) => (
-          <React.Fragment
-            key={`${journeySection.beginTimeTableRow.stationShortCode}_${journeySection.endTimeTableRow.stationShortCode}`}
-          >
-            <Accordion.Title
-              active={openIndex === i}
-              index={i}
-              onClick={handleClick}
+        {mergeJourneySections(trainComposition.journeySections).map(
+          (journeySection, i) => (
+            <React.Fragment
+              key={`${journeySection.beginTimeTableRow.stationShortCode}_${journeySection.endTimeTableRow.stationShortCode}`}
             >
-              <StationName
-                stationShortCode={
-                  journeySection.beginTimeTableRow.stationShortCode
-                }
-              />
-              {' - '}
-              <StationName
-                stationShortCode={
-                  journeySection.endTimeTableRow.stationShortCode
-                }
-              />
-            </Accordion.Title>
-            <Accordion.Content active={openIndex === i}>
-              <List horizontal>
-                {journeySection.wagons.map(wagon => (
-                  <List.Item
-                    key={wagon.location}
-                    style={{ verticalAlign: 'top' }}
-                  >
-                    <List.Content>
-                      <List.Header>
-                        {t('trainComposition.wagon')} {wagon.salesNumber}
-                      </List.Header>
-                      <List.Description
-                        style={{ display: 'flex-inline', alignItems: 'center' }}
-                      >
-                        {wagon.wagonType && wagon.wagonType + ' '}
-                        {Object.entries(wagon)
-                          .filter(([_, value]) => typeof value === 'boolean')
-                          .map(([key, _]) => (
-                            <WagonFeature key={key} feature={key} />
-                          ))}
-                      </List.Description>
-                    </List.Content>
-                  </List.Item>
-                ))}
-              </List>
-              <p>
-                {t('trainComposition.compositionDescription', {
-                  length: journeySection.totalLength,
-                  speed: journeySection.maximumSpeed,
-                })}
-              </p>
-            </Accordion.Content>
-          </React.Fragment>
-        ))}
+              <Accordion.Title
+                active={openIndex === i}
+                index={i}
+                onClick={handleClick}
+              >
+                <StationName
+                  stationShortCode={
+                    journeySection.beginTimeTableRow.stationShortCode
+                  }
+                />
+                {' - '}
+                <StationName
+                  stationShortCode={
+                    journeySection.endTimeTableRow.stationShortCode
+                  }
+                />
+              </Accordion.Title>
+              <Accordion.Content active={openIndex === i}>
+                <List horizontal>
+                  {journeySection.wagons.map(wagon => (
+                    <List.Item
+                      key={wagon.location}
+                      style={{ verticalAlign: 'top' }}
+                    >
+                      <List.Content>
+                        <List.Header>
+                          {t('trainComposition.wagon')} {wagon.salesNumber}
+                        </List.Header>
+                        <List.Description
+                          style={{
+                            display: 'flex-inline',
+                            alignItems: 'center',
+                          }}
+                        >
+                          {wagon.wagonType && wagon.wagonType + ' '}
+                          {Object.entries(wagon)
+                            .filter(([_, value]) => typeof value === 'boolean')
+                            .map(([key, _]) => (
+                              <WagonFeature key={key} feature={key} />
+                            ))}
+                        </List.Description>
+                      </List.Content>
+                    </List.Item>
+                  ))}
+                </List>
+                <p>
+                  {t('trainComposition.compositionDescription', {
+                    length: journeySection.totalLength,
+                    speed: journeySection.maximumSpeed,
+                  })}
+                </p>
+              </Accordion.Content>
+            </React.Fragment>
+          )
+        )}
       </Accordion>
     )
   );
