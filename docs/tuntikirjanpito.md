@@ -29,3 +29,4 @@
 | 12.2.2020  | 5.5h | Bugikorjauksia. Junan operaattorin nimen näyttäminen. Matkustajakäytössä olemattomien asemien nimen näyttäminen (esim. museojunia varten). Ilmoitus, jos juna on epäsäännöllistä liikennettä. Sivu junien hakemiseen.
 | 13.2.2020  | 1h   | Junahaun parantamista, linkki hakuun yläpalkkiin. Aikojen ja päivien muotoilu valitun lokaalin mukaisesti. Pientä testien säätöä.
 | 22.2.2020  | 1h   | "Korjauksia" rajapinnasta tulevaan dataan: "toteutumatiedon" näyttäminen asemilta, joilla sitä ei ole saatavilla + junan kokoonpanojen yhdistäminen, jos kokoonpano ei muutu matkalla
+| 29.2.2020  | 0.5h | Komponentti asemien hakemiseen
