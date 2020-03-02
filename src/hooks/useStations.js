@@ -11,6 +11,10 @@ const FIXED_DATA = {
   KML: {
     passengerTraffic: true,
   },
+  //Härmä has passenger traffic
+  HM: {
+    passengerTraffic: true,
+  },
   //Russian stations have incorrect coordinates in the API
   VYB: {
     latitude: 60.71585,
