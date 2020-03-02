@@ -1,53 +1,15 @@
-import React, {
-  useState,
-  useEffect,
-  useRef,
-  useMemo,
-  useContext,
-  useCallback,
-} from 'react';
+import React, { useMemo, useContext, useCallback } from 'react';
 
 import { Popup } from 'react-leaflet';
 import { Link } from 'react-router-dom';
 
-import { getCurrentlyRunningTrains } from '../../../services/rataDigitrafficService';
 import useTrainPositions from '../../../hooks/useTrainPositions';
+import useCurrentlyRunningTrains from '../../../hooks/useCurrentlyRunningTrains';
 
 import { formatTrainNumber } from '../../../utils/format';
 
 import CustomMarker from '../../CustomMarker';
 import { MapContext } from './FrontPage';
-
-const useCurrentlyRunningTrains = () => {
-  const [trains, setTrains] = useState([]);
-  const promise = useRef(null);
-
-  useEffect(() => {
-    promise.current = getCurrentlyRunningTrains();
-    promise.current.result.then(setTrains);
-
-    const timer = setInterval(() => {
-      if (promise.current) {
-        promise.current.cancel();
-      }
-      promise.current = getCurrentlyRunningTrains();
-      promise.current.result.then(setTrains);
-    }, 60 * 1000);
-
-    return () => {
-      clearInterval(timer);
-      promise.current.cancel();
-    };
-  }, []);
-
-  return trains
-    ? trains.reduce(
-        (map, train) =>
-          map.set(`${train.trainNumber}_${train.departureDate}`, train),
-        new Map()
-      )
-    : new Map();
-};
 
 const TrainIcon = ({ train }) => {
   let trainNumber = formatTrainNumber(train);
