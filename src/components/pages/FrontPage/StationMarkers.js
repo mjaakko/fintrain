@@ -1,4 +1,4 @@
-import React, { useContext, useCallback } from 'react';
+import React, { useContext, useCallback, useMemo } from 'react';
 import { Marker, Popup } from 'react-leaflet';
 import { Link } from 'react-router-dom';
 
@@ -28,8 +28,16 @@ const StationMarker = ({
     [activePopup]
   );
 
+  const position = useMemo(
+    () => ({
+      lat: latitude,
+      lng: longitude,
+    }),
+    [latitude, longitude]
+  );
+
   return (
-    <Marker ref={popupRef} position={{ lat: latitude, lng: longitude }}>
+    <Marker ref={popupRef} position={position}>
       <Popup
         onOpen={() =>
           setActivePopup({ type: 'STATION', code: stationShortCode })
