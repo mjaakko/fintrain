@@ -1,4 +1,11 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, {
+  useState,
+  useEffect,
+  useRef,
+  useMemo,
+  useContext,
+  useCallback,
+} from 'react';
 
 import { Popup } from 'react-leaflet';
 import { Link } from 'react-router-dom';
@@ -9,6 +16,7 @@ import useTrainPositions from '../../../hooks/useTrainPositions';
 import { formatTrainNumber } from '../../../utils/format';
 
 import CustomMarker from '../../CustomMarker';
+import { MapContext } from './FrontPage';
 
 const useCurrentlyRunningTrains = () => {
   const [trains, setTrains] = useState([]);
@@ -70,6 +78,62 @@ const TrainIcon = ({ train }) => {
   );
 };
 
+const TrainPosition = ({ trainPosition, train }) => {
+  const { activePopup, setActivePopup } = useContext(MapContext);
+
+  const popupRef = useCallback(
+    node => {
+      if (
+        node !== null &&
+        node.leafletElement !== null &&
+        activePopup &&
+        activePopup.type === 'TRAIN' &&
+        activePopup.trainNumber === train.trainNumber &&
+        activePopup.departureDate === train.departureDate &&
+        !node.leafletElement.isPopupOpen()
+      ) {
+        node.leafletElement.openPopup();
+      }
+    },
+    [activePopup, train.trainNumber, train.departureDate]
+  );
+
+  const latitude = trainPosition.location.coordinates[1];
+  const longitude = trainPosition.location.coordinates[0];
+
+  const position = useMemo(
+    () => ({
+      lat: latitude,
+      lng: longitude,
+    }),
+    [latitude, longitude]
+  );
+
+  return (
+    <CustomMarker
+      ref={popupRef}
+      position={position}
+      icon={{ element: <TrainIcon train={train} /> }}
+    >
+      <Popup
+        onOpen={() =>
+          setActivePopup({
+            type: 'TRAIN',
+            trainNumber: train.trainNumber,
+            departureDate: train.departureDate,
+          })
+        }
+        onClose={() => setActivePopup(null)}
+      >
+        <Link to={`/train/${train.trainNumber}/${train.departureDate}`}>
+          {formatTrainNumber(train)}
+        </Link>
+        <br />({trainPosition.speed} km/h)
+      </Popup>
+    </CustomMarker>
+  );
+};
+
 const TrainPositions = () => {
   const currentlyRunningTrains = useCurrentlyRunningTrains();
   const { trainPositions } = useTrainPositions(
@@ -88,21 +152,11 @@ const TrainPositions = () => {
     }
 
     return (
-      <CustomMarker
+      <TrainPosition
         key={`${trainPosition.trainNumber}_${trainPosition.departureDate}`}
-        position={{
-          lat: trainPosition.location.coordinates[1],
-          lng: trainPosition.location.coordinates[0],
-        }}
-        icon={{ element: <TrainIcon train={train} /> }}
-      >
-        <Popup>
-          <Link to={`/train/${train.trainNumber}/${train.departureDate}`}>
-            {formatTrainNumber(train)}
-          </Link>
-          <br />({trainPosition.speed} km/h)
-        </Popup>
-      </CustomMarker>
+        trainPosition={trainPosition}
+        train={train}
+      />
     );
   });
 };
