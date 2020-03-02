@@ -6,6 +6,20 @@ import { MetadataContext } from '../../../App';
 
 import StationName from '../../StationName';
 
+const StationMarker = ({
+  station: { latitude, longitude, stationShortCode },
+}) => {
+  return (
+    <Marker position={{ lat: latitude, lng: longitude }}>
+      <Popup>
+        <Link to={`/station/${stationShortCode}`}>
+          <StationName stationShortCode={stationShortCode} />
+        </Link>
+      </Popup>
+    </Marker>
+  );
+};
+
 const StationMarkers = () => {
   const metadata = useContext(MetadataContext);
 
@@ -16,16 +30,7 @@ const StationMarkers = () => {
   return Array.from(metadata.stations.values())
     .filter(station => station.passengerTraffic)
     .map(station => (
-      <Marker
-        key={station.stationShortCode}
-        position={{ lat: station.latitude, lng: station.longitude }}
-      >
-        <Popup>
-          <Link to={`/station/${station.stationShortCode}`}>
-            <StationName stationShortCode={station.stationShortCode} />
-          </Link>
-        </Popup>
-      </Marker>
+      <StationMarker key={station.stationShortCode} station={station} />
     ));
 };
 
