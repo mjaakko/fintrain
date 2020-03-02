@@ -25,7 +25,7 @@ const StationMarker = ({
         node.leafletElement.openPopup();
       }
     },
-    [activePopup]
+    [activePopup, stationShortCode]
   );
 
   const position = useMemo(
