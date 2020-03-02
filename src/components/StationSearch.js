@@ -3,14 +3,16 @@ import { Search, Menu } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
 
 import { MetadataContext } from '../App';
+import { MapContext } from './pages/FrontPage';
 
 import { formatStationName } from '../utils/format';
 
 const style = { width: '20rem' };
 
-const StationSearch = ({ onStationSelected }) => {
+const StationSearch = () => {
   const { t } = useTranslation();
 
+  const { setActivePopup, setViewport } = useContext(MapContext);
   const { stations } = useContext(MetadataContext);
   const [results, setResults] = useState([]);
   const [searchValue, setSearchValue] = useState('');
@@ -37,7 +39,12 @@ const StationSearch = ({ onStationSelected }) => {
 
   const handleResultSelect = (_, { result: { stationShortCode } }) => {
     setSearchValue('');
-    onStationSelected(stationShortCode);
+    const station = stations.get(stationShortCode);
+    setActivePopup({ type: 'STATION', code: station.stationShortCode });
+    setViewport({
+      zoom: 12,
+      center: { lat: station.latitude, lng: station.longitude },
+    });
   };
 
   return (
