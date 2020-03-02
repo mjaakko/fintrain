@@ -25,9 +25,12 @@ export const MapContextProvider = ({ children }) => {
     center: DEFAULT_CENTER,
     zoom: DEFAULT_ZOOM,
   });
+  const [activePopup, setActivePopup] = useState(null);
 
   return (
-    <MapContext.Provider value={{ viewport, setViewport }}>
+    <MapContext.Provider
+      value={{ viewport, setViewport, activePopup, setActivePopup }}
+    >
       {children}
     </MapContext.Provider>
   );
