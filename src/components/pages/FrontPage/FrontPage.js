@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Map, TileLayer } from 'react-leaflet';
 import Control from 'react-leaflet-control';
 import { Icon, Checkbox, Popup } from 'semantic-ui-react';
@@ -13,24 +13,36 @@ import BorderedButton from '../../BorderedButton';
 import useCachedGeolocation from '../../../hooks/useCachedGeolocation';
 import usePersistedState from '../../../hooks/usePersistedState';
 
+const DEFAULT_CENTER = [62.91, 26.32];
+const DEFAULT_ZOOM = 6;
+
+const DEFAULT_ZOOM_IF_USER_LOCATION = 10;
+
+export const MapContext = React.createContext();
+
+export const MapContextProvider = ({ children }) => {
+  const [viewport, setViewport] = useState({
+    center: DEFAULT_CENTER,
+    zoom: DEFAULT_ZOOM,
+  });
+
+  return (
+    <MapContext.Provider value={{ viewport, setViewport }}>
+      {children}
+    </MapContext.Provider>
+  );
+};
+
 const GEOLOCATION_OPTIONS = {
   maximumAge: 10 * 60 * 1000, // accept locations up to 10 minutes old
   timeout: 30 * 1000, // 30 second timeout
   enableHighAccuracy: false,
 };
 
-const DEFAULT_CENTER = [62.91, 26.32];
-const DEFAULT_ZOOM = 6;
-
-const DEFAULT_ZOOM_IF_USER_LOCATION = 10;
-
 export default () => {
   const { t } = useTranslation();
 
-  const [viewport, setViewport] = useState({
-    center: DEFAULT_CENTER,
-    zoom: DEFAULT_ZOOM,
-  });
+  const { viewport, setViewport } = useContext(MapContext);
   const [mapInteractedWith, setMapInteractedWith] = useState(false);
 
   const cachedGeolocation = useCachedGeolocation(GEOLOCATION_OPTIONS);
@@ -45,7 +57,7 @@ export default () => {
         zoom: DEFAULT_ZOOM_IF_USER_LOCATION,
       });
     }
-  }, [mapInteractedWith, cachedGeolocation]);
+  }, [setViewport, mapInteractedWith, cachedGeolocation]);
 
   const [showTrainPositions, setShowTrainPositions] = usePersistedState(
     'show_train_positions',
