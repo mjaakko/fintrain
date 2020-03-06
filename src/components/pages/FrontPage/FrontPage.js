@@ -78,8 +78,8 @@ export default () => {
       }}
       onViewportChanged={newViewport => {
         if (
-          viewport.center.lat !== newViewport.center.lat ||
-          viewport.center.lng !== newViewport.center.lng ||
+          viewport.center[0] !== newViewport.center[0] ||
+          viewport.center[1] !== newViewport.center[1] ||
           viewport.zoom !== newViewport.zoom
         ) {
           setViewport(newViewport);

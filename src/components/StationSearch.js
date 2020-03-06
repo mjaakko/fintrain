@@ -43,7 +43,7 @@ const StationSearch = () => {
     setActivePopup({ type: 'STATION', code: station.stationShortCode });
     setViewport({
       zoom: 12,
-      center: { lat: station.latitude, lng: station.longitude },
+      center: [station.latitude, station.longitude],
     });
   };
 
