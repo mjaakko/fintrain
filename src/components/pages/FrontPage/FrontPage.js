@@ -76,8 +76,14 @@ export default () => {
           setMapInteractedWith(true);
         }
       }}
-      onViewportChanged={viewport => {
-        setViewport(viewport);
+      onViewportChanged={newViewport => {
+        if (
+          viewport.center.lat !== newViewport.center.lat ||
+          viewport.center.lng !== newViewport.center.lng ||
+          viewport.zoom !== newViewport.zoom
+        ) {
+          setViewport(newViewport);
+        }
       }}
       style={{ height: '100%', width: '100%' }}
     >
