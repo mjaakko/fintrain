@@ -30,4 +30,5 @@
 | 13.2.2020  | 1h   | Junahaun parantamista, linkki hakuun yläpalkkiin. Aikojen ja päivien muotoilu valitun lokaalin mukaisesti. Pientä testien säätöä.
 | 22.2.2020  | 1h   | "Korjauksia" rajapinnasta tulevaan dataan: "toteutumatiedon" näyttäminen asemilta, joilla sitä ei ole saatavilla + junan kokoonpanojen yhdistäminen, jos kokoonpano ei muutu matkalla
 | 29.2.2020  | 0.5h | Komponentti asemien hakemiseen
-| 2.3.2020   | 2h | Kartan tilan tallentaminen React Contextiin. Jatkoa asemien haulle: kartan siirtäminen aseman kohdalle ja popupin avaaminen, kun asema valitaan tuloksista. Refaktorointia. Pieniä bugikorjauksia.
+| 2.3.2020   | 2h   | Kartan tilan tallentaminen React Contextiin. Jatkoa asemien haulle: kartan siirtäminen aseman kohdalle ja popupin avaaminen, kun asema valitaan tuloksista. Refaktorointia. Pieniä bugikorjauksia.
+| 6.3.2020   | 0.5h | Säätöä kartan siirtämisen kanssa, kun asema valitaan hausta.
