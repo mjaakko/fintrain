@@ -7,7 +7,7 @@ import { MapContext } from './pages/FrontPage';
 
 import { formatStationName } from '../utils/format';
 
-const style = { width: '20rem' };
+import useMediaQuery from '../hooks/useMediaQuery';
 
 const StationSearch = () => {
   const { t } = useTranslation();
@@ -16,6 +16,10 @@ const StationSearch = () => {
   const { stations } = useContext(MetadataContext);
   const [results, setResults] = useState([]);
   const [searchValue, setSearchValue] = useState('');
+
+  const isMobile = useMediaQuery('only screen and (max-width:767px)');
+
+  const style = { width: isMobile ? '100%' : '20rem' };
 
   if (!stations) {
     return null;
@@ -48,7 +52,7 @@ const StationSearch = () => {
   };
 
   return (
-    <Menu.Item style={{ paddingTop: 0, paddingBottom: 0 }}>
+    <Menu.Item fitted="vertically" style={{ minHeight: '42px' }}>
       <Search
         minCharacters={2}
         onResultSelect={handleResultSelect}
