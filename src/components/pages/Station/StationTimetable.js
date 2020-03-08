@@ -9,6 +9,11 @@ import { formatStationName } from '../../../utils/format';
 import StationTimetableRow from './StationTimetableRow';
 import fixMissingActualTimes from '../../../utils/fixMissingActualTimes';
 
+export const filterPassedTrains = ({ arrivalRow, departureRow }) => {
+  //Filters trains that have passed the station
+  return !departureRow ? !arrivalRow.actualTime : !departureRow.actualTime;
+};
+
 const sortByTime = (a, b) => {
   const timetableRowA = a.arrivalRow ? a.arrivalRow : a.departureRow;
   const timetableRowB = b.arrivalRow ? b.arrivalRow : b.departureRow;
@@ -148,14 +153,7 @@ export default ({ trains, stationShortCode }) => {
               (arrivalRow && arrivalRow.commercialStop) ||
               (departureRow && departureRow.commercialStop)
           )
-          .filter(timetableRow => {
-            //Filter trains that have already passed the station
-            return !timetableRow.arrivalRow
-              ? !timetableRow.departureRow.actualTime
-              : !timetableRow.arrivalRow.actualTime ||
-                  (timetableRow.departureRow &&
-                    !timetableRow.departureRow.actualTime);
-          })
+          .filter(filterPassedTrains)
           .sort(sortByTime)
           .map(timetableRow => (
             <StationTimetableRow
