@@ -36,15 +36,17 @@ class CustomMarker extends React.Component {
   }
 
   render() {
-    const { icon, children, ...props } = this.props;
+    const { innerRef, icon, children, ...props } = this.props;
 
     return [
       this.state.div && createPortal(icon.element, this.state.div, 'icon'),
-      <Marker key="marker" {...props} icon={this.state.icon}>
+      <Marker ref={innerRef} key="marker" {...props} icon={this.state.icon}>
         {children}
       </Marker>,
     ];
   }
 }
 
-export default CustomMarker;
+export default React.forwardRef((props, ref) => (
+  <CustomMarker {...props} innerRef={ref} />
+));

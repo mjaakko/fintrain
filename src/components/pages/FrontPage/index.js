@@ -1,3 +1,1 @@
-import FrontPage from './FrontPage';
-
-export default FrontPage;
+export { default, MapContext, MapContextProvider } from './FrontPage';

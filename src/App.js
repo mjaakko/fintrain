@@ -1,9 +1,9 @@
 import React from 'react';
-import FrontPage from './components/pages/FrontPage';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { Dimmer, Loader, Button, Icon } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
 
+import FrontPage, { MapContextProvider } from './components/pages/FrontPage';
 import Station from './components/pages/Station';
 import Train from './components/pages/Train';
 import SearchTrain from './components/pages/SearchTrain';
@@ -42,61 +42,65 @@ export default () => {
   return (
     <>
       <DocumentTitle />
-      <MetadataContext.Provider value={{ stations, detailedCauses, operators }}>
-        <Dimmer.Dimmable
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            width: '100%',
-            height: '100%',
-          }}
-          dimmed={!hasMetadata}
+      <MapContextProvider>
+        <MetadataContext.Provider
+          value={{ stations, detailedCauses, operators }}
         >
-          <Router>
-            <Header />
-            <div style={{ flexGrow: 1 }}>
-              <Switch>
-                <Route path="/station/:stationShortCode">
-                  <Station />
-                </Route>
-                <Route path="/train/:trainNumber/:departureDate">
-                  <Train />
-                </Route>
-                <Route path="/searchtrain">
-                  <SearchTrain />
-                </Route>
-                <Route path="/">
-                  <FrontPage />
-                </Route>
-              </Switch>
-            </div>
-          </Router>
+          <Dimmer.Dimmable
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              width: '100%',
+              height: '100%',
+            }}
+            dimmed={!hasMetadata}
+          >
+            <Router>
+              <Header />
+              <div style={{ flexGrow: 1 }}>
+                <Switch>
+                  <Route path="/station/:stationShortCode">
+                    <Station />
+                  </Route>
+                  <Route path="/train/:trainNumber/:departureDate">
+                    <Train />
+                  </Route>
+                  <Route path="/searchtrain">
+                    <SearchTrain />
+                  </Route>
+                  <Route path="/">
+                    <FrontPage />
+                  </Route>
+                </Switch>
+              </div>
+            </Router>
 
-          <Dimmer active={!hasMetadata}>
-            {isLoadingMetadata && (
-              <Loader>{t('common.loading') + '...'}</Loader>
-            )}
-            {!isLoadingMetadata && (
-              <Button
-                onClick={() => {
-                  if (!stations) {
-                    retryStations();
-                  }
-                  if (!detailedCauses) {
-                    retryDetailedCauses();
-                  }
-                  if (!operators) {
-                    retryOperators();
-                  }
-                }}
-              >
-                <Icon name="redo" />
-                {t('common.retry')}
-              </Button>
-            )}
-          </Dimmer>
-        </Dimmer.Dimmable>
-      </MetadataContext.Provider>
+            <Dimmer active={!hasMetadata}>
+              {isLoadingMetadata && (
+                <Loader>{t('common.loading') + '...'}</Loader>
+              )}
+              {!isLoadingMetadata && (
+                <Button
+                  onClick={() => {
+                    if (!stations) {
+                      retryStations();
+                    }
+                    if (!detailedCauses) {
+                      retryDetailedCauses();
+                    }
+                    if (!operators) {
+                      retryOperators();
+                    }
+                  }}
+                >
+                  <Icon name="redo" />
+                  {t('common.retry')}
+                </Button>
+              )}
+            </Dimmer>
+          </Dimmer.Dimmable>
+        </MetadataContext.Provider>
+      </MapContextProvider>
     </>
   );
 };

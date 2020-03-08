@@ -1,10 +1,11 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Route } from 'react-router-dom';
 import { Menu, Sticky, Icon } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
 
 import Information from './Information';
 import LanguageSwitcher from './LanguageSwitcher';
+import StationSearch from './StationSearch';
 
 export default () => {
   const { t } = useTranslation();
@@ -22,6 +23,9 @@ export default () => {
           FinTrain
         </Menu.Item>
         <Menu.Menu position="right">
+          <Route path="/" exact>
+            <StationSearch />
+          </Route>
           <Menu.Item as={Link} to="/searchtrain">
             <Icon name="search" />
             {t('searchTrains.headerText')}

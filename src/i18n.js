@@ -71,6 +71,10 @@ const resources = {
         failedToSearch: 'Failed to load search results',
         noResults: 'No trains found',
       },
+      searchStations: {
+        placeholderText: 'Search stations',
+        noResults: 'No stations found',
+      },
     },
   },
   fi: {
@@ -140,6 +144,10 @@ const resources = {
         departureDate: 'Lähtöpäivä',
         failedToSearch: 'Hakutulosten lataaminen epäonnistui',
         noResults: 'Junia ei löytynyt',
+      },
+      searchStations: {
+        placeholderText: 'Hae asemaa',
+        noResults: 'Asemia ei löytynyt',
       },
     },
   },
