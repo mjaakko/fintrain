@@ -43,6 +43,8 @@ const StationMarker = ({
           setActivePopup({ type: 'STATION', code: stationShortCode })
         }
         onClose={() => setActivePopup(null)}
+        //Disable autoPan as it causes problems when map viewport is programmatically moved
+        autoPan={false}
       >
         <Link to={`/station/${stationShortCode}`}>
           <StationName stationShortCode={stationShortCode} />
