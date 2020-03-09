@@ -155,11 +155,13 @@ const resources = {
 
 const getDefaultLanguage = () => {
   if (window.navigator.languages && window.navigator.languages.length > 0) {
-    for (const language in window.navigator.languages) {
+    for (const language of window.navigator.languages) {
       const simplifiedLanguage = language.slice(0, 2);
 
-      if (simplifiedLanguage === 'en' || simplifiedLanguage === 'fi') {
-        return simplifiedLanguage;
+      if (simplifiedLanguage === 'en') {
+        return 'en-US';
+      } else if (simplifiedLanguage === 'fi') {
+        return 'fi-FI';
       }
     }
   }
@@ -167,11 +169,13 @@ const getDefaultLanguage = () => {
   const userLanguage =
     window.navigator.userLanguage && window.navigator.userLanguage.slice(0, 2);
 
-  if (userLanguage === 'en' || userLanguage === 'fi') {
-    return userLanguage;
+  if (userLanguage === 'en') {
+    return 'en-US';
+  } else if (userLanguage === 'fi') {
+    return 'fi-FI';
   }
 
-  return 'en';
+  return 'en-US';
 };
 
 //Save selected language to localStorage and update moment locale
