@@ -33,3 +33,4 @@
 | 2.3.2020   | 2h   | Kartan tilan tallentaminen React Contextiin. Jatkoa asemien haulle: kartan siirtäminen aseman kohdalle ja popupin avaaminen, kun asema valitaan tuloksista. Refaktorointia. Pieniä bugikorjauksia.
 | 6.3.2020   | 0.5h | Säätöä kartan siirtämisen kanssa, kun asema valitaan hausta.
 | 8.3.2020   | 1h   | Asemahaun viimeistely. Aseman ohittaneiden junien filtteröinnin korjaus.
+| 9.3.2020   | 0.5h | Korjauksia oletuslokaalin tunnistamiseen ja aikojen muotoiluun.
