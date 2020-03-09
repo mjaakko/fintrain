@@ -174,19 +174,27 @@ const getDefaultLanguage = () => {
   return 'en';
 };
 
-i18n.use(initReactI18next).init({
-  debug: process.env.NODE_ENV === 'development',
-  resources,
-  lng: window.localStorage.getItem('language') || getDefaultLanguage(),
-  nonExplicitWhitelist: true,
-  interpolation: {
-    escapeValue: false,
-  },
-});
-
-i18n.on('languageChanged', language => {
+//Save selected language to localStorage and update moment locale
+const onChangeLanguage = language => {
   localStorage.setItem('language', language);
   moment.locale(language);
-});
+};
+
+i18n
+  .use(initReactI18next)
+  .init({
+    debug: process.env.NODE_ENV === 'development',
+    resources,
+    lng: window.localStorage.getItem('language') || getDefaultLanguage(),
+    nonExplicitWhitelist: true,
+    interpolation: {
+      escapeValue: false,
+    },
+  })
+  .then(() => {
+    onChangeLanguage(i18n.language);
+  });
+
+i18n.on('languageChanged', onChangeLanguage);
 
 export default i18n;
