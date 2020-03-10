@@ -7,14 +7,23 @@ Sovellus tarjoaa käyttöliittymän [rata.digitraffic.fi:n rajapintoihin](https:
 * [Tuntikirjanpito](docs/tuntikirjanpito.md)
 * [Sovellus Netlifyssä](https://fintrain.malkki.xyz/)
 
-## Suunnitellut ominaisuudet
+## Ominaisuudet
 
 * Asemat kartalla
-* Aseman aikataulujen ja reaaliaikaisten lähtöjen näyttäminen
-* Yksittäisen junan aikataulun ja reaaliaikatietojen näyttäminen
-* Yksittäisen junan sijainnin seuraaminen kartalla
-* Yksittäisen junan kokoonpanon näyttäminen
+  * Aseman hakeminen kartalta
+* Aseman aikataulut reaaliaikaisena
+* Junat kartalla (oletuksena pois päältä)
+* Junan aikataulu reaaliaikaisena
+* Junan kokoonpanon näyttäminen
+* Junan haku numeron perusteella
 
-Mahdollisesti myös:
+### Kehitysideoita
 
-* Kaikkien junien sijaintien näyttäminen kartalla
+* Junan hakeminen kartalta numeron perusteella
+* Junien hakeminen reitin perusteella
+
+## Kehitys lokaalisti
+
+1. Sovelluksen ajaminen kehitystilassa: `yarn start`
+2. Testien ajaminen: `yarn test`
+3. Sovelluksen tuotantoversion luominen: `yarn build`
