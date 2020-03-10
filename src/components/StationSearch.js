@@ -19,7 +19,7 @@ const StationSearch = () => {
 
   const isMobile = useMediaQuery('only screen and (max-width:767px)');
 
-  const style = { width: isMobile ? '100%' : '20rem' };
+  const style = { width: isMobile ? '13rem' : '30rem' };
 
   if (!stations) {
     return null;

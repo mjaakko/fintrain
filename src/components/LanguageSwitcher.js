@@ -17,14 +17,17 @@ const languages = [
   },
 ];
 
-const LanguageSwitcher = () => {
+const LanguageSwitcher = ({ hideSidebar }) => {
   const { t, i18n } = useTranslation();
 
-  const changeLanguage = (_, { value }) => i18n.changeLanguage(value);
+  const changeLanguage = (_, { value }) => {
+    hideSidebar();
+    i18n.changeLanguage(value);
+  };
 
   return (
     <Dropdown item text={t('common.language')} className="languageswitcher">
-      <Dropdown.Menu>
+      <Dropdown.Menu direction="left">
         {languages.map(language => (
           <Dropdown.Item
             key={language.code}

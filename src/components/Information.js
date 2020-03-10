@@ -2,7 +2,7 @@ import React from 'react';
 import { Modal, Menu, Icon } from 'semantic-ui-react';
 import { useTranslation, Trans } from 'react-i18next';
 
-export default () => {
+export default ({ hideSidebar }) => {
   const { t } = useTranslation();
 
   return (
@@ -14,6 +14,7 @@ export default () => {
           {t('appInfo.info')}
         </Menu.Item>
       }
+      onOpen={hideSidebar}
     >
       <Modal.Header>{t('appInfo.copyrightTitle')}</Modal.Header>
       <Modal.Content>
