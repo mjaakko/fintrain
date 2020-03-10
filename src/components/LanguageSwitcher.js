@@ -20,8 +20,6 @@ const languages = [
 const LanguageSwitcher = () => {
   const { t, i18n } = useTranslation();
 
-  const activeLanguage = i18n.language.slice(0, 2);
-
   const changeLanguage = (_, { value }) => i18n.changeLanguage(value);
 
   return (
@@ -33,7 +31,7 @@ const LanguageSwitcher = () => {
             value={language.code}
             flag={language.flag}
             text={language.name}
-            active={activeLanguage === language.code}
+            active={i18n.language === language.code}
             onClick={changeLanguage}
           />
         ))}
