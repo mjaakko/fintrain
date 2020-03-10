@@ -25,11 +25,19 @@ export const MapContextProvider = ({ children }) => {
     center: DEFAULT_CENTER,
     zoom: DEFAULT_ZOOM,
   });
+  const [mapInteractedWith, setMapInteractedWith] = useState(false);
   const [activePopup, setActivePopup] = useState(null);
 
   return (
     <MapContext.Provider
-      value={{ viewport, setViewport, activePopup, setActivePopup }}
+      value={{
+        viewport,
+        setViewport,
+        activePopup,
+        setActivePopup,
+        mapInteractedWith,
+        setMapInteractedWith,
+      }}
     >
       {children}
     </MapContext.Provider>
@@ -45,8 +53,12 @@ const GEOLOCATION_OPTIONS = {
 export default () => {
   const { t } = useTranslation();
 
-  const { viewport, setViewport } = useContext(MapContext);
-  const [mapInteractedWith, setMapInteractedWith] = useState(false);
+  const {
+    viewport,
+    setViewport,
+    mapInteractedWith,
+    setMapInteractedWith,
+  } = useContext(MapContext);
 
   const cachedGeolocation = useCachedGeolocation(GEOLOCATION_OPTIONS);
 
