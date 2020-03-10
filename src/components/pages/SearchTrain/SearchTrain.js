@@ -56,11 +56,11 @@ const SearchTrain = () => {
         <Header as="h1">{t('searchTrains.search')}</Header>
         <Form onSubmit={onSubmit}>
           <Form.Input
-            width={3}
             label={t('searchTrains.trainNumber')}
             value={trainNumber}
             required
             onChange={onChangeTrainNumber}
+            style={{ width: '15rem' }}
           />
           <SemanticDatepicker
             size="small"
@@ -71,6 +71,7 @@ const SearchTrain = () => {
             required
             firstDayOfWeek={moment.localeData().firstDayOfWeek()}
             onChange={onChangeDepartureDate}
+            style={{ width: '15rem' }}
           />
           <Form.Button>{t('searchTrains.search')}</Form.Button>
         </Form>
