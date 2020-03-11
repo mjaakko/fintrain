@@ -35,3 +35,4 @@
 | 8.3.2020   | 1h   | 52h       | Asemahaun viimeistely. Aseman ohittaneiden junien filtteröinnin korjaus.
 | 9.3.2020   | 0.5h | 52.5h     | Korjauksia oletuslokaalin tunnistamiseen ja aikojen muotoiluun.
 | 10.3.2020  | 1.5h | 54h       | Parempi menu mobiililaitteille. Muita pieniä korjauksia.
+| 11.2.2020  | 0.5h | 54.5h     | Bugikorjauksia
