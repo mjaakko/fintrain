@@ -20,7 +20,7 @@ export const formatStationName = stationName => {
 
   return formattedStationName.endsWith(' asema') ||
     formattedStationName.endsWith(' Asema')
-    ? formattedStationName.substring(0, stationName.indexOf(' '))
+    ? formattedStationName.substring(0, stationName.lastIndexOf(' '))
     : formattedStationName;
 };
 
