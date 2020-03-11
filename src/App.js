@@ -53,7 +53,7 @@ export default () => {
         >
           <Dimmer.Dimmable dimmed={!hasMetadata} style={{ height: '100%' }}>
             <Router>
-              <Sidebar.Pushable style={{ height: '100%' }}>
+              <Sidebar.Pushable>
                 <Sidebar
                   as={Menu}
                   animation="overlay"
@@ -72,6 +72,7 @@ export default () => {
                     flexDirection: 'column',
                     width: '100%',
                     height: '100%',
+                    overflow: 'auto',
                   }}
                 >
                   <Header toggleSidebar={toggleSidebar} />
