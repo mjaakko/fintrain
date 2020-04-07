@@ -1,4 +1,4 @@
-import { formatStationName, formatTrack } from '../format';
+import { formatStationName, formatTrack, formatDuration } from '../format';
 
 describe('format', () => {
   test('station name that does not end with " asema" is not modified', () => {
@@ -29,5 +29,17 @@ describe('format', () => {
 
   test('track 1 is formatted as 1', () => {
     expect(formatTrack('001')).toBe('1');
+  });
+
+  test('3600 seconds is formatted correctly', () => {
+    expect(formatDuration(3600, 'h', 'min')).toBe('1h');
+  });
+
+  test('3660 seconds is formatted correctly', () => {
+    expect(formatDuration(3660, 'h', 'min')).toBe('1h 1min');
+  });
+
+  test('60 seconds is formatted correctly', () => {
+    expect(formatDuration(60, 'h', 'min')).toBe('1min');
   });
 });
