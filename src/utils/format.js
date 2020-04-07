@@ -31,3 +31,16 @@ export const formatTrack = track => {
 
   return track.replace(/^0+/, '');
 };
+
+export const formatDuration = (timeInSeconds, hoursText, minutesText) => {
+  const hours = Math.floor(timeInSeconds / 60 / 60);
+  const minutes = Math.floor(timeInSeconds / 60) - 60 * hours;
+
+  if (hours === 0) {
+    return `${minutes}${minutesText}`;
+  }
+  if (minutes === 0) {
+    return `${hours}${hoursText}`;
+  }
+  return `${hours}${hoursText} ${minutes}${minutesText}`;
+};
