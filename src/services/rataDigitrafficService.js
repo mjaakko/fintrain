@@ -289,3 +289,36 @@ export const getTrainsByDepartureDate = departureDate => {
     cancel,
   };
 };
+
+export const getTrainsByRoute = (fromStation, toStation, time) => {
+  const { result, cancel } = graphQlFetch(`
+  {
+    viewer {
+      getTrainsFromDepartureToArrivalStationUsingGET(departure_station: "${encodeURI(
+        fromStation
+      )}", arrival_station: "${encodeURI(
+    toStation
+  )}", include_nonstopping: false, startDate: "${time}", where: "[*${passengerTrainsFilter}]") {
+        trainType
+        trainNumber
+        departureDate
+        operatorShortCode
+        commuterLineID
+        timeTableRows {
+          stationShortCode
+          type
+          scheduledTime
+          countryCode
+        }
+      }
+    }
+  }
+  `);
+
+  return {
+    result: result.then(
+      result => result.viewer.getTrainsFromDepartureToArrivalStationUsingGET
+    ),
+    cancel,
+  };
+};
