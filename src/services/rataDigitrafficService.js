@@ -127,6 +127,7 @@ export const getStationsTrains = stationShortCode => {
           trainStopping
           commercialStop
           commercialTrack
+          countryCode
           causes {
             categoryCode
             detailedCategoryCode
@@ -192,6 +193,7 @@ export const getTrain = (trainNumber, departureDate) => {
           trainStopping
           commercialStop
           commercialTrack
+          countryCode
           causes {
             categoryCode
             detailedCategoryCode
