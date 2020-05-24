@@ -11,6 +11,7 @@ const resources = {
         loading: 'Loading',
         retry: 'Retry',
         language: 'Language',
+        noResults: 'No results found',
       },
       appInfo: {
         info: 'Info',
@@ -66,10 +67,20 @@ const resources = {
       searchTrains: {
         headerText: 'Search trains',
         search: 'Search',
+        byNumber: 'By number',
+        byRoute: 'By route',
         trainNumber: 'Train number',
         departureDate: 'Departure date',
         failedToSearch: 'Failed to load search results',
         noResults: 'No trains found',
+      },
+      searchTrainsByRoute: {
+        from: 'From',
+        to: 'To',
+        train: 'Train',
+        departureTime: 'Departure time',
+        arrivalTime: 'Arrival time',
+        duration: 'Duration',
       },
       searchStations: {
         placeholderText: 'Search stations',
@@ -84,6 +95,7 @@ const resources = {
         loading: 'Ladataan',
         retry: 'Yritä uudestaan',
         language: 'Kieli',
+        noResults: 'Ei tuloksia',
       },
       appInfo: {
         info: 'Info',
@@ -140,10 +152,24 @@ const resources = {
       searchTrains: {
         headerText: 'Hae junaa',
         search: 'Haku',
+        byNumber: 'Numeron perusteella',
+        byRoute: 'Reitin perusteella',
         trainNumber: 'Junan numero',
         departureDate: 'Lähtöpäivä',
         failedToSearch: 'Hakutulosten lataaminen epäonnistui',
         noResults: 'Junia ei löytynyt',
+      },
+      searchTrainsByNumber: {
+        trainNumber: 'Junan numero',
+        departureDate: 'Lähtöpäivä',
+      },
+      searchTrainsByRoute: {
+        from: 'Mistä',
+        to: 'Minne',
+        train: 'Juna',
+        departureTime: 'Lähtöaika',
+        arrivalTime: 'Saapumisaika',
+        duration: 'Kesto',
       },
       searchStations: {
         placeholderText: 'Hae asemaa',
