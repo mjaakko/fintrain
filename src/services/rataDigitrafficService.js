@@ -309,6 +309,7 @@ export const getTrainsByRoute = (fromStation, toStation, time) => {
           type
           scheduledTime
           countryCode
+          commercialStop
         }
       }
     }
