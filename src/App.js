@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import FrontPage, { MapContextProvider } from './components/pages/FrontPage';
 import Station from './components/pages/Station';
 import Train from './components/pages/Train';
-import SearchTrain from './components/pages/SearchTrain';
+import SearchTrain from './components/SearchTrain';
 
 import DocumentTitle from './components/DocumentTitle';
 import Header from './components/Header';
@@ -84,7 +84,9 @@ export default () => {
                       <Route path="/train/:trainNumber/:departureDate">
                         <Train />
                       </Route>
-                      <Route path="/searchtrain">
+                      <Route
+                        path={['/searchtrainbynumber', '/searchtrainbyroute']}
+                      >
                         <SearchTrain />
                       </Route>
                       <Route path="/">

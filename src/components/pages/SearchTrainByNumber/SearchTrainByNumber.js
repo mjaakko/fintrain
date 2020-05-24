@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import { useLocation, useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Container, Header, Form, Divider } from 'semantic-ui-react';
+import { Container, Form, Divider } from 'semantic-ui-react';
 import SemanticDatepicker from 'react-semantic-ui-datepickers';
 import 'react-semantic-ui-datepickers/dist/react-semantic-ui-datepickers.css';
 import moment from 'moment';
 
-import DocumentTitle from '../../DocumentTitle';
 import TrainResults from './TrainResults';
 
 const validateDate = date => {
@@ -50,42 +49,38 @@ const SearchTrain = () => {
     );
 
   return (
-    <>
-      <DocumentTitle title={t('searchTrains.search')} />
-      <Container as="main">
-        <Header as="h1">{t('searchTrains.search')}</Header>
-        <Form onSubmit={onSubmit}>
-          <Form.Input
-            label={t('searchTrains.trainNumber')}
-            value={trainNumber}
-            required
-            onChange={onChangeTrainNumber}
-            style={{ width: '15rem' }}
+    <Container style={{ marginTop: '1rem' }}>
+      <Form onSubmit={onSubmit}>
+        <Form.Input
+          label={t('searchTrainsByNumber.trainNumber')}
+          value={trainNumber}
+          required
+          onChange={onChangeTrainNumber}
+          style={{ width: '15rem' }}
+        />
+        <SemanticDatepicker
+          size="small"
+          locale={i18n.language}
+          label={t('searchTrainsByNumber.departureDate')}
+          value={new Date(departureDate)}
+          date={new Date(departureDate)}
+          required
+          firstDayOfWeek={moment.localeData().firstDayOfWeek()}
+          onChange={onChangeDepartureDate}
+          style={{ width: '15rem' }}
+        />
+        <Form.Button>{t('searchTrains.search')}</Form.Button>
+      </Form>
+      {queryParams.has('trainNumber') && queryParams.has('departureDate') && (
+        <>
+          <Divider section />
+          <TrainResults
+            trainNumber={queryParams.get('trainNumber')}
+            departureDate={queryParams.get('departureDate')}
           />
-          <SemanticDatepicker
-            size="small"
-            locale={i18n.language}
-            label={t('searchTrains.departureDate')}
-            value={new Date(departureDate)}
-            date={new Date(departureDate)}
-            required
-            firstDayOfWeek={moment.localeData().firstDayOfWeek()}
-            onChange={onChangeDepartureDate}
-            style={{ width: '15rem' }}
-          />
-          <Form.Button>{t('searchTrains.search')}</Form.Button>
-        </Form>
-        {queryParams.has('trainNumber') && queryParams.has('departureDate') && (
-          <>
-            <Divider section />
-            <TrainResults
-              trainNumber={queryParams.get('trainNumber')}
-              departureDate={queryParams.get('departureDate')}
-            />
-          </>
-        )}
-      </Container>
-    </>
+        </>
+      )}
+    </Container>
   );
 };
 

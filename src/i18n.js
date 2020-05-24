@@ -69,10 +69,13 @@ const resources = {
         search: 'Search',
         byNumber: 'By number',
         byRoute: 'By route',
-        trainNumber: 'Train number',
         departureDate: 'Departure date',
         failedToSearch: 'Failed to load search results',
         noResults: 'No trains found',
+      },
+      searchTrainsByNumber: {
+        trainNumber: 'Train number',
+        departureDate: 'Departure date',
       },
       searchTrainsByRoute: {
         from: 'From',
