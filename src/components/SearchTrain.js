@@ -13,7 +13,10 @@ const tabs = t => [
     menuItem: t('searchTrains.byNumber'),
     render: () => <SearchTrainByNumber />,
   },
-  { menuItem: t('searchTrains.byRoute'), render: () => <SearchTrainByRoute /> },
+  {
+    menuItem: t('searchTrains.byRoute'),
+    render: () => <SearchTrainByRoute />,
+  },
 ];
 
 const SearchTrain = () => {
@@ -25,7 +28,6 @@ const SearchTrain = () => {
   const byRoute = useRouteMatch('/searchtrainbyroute');
 
   const onTabChange = (_, { activeIndex: index }) => {
-    console.log(index);
     if (index === 0) {
       history.push('/searchtrainbynumber');
     } else if (index === 1) {
