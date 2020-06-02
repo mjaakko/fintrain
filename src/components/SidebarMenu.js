@@ -14,7 +14,7 @@ const SidebarMenu = ({ hideSidebar }) => {
     <Menu.Item
       key="searchtrains"
       as={Link}
-      to="/searchtrain"
+      to="/searchtrainbynumber"
       onClick={hideSidebar}
     >
       <Icon name="search" />

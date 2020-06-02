@@ -5,14 +5,12 @@ import { useTranslation } from 'react-i18next';
 import { MetadataContext } from '../App';
 
 import { formatTime } from '../utils/format';
+import timezones from '../utils/timezones';
 
 import './TrainTime.css';
 
 const MINOR_DELAY = 2;
 const MAJOR_DELAY = 15;
-
-const TIMEZONE_FINLAND = 'Europe/Helsinki';
-const TIMEZONE_RUSSIA = 'Europe/Moscow'; //In Russia trains run on Moscow time
 
 const generateCausesString = (
   detailedCauseCodes,
@@ -106,12 +104,7 @@ export default ({ timetableRow }) => {
           }`}
           dateTime={time}
         >
-          {formatTime(
-            time,
-            timetableRow.countryCode === 'RU'
-              ? TIMEZONE_RUSSIA
-              : TIMEZONE_FINLAND
-          )}
+          {formatTime(time, timezones[timetableRow.countryCode])}
           {timetableRow.unknownDelay && '\u00a0?'}
         </time>
       }

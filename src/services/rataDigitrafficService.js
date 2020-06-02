@@ -133,6 +133,7 @@ export const getStationsTrains = stationShortCode => {
           trainStopping
           commercialStop
           commercialTrack
+          countryCode
           causes {
             categoryCode
             detailedCategoryCode
@@ -198,6 +199,7 @@ export const getTrain = (trainNumber, departureDate) => {
           trainStopping
           commercialStop
           commercialTrack
+          countryCode
           causes {
             categoryCode
             detailedCategoryCode
@@ -291,6 +293,40 @@ export const getTrainsByDepartureDate = departureDate => {
   return {
     result: result.then(
       result => result.viewer.getTrainsByDepartureDateUsingGET
+    ),
+    cancel,
+  };
+};
+
+export const getTrainsByRoute = (fromStation, toStation, time) => {
+  const { result, cancel } = graphQlFetch(`
+  {
+    viewer {
+      getTrainsFromDepartureToArrivalStationUsingGET(departure_station: "${encodeURI(
+        fromStation
+      )}", arrival_station: "${encodeURI(
+    toStation
+  )}", include_nonstopping: false, startDate: "${time}", where: "[*${passengerTrainsFilter}]") {
+        trainType
+        trainNumber
+        departureDate
+        operatorShortCode
+        commuterLineID
+        timeTableRows {
+          stationShortCode
+          type
+          scheduledTime
+          countryCode
+          commercialStop
+        }
+      }
+    }
+  }
+  `);
+
+  return {
+    result: result.then(
+      result => result.viewer.getTrainsFromDepartureToArrivalStationUsingGET
     ),
     cancel,
   };
