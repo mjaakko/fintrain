@@ -28,7 +28,13 @@ const graphQlFetch = (query, variables) => {
           `Unsuccessful fetch (${result.status} ${result.statusText})`
         );
       })
-      .then(result => result.data),
+      .then(result => {
+        if (result.errors) {
+          return Promise.reject(JSON.stringify(result.errors, null, 4));
+        } else {
+          return result.data;
+        }
+      }),
     cancel,
   };
 };
