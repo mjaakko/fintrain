@@ -11,6 +11,7 @@ import { formatStationName } from '../../../utils/format';
 import StationTimetable from './StationTimetable';
 import StationName from '../../StationName';
 import DocumentTitle from '../../DocumentTitle';
+import NoIndex from '../../NoIndex';
 
 export default () => {
   const { t } = useTranslation();
@@ -19,10 +20,15 @@ export default () => {
   const { stationShortCode } = useParams();
   const { loading, trains, error } = useStationsTrains(stationShortCode);
 
+  if (!stations) {
+    return null;
+  }
+
   const stationMetadata = stations && stations.get(stationShortCode);
 
   return (
     <>
+      {(!stationMetadata || !stationMetadata.passengerTraffic) && <NoIndex />}
       <DocumentTitle
         title={
           stationMetadata && formatStationName(stationMetadata.stationName)
@@ -30,24 +36,29 @@ export default () => {
       />
       <Container as="main">
         <Header as="h1">
-          <StationName stationShortCode={stationShortCode} />
+          {!stationMetadata ? (
+            t('station.notFound')
+          ) : (
+            <StationName stationShortCode={stationShortCode} />
+          )}
         </Header>
-        {stationMetadata && !stationMetadata.passengerTraffic ? (
-          <p className="noPassengerTraffic">
-            {t('station.noPassengerTraffic')}
-          </p>
-        ) : (
-          <>
-            {loading && <Loader indeterminate active />}
-            {trains && (
-              <StationTimetable
-                trains={trains}
-                stationShortCode={stationShortCode}
-              />
-            )}
-            {error && !trains && <p>{t('station.failedToLoad')}</p>}
-          </>
-        )}
+        {stationMetadata &&
+          (!stationMetadata.passengerTraffic ? (
+            <p className="noPassengerTraffic">
+              {t('station.noPassengerTraffic')}
+            </p>
+          ) : (
+            <>
+              {loading && <Loader indeterminate active />}
+              {trains && (
+                <StationTimetable
+                  trains={trains}
+                  stationShortCode={stationShortCode}
+                />
+              )}
+              {error && !trains && <p>{t('station.failedToLoad')}</p>}
+            </>
+          ))}
       </Container>
     </>
   );

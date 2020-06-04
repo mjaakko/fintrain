@@ -35,6 +35,7 @@ const resources = {
         track: 'Track',
       },
       station: {
+        notFound: 'Station not found',
         failedToLoad: 'Failed to load station data',
         noPassengerTraffic: 'Station does not have regular passenger traffic',
       },
@@ -122,6 +123,7 @@ const resources = {
         track: 'Raide',
       },
       station: {
+        notFound: 'Asemaa ei löytynyt',
         failedToLoad: 'Aseman tietojen lataaminen epäonnistui',
         noPassengerTraffic:
           'Asemalla ei ole säännöllistä matkustajaliikennettä',
