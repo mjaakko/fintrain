@@ -7,7 +7,7 @@ const backendUrl =
   process.env.REACT_APP_BACKEND_URL ||
   'https://rata.digitraffic.fi/api/v1/graphql/graphiql';
 
-const graphQlFetch = (query, variables) => {
+const graphQlFetch = (query, variables, resolveOnGraphQLError) => {
   const { result, cancel } = cancellableFetch(backendUrl, {
     method: 'POST',
     headers: {
@@ -29,7 +29,7 @@ const graphQlFetch = (query, variables) => {
         );
       })
       .then(result => {
-        if (result.errors) {
+        if (result.errors && !resolveOnGraphQLError) {
           return Promise.reject(JSON.stringify(result.errors, null, 4));
         } else {
           return result.data;
@@ -299,14 +299,15 @@ export const getTrainsByDepartureDate = departureDate => {
 };
 
 export const getTrainsByRoute = (fromStation, toStation, time) => {
-  const { result, cancel } = graphQlFetch(`
+  const { result, cancel } = graphQlFetch(
+    `
   {
     viewer {
       getTrainsFromDepartureToArrivalStationUsingGET(departure_station: "${encodeURI(
         fromStation
       )}", arrival_station: "${encodeURI(
-    toStation
-  )}", include_nonstopping: false, startDate: "${time}", where: "[*${passengerTrainsFilter}]") {
+      toStation
+    )}", include_nonstopping: false, startDate: "${time}", where: "[*${passengerTrainsFilter}]") {
         trainType
         trainNumber
         departureDate
@@ -322,7 +323,10 @@ export const getTrainsByRoute = (fromStation, toStation, time) => {
       }
     }
   }
-  `);
+  `,
+    null,
+    true
+  ); //Do not reject on GraphQL errors as rata.digitraffic.fi API throws an error when no results are found
 
   return {
     result: result.then(
