@@ -11,6 +11,7 @@ import TrainTimetable from './TrainTimetable';
 import DocumentTitle from '../../DocumentTitle';
 import TrainComposition from '../../TrainComposition';
 import OperatorName from '../../OperatorName';
+import NoIndex from '../../NoIndex';
 
 export default () => {
   const { t } = useTranslation();
@@ -84,6 +85,7 @@ export default () => {
             </>
           ) : (
             <>
+              <NoIndex />
               <Header as="h1">{t('train.notFoundTitle')}</Header>
               <Trans
                 i18nKey="train.notFoundDescription"
@@ -96,7 +98,10 @@ export default () => {
             </>
           )
         ) : (
-          <Header as="h1">{t('train.failedToLoad')}</Header>
+          <>
+            <NoIndex />
+            <Header as="h1">{t('train.failedToLoad')}</Header>
+          </>
         )}
       </Container>
     </>
