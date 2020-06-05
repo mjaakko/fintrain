@@ -6,7 +6,7 @@ import { Tab, Container, Header } from 'semantic-ui-react';
 import SearchTrainByRoute from './pages/SearchTrainByRoute';
 import SearchTrainByNumber from './pages/SearchTrainByNumber';
 
-import DocumentTitle from './DocumentTitle';
+import SEO from './SEO';
 
 const tabs = t => [
   {
@@ -39,7 +39,7 @@ const SearchTrain = () => {
 
   return (
     <>
-      <DocumentTitle title={t('searchTrains.search')} />
+      <SEO title={t('searchTrains.search')} />
       <Container as="main">
         <Header as="h1">{t('searchTrains.search')}</Header>
         <Tab

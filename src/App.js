@@ -8,7 +8,7 @@ import Station from './components/pages/Station';
 import Train from './components/pages/Train';
 import SearchTrain from './components/SearchTrain';
 
-import DocumentTitle from './components/DocumentTitle';
+import SEO from './components/SEO';
 import Header from './components/Header';
 
 import useStations from './hooks/useStations';
@@ -46,7 +46,7 @@ export default () => {
 
   return (
     <>
-      <DocumentTitle />
+      <SEO />
       <MapContextProvider>
         <MetadataContext.Provider
           value={{ stations, detailedCauses, operators }}

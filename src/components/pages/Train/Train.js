@@ -8,7 +8,7 @@ import useTrainComposition from '../../../hooks/useTrainComposition';
 
 import { formatTrainNumber, formatDate } from '../../../utils/format';
 import TrainTimetable from './TrainTimetable';
-import DocumentTitle from '../../DocumentTitle';
+import SEO from '../../SEO';
 import TrainComposition from '../../TrainComposition';
 import OperatorName from '../../OperatorName';
 import NoIndex from '../../NoIndex';
@@ -31,7 +31,7 @@ export default () => {
 
   return (
     <>
-      <DocumentTitle title={train && formatTrainNumber(train)} />
+      <SEO title={train && formatTrainNumber(train)} />
       <Container as="main">
         {loading ? (
           <Loader indeterminate active />

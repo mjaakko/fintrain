@@ -10,7 +10,7 @@ import { formatStationName } from '../../../utils/format';
 
 import StationTimetable from './StationTimetable';
 import StationName from '../../StationName';
-import DocumentTitle from '../../DocumentTitle';
+import SEO from '../../SEO';
 import NoIndex from '../../NoIndex';
 
 export default () => {
@@ -29,7 +29,7 @@ export default () => {
   return (
     <>
       {(!stationMetadata || !stationMetadata.passengerTraffic) && <NoIndex />}
-      <DocumentTitle
+      <SEO
         title={
           stationMetadata && formatStationName(stationMetadata.stationName)
         }
