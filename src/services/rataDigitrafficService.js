@@ -1,7 +1,8 @@
 import cancellableFetch from '../utils/cancellableFetch';
 
+//See https://fi.wikipedia.org/wiki/Luettelo_Suomen_junatyypeist%C3%A4
 const passengerTrainsFilter =
-  'trainCategory=Long-distance|trainCategory=Commuter&trainType!=MV&trainType!=HV&trainType!=HLV&trainType!=V';
+  'trainCategory=Long-distance|trainCategory=Commuter&trainType!=MV&trainType!=HV&trainType!=MUV&trainType!=V';
 
 const backendUrl =
   process.env.REACT_APP_BACKEND_URL ||
