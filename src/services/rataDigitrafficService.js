@@ -13,6 +13,7 @@ const graphQlFetch = (query, variables, resolveOnGraphQLError) => {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
+      'Digitraffic-User': 'FinTrain',
     },
     body: JSON.stringify({
       query,
