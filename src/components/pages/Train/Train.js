@@ -1,6 +1,14 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
-import { Container, Header, Loader, Message, Icon } from 'semantic-ui-react';
+import moment from 'moment';
+import { useParams, useHistory } from 'react-router-dom';
+import {
+  Container,
+  Header,
+  Loader,
+  Message,
+  Button,
+  Icon,
+} from 'semantic-ui-react';
 import { useTranslation, Trans } from 'react-i18next';
 
 import useTrain from '../../../hooks/useTrain';
@@ -14,6 +22,7 @@ import OperatorName from '../../OperatorName';
 
 export default () => {
   const { t } = useTranslation();
+  const history = useHistory();
   const { trainNumber, departureDate } = useParams();
   const { loading: loadingTrain, train, error: errorTrain } = useTrain(
     trainNumber,
@@ -43,7 +52,41 @@ export default () => {
                   style={{ display: 'flex', justifyContent: 'space-between' }}
                 >
                   <span>
-                    {train && formatDate(new Date(train.departureDate))}
+                    {train.timetableType === 'REGULAR' && (
+                      <Button
+                        icon
+                        size="mini"
+                        onClick={() => {
+                          const previousDate = moment(train.departureDate)
+                            .subtract(1, 'days')
+                            .format('YYYY-MM-DD');
+                          history.push(
+                            `/train/${train.trainNumber}/${previousDate}`
+                          );
+                        }}
+                      >
+                        <Icon name="caret left" />
+                      </Button>
+                    )}
+                    <span style={{ margin: '0 0.25rem' }}>
+                      {train && formatDate(new Date(train.departureDate))}
+                    </span>
+                    {train.timetableType === 'REGULAR' && (
+                      <Button
+                        icon
+                        size="mini"
+                        onClick={() => {
+                          const nextDate = moment(train.departureDate)
+                            .add(1, 'days')
+                            .format('YYYY-MM-DD');
+                          history.push(
+                            `/train/${train.trainNumber}/${nextDate}`
+                          );
+                        }}
+                      >
+                        <Icon name="caret right" />
+                      </Button>
+                    )}
                   </span>
                   <span style={{ fontSize: '0.75em' }}>
                     {train && (
