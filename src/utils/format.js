@@ -1,8 +1,8 @@
 import moment from 'moment';
 import 'moment-timezone/builds/moment-timezone-with-data-10-year-range';
 
-export const formatTrainNumber = ({ trainType, trainNumber, commuterLineID }) =>
-  commuterLineID ? commuterLineID : `${trainType}\u00a0${trainNumber}`;
+export const formatTrainNumber = ({ trainType, trainNumber, commuterLineid }) =>
+  commuterLineid ? commuterLineid : `${trainType}\u00a0${trainNumber}`;
 
 export const formatDate = date => {
   return moment(date).format('L');

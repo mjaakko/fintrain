@@ -10,7 +10,7 @@ export default ({
   trainNumber,
   departureDate,
   trainType,
-  commuterLineID,
+  commuterLineid,
   destination,
   arrivalRow,
   departureRow,
@@ -24,7 +24,7 @@ export default ({
     </Table.Cell>
     <Table.Cell>
       <Link to={`/train/${trainNumber}/${departureDate}`}>
-        {formatTrainNumber({ commuterLineID, trainNumber, trainType })}
+        {formatTrainNumber({ commuterLineid, trainNumber, trainType })}
       </Link>
     </Table.Cell>
     <Table.Cell>{destination}</Table.Cell>

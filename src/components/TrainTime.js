@@ -61,8 +61,11 @@ export default ({ timetableRow }) => {
     timetableRow.liveEstimateTime ||
     timetableRow.scheduledTime;
 
+  const hasEstimate =
+    !!timetableRow.liveEstimateTime || !!timetableRow.actualTime;
+
   const causes = generateCausesString(
-    timetableRow.causes.map(cause => cause.detailedCategoryCode),
+    (timetableRow.causes || []).map(cause => cause.detailedCategoryCode.code),
     detailedCauses,
     i18n.language,
     t('common.and')
@@ -94,7 +97,7 @@ export default ({ timetableRow }) => {
           className={`${timetableRow.actualTime ? 'actual' : ''} ${
             timetableRow.cancelled
               ? 'cancelled'
-              : timetableRow.differenceInMinutes !== null
+              : hasEstimate
               ? timetableRow.differenceInMinutes <= MINOR_DELAY
                 ? 'ontime'
                 : timetableRow.differenceInMinutes <= MAJOR_DELAY
@@ -104,7 +107,7 @@ export default ({ timetableRow }) => {
           }`}
           dateTime={time}
         >
-          {formatTime(time, timezones[timetableRow.countryCode])}
+          {formatTime(time, timezones[timetableRow.station.countryCode])}
           {timetableRow.unknownDelay && '\u00a0?'}
         </time>
       }

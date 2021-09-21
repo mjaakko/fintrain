@@ -1,19 +1,49 @@
 import cancellableFetch from '../utils/cancellableFetch';
 
 //See https://fi.wikipedia.org/wiki/Luettelo_Suomen_junatyypeist%C3%A4
-const passengerTrainsFilter =
-  'trainCategory=Long-distance|trainCategory=Commuter&trainType!=MV&trainType!=HV&trainType!=MUV&trainType!=V';
+const nonPassengerTrainTypes = ['MV', 'HV', 'MUV', 'V'];
+const formatTrainTypeFilter = trainType =>
+  `{trainType: {name: {unequals: "${trainType}"}}}`;
+
+const passengerTrainCategories = ['Commuter', 'Long-distance'];
+const formatTrainCategoryFilter = trainCategory =>
+  `{name: {equals: "${trainCategory}"}}`;
+
+const passengerTrainFilter = `{and: [{trainType: {trainCategory: {or: [${passengerTrainCategories
+  .map(formatTrainCategoryFilter)
+  .join(', ')}]}}}, ${nonPassengerTrainTypes
+  .map(formatTrainTypeFilter)
+  .join(', ')}]}`;
 
 const backendUrl =
   process.env.REACT_APP_BACKEND_URL ||
-  'https://rata.digitraffic.fi/api/v1/graphql/graphiql';
+  'https://rata.digitraffic.fi/api/v2/graphql/graphql';
+
+const userHeader = { 'Digitraffic-User': 'FinTrain' };
+
+const restFetch = endpoint => {
+  const { result, cancel } = cancellableFetch(endpoint, {
+    headers: { ...userHeader },
+  });
+  return {
+    result: result.then(result => {
+      if (result.ok) {
+        return result.json();
+      }
+      return Promise.reject(
+        `Unsuccessful fetch (${result.status} ${result.statusText})`
+      );
+    }),
+    cancel,
+  };
+};
 
 const graphQlFetch = (query, variables, resolveOnGraphQLError) => {
   const { result, cancel } = cancellableFetch(backendUrl, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'Digitraffic-User': 'FinTrain',
+      ...userHeader,
     },
     body: JSON.stringify({
       query,
@@ -42,66 +72,34 @@ const graphQlFetch = (query, variables, resolveOnGraphQLError) => {
 };
 
 export const getStations = () => {
-  const { result, cancel } = graphQlFetch(`
-    {
-      viewer {
-        getStationsUsingGET {
-          countryCode
-          latitude
-          longitude
-          stationName
-          stationShortCode
-          passengerTraffic
-          type
-        }
-      }
-    }
-    `);
+  const { result, cancel } = restFetch(
+    'https://rata.digitraffic.fi/api/v1/metadata/stations'
+  );
 
   return {
-    result: result.then(result => result.viewer.getStationsUsingGET),
+    result,
     cancel,
   };
 };
 
 export const getOperators = () => {
-  const { result, cancel } = graphQlFetch(`
-    {
-      viewer {
-        getOperatorsUsingGET {
-          operatorName
-          operatorShortCode
-        }
-      }
-    }
-  `);
+  const { result, cancel } = restFetch(
+    'https://rata.digitraffic.fi/api/v1/metadata/operators'
+  );
 
   return {
-    result: result.then(result => result.viewer.getOperatorsUsingGET),
+    result,
     cancel,
   };
 };
 
 export const getDetailedCauses = () => {
-  const { result, cancel } = graphQlFetch(`
-    {
-      viewer {
-        getDetailedCauseResourcesUsingGET {
-          detailedCategoryCode
-          detailedCategoryName
-          passengerTerm {
-            fi
-            en
-          }
-        }
-      }
-    }
-  `);
+  const { result, cancel } = restFetch(
+    'https://rata.digitraffic.fi/api/v1/metadata/detailed-cause-category-codes'
+  );
 
   return {
-    result: result.then(
-      result => result.viewer.getDetailedCauseResourcesUsingGET
-    ),
+    result,
     cancel,
   };
 };
@@ -110,36 +108,43 @@ export const getStationsTrains = stationShortCode => {
   //TODO: figure out how to use (or is it even possible to use) query arguments to return only trains that have not passed the station
   const { result, cancel } = graphQlFetch(`
   {
-    viewer {
-      getStationsTrainsUsingGET(station: "${encodeURI(
-        stationShortCode
-      )}", arrived_trains: 0, arriving_trains: 30, departing_trains: 30, departed_trains: 0, where: "[*${passengerTrainsFilter}]") {
-        version
-        trainCategory
-        trainNumber
-        trainType
-        cancelled
-        commuterLineID
-        departureDate
-        operatorShortCode
-        timeTableRows {
-          stationShortCode
-          type
-          liveEstimateTime
-          scheduledTime
-          actualTime
-          differenceInMinutes
-          estimateSource
-          unknownDelay
-          cancelled
-          trainStopping
-          commercialStop
-          commercialTrack
+    trainsByStationAndQuantity(station: "${stationShortCode}",
+      arrivedTrains: 0,
+      arrivingTrains: 30,
+      departingTrains: 30,
+      departedTrains: 0,
+      where: ${passengerTrainFilter}
+    ) {
+      trainType {
+        name
+      }
+      trainNumber
+      departureDate
+      operator {
+        shortCode
+      }
+      commuterLineid
+      cancelled
+      runningCurrently
+      timetableType
+      timeTableRows(where: { and: [{ trainStopping: { equals: true }}, { commercialStop: { equals: true }}]}) {  
+        station { 
+          shortCode
           countryCode
-          causes {
-            categoryCode
-            detailedCategoryCode
-            thirdCategoryCode
+        }
+        type
+        trainStopping
+        commercialStop
+        commercialTrack
+        cancelled
+        scheduledTime
+        actualTime
+        liveEstimateTime
+        differenceInMinutes
+        unknownDelay
+        causes {
+          detailedCategoryCode {
+            code
           }
         }
       }
@@ -148,7 +153,7 @@ export const getStationsTrains = stationShortCode => {
   `);
 
   return {
-    result: result.then(result => result.viewer.getStationsTrainsUsingGET),
+    result: result.then(result => result.trainsByStationAndQuantity),
     cancel,
   };
 };
@@ -156,20 +161,21 @@ export const getStationsTrains = stationShortCode => {
 export const getCurrentlyRunningTrains = () => {
   const { result, cancel } = graphQlFetch(`
   {
-    viewer {
-      getLiveTrainsByVersionUsingGET(where: "[*${passengerTrainsFilter}&runningCurrently=true]") {
-        trainType
-        trainNumber
-        departureDate
-        runningCurrently
-        commuterLineID
+    currentlyRunningTrains(where: ${passengerTrainFilter}) {
+      trainType {
+        name
       }
+      trainNumber
+      departureDate
+      runningCurrently
+      commuterLineid
     }
   }
+  
   `);
 
   return {
-    result: result.then(result => result.viewer.getLiveTrainsByVersionUsingGET),
+    result: result.then(result => result.getCurrentlyRunningTrains),
     cancel,
   };
 };
@@ -177,103 +183,64 @@ export const getCurrentlyRunningTrains = () => {
 export const getTrain = (trainNumber, departureDate) => {
   const { result, cancel } = graphQlFetch(`
   {
-    viewer {
-      getTrainByTrainNumberAndDepartureDateUsingGET(train_number: "${trainNumber}", departure_date: "${departureDate}") {
-        departureDate
-        trainNumber
-        trainType
-        trainCategory
-        commuterLineID
-        operatorShortCode
-        runningCurrently
-        cancelled
-        timetableType
-        timeTableRows {
-          stationShortCode
-          type
-          liveEstimateTime
-          scheduledTime
-          actualTime
-          differenceInMinutes
-          estimateSource
-          unknownDelay
-          cancelled
-          trainStopping
-          commercialStop
-          commercialTrack
+    train(trainNumber: ${trainNumber}, departureDate: "${departureDate}") {
+      trainType {
+        name
+      }
+      trainNumber
+      departureDate
+      commuterLineid
+      operator {
+        shortCode
+      }
+      cancelled
+      runningCurrently
+      timetableType
+      timeTableRows(where: {and: [{trainStopping: {equals: true}}, {commercialStop: {equals: true}}]}) {
+        station {
+          shortCode
           countryCode
-          causes {
-            categoryCode
-            detailedCategoryCode
-            thirdCategoryCode
+        }
+        type
+        trainStopping
+        commercialStop
+        commercialTrack
+        cancelled
+        scheduledTime
+        liveEstimateTime
+        differenceInMinutes
+        actualTime
+        unknownDelay
+        causes {
+          categoryCode {
+            code
           }
-          trainReady {
-            accepted
-            source
-            timestamp
+          detailedCategoryCode {
+            code
+          }
+          thirdCategoryCode {
+            code
           }
         }
       }
     }
   }
+  
   `);
 
   return {
-    result: result.then(
-      result => result.viewer.getTrainByTrainNumberAndDepartureDateUsingGET[0]
-    ),
+    result: result.then(result => result.train[0]),
     cancel,
   };
 };
 
 export const getTrainComposition = (trainNumber, departureDate) => {
-  const { result, cancel } = graphQlFetch(`
-  {
-    viewer {
-      getCompositionByTrainNumberAndDepartureDateUsingGET(train_number: "${trainNumber}", departure_date: "${departureDate}") {
-        trainType
-        trainNumber
-        trainCategory
-        departureDate
-        operatorShortCode
-        journeySections {
-          beginTimeTableRow {
-            stationShortCode
-          }
-          endTimeTableRow {
-            stationShortCode
-          }
-          locomotives {
-            location
-            locomotiveType
-            powerType
-          }
-          wagons {
-            location
-            salesNumber
-            length
-            catering
-            disabled
-            luggage
-            pet
-            playground
-            smoking
-            video
-            wagonType
-          }
-          maximumSpeed
-          totalLength
-        }
-      }
-    }
-  }
-  `);
+  const { result, cancel } = restFetch(
+    `https://rata.digitraffic.fi/api/v1/compositions/${departureDate}/${trainNumber}`
+  );
 
   return {
-    result: result.then(
-      result =>
-        result.viewer.getCompositionByTrainNumberAndDepartureDateUsingGET
-    ),
+    result,
     cancel,
   };
 };
@@ -281,58 +248,35 @@ export const getTrainComposition = (trainNumber, departureDate) => {
 export const getTrainsByDepartureDate = departureDate => {
   const { result, cancel } = graphQlFetch(`
   {
-    viewer {
-      getTrainsByDepartureDateUsingGET(departure_date: "${departureDate}", where: "[*trainCategory=Long-distance|trainCategory=Commuter&trainType!=MV&trainType!=HV&trainType!=HLV&trainType!=V]") {
-        trainType
-        trainNumber
-        departureDate
-        commuterLineID
+    trainsByDepartureDate(departureDate: "${departureDate}", where: ${passengerTrainFilter}) {
+      trainType {
+        name
       }
+      trainNumber
+      departureDate
+      commuterLineid
     }
   }
   `);
 
   return {
-    result: result.then(
-      result => result.viewer.getTrainsByDepartureDateUsingGET
-    ),
+    result: result.then(result => result.trainsByDepartureDate),
     cancel,
   };
 };
 
 export const getTrainsByRoute = (fromStation, toStation, time) => {
-  const { result, cancel } = graphQlFetch(
-    `
-  {
-    viewer {
-      getTrainsFromDepartureToArrivalStationUsingGET(departure_station: "${encodeURI(
-        fromStation
-      )}", arrival_station: "${encodeURI(
-      toStation
-    )}", include_nonstopping: false, startDate: "${time}", where: "[*${passengerTrainsFilter}]") {
-        trainType
-        trainNumber
-        departureDate
-        operatorShortCode
-        commuterLineID
-        timeTableRows {
-          stationShortCode
-          type
-          scheduledTime
-          countryCode
-          commercialStop
-        }
-      }
-    }
-  }
-  `,
-    null,
-    true
-  ); //Do not reject on GraphQL errors as rata.digitraffic.fi API throws an error when no results are found
+  const { result, cancel } = restFetch(
+    `https://rata.digitraffic.fi/api/v1/live-trains/station/${fromStation}/${toStation}?startDate=${time}&limit=100&include_nonstopping=false`
+  );
 
   return {
-    result: result.then(
-      result => result.viewer.getTrainsFromDepartureToArrivalStationUsingGET
+    result: result.then(trains =>
+      trains.filter(
+        train =>
+          passengerTrainCategories.includes(train.trainCategory) &&
+          !nonPassengerTrainTypes.includes(train.trainType)
+      )
     ),
     cancel,
   };

@@ -30,7 +30,16 @@ export default () => {
 
   return (
     <>
-      <DocumentTitle title={train && formatTrainNumber(train)} />
+      <DocumentTitle
+        title={
+          train &&
+          formatTrainNumber({
+            commuterLineid: train.commuterLineid,
+            trainType: train.trainType.name,
+            trainNumber: train.trainNumber,
+          })
+        }
+      />
       <Container as="main">
         {loading ? (
           <Loader indeterminate active />
@@ -38,7 +47,12 @@ export default () => {
           train ? (
             <>
               <Header as="h1">
-                {train && formatTrainNumber(train)}
+                {train &&
+                  formatTrainNumber({
+                    commuterLineid: train.commuterLineid,
+                    trainType: train.trainType.name,
+                    trainNumber: train.trainNumber,
+                  })}
                 <Header.Subheader
                   style={{ display: 'flex', justifyContent: 'space-between' }}
                 >
@@ -48,7 +62,7 @@ export default () => {
                   <span style={{ fontSize: '0.75em' }}>
                     {train && (
                       <OperatorName
-                        operatorShortCode={train.operatorShortCode}
+                        operatorShortCode={train.operator.shortCode}
                       />
                     )}
                   </span>
