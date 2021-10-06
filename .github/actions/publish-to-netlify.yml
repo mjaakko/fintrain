@@ -1,0 +1,26 @@
+name: Publish release to Netlify
+on:
+  push:
+    tags:
+      - '**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Node 12
+        uses: actions/setup-node@v2
+        with:
+          node-version: '12'
+      - name: Install dependencies with yarn
+        run: yarn
+      - name: Build site
+        run: yarn build
+      - name: Publish to Netlify
+        uses: netlify/actions/cli@master
+        with:
+          args: deploy --dir=./build
+        env:
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
