@@ -61,8 +61,8 @@ export default ({ trains, stationShortCode }) => {
             const destination = stations
               ? formatStationName(
                   stations.get(
-                    train.timeTableRows[train.timeTableRows.length - 1]
-                      .stationShortCode
+                    train.timeTableRows[train.timeTableRows.length - 1].station
+                      .shortCode
                   ).stationName
                 )
               : '';
@@ -81,7 +81,7 @@ export default ({ trains, stationShortCode }) => {
               }
 
               if (
-                train.timeTableRows[i].stationShortCode === stationShortCode
+                train.timeTableRows[i].station.shortCode === stationShortCode
               ) {
                 timetableRowIndices.push(i);
               }
@@ -114,8 +114,8 @@ export default ({ trains, stationShortCode }) => {
                 return {
                   trainNumber: train.trainNumber,
                   departureDate: train.departureDate,
-                  trainType: train.trainType,
-                  commuterLineID: train.commuterLineID,
+                  trainType: train.trainType.name,
+                  commuterLineid: train.commuterLineid,
                   destination,
                   arrivalRow: timetableRowsForStation.find(
                     timetableRow => timetableRow.type === 'ARRIVAL'
@@ -135,8 +135,8 @@ export default ({ trains, stationShortCode }) => {
               return {
                 trainNumber: train.trainNumber,
                 departureDate: train.departureDate,
-                trainType: train.trainType,
-                commuterLineID: train.commuterLineID,
+                trainType: train.trainType.name,
+                commuterLineid: train.commuterLineid,
                 destination,
                 arrivalRow: timetableRowsForStation.find(
                   timetableRow => timetableRow.type === 'ARRIVAL'
@@ -148,11 +148,6 @@ export default ({ trains, stationShortCode }) => {
             }
           })
           .flat()
-          .filter(
-            ({ arrivalRow, departureRow }) =>
-              (arrivalRow && arrivalRow.commercialStop) ||
-              (departureRow && departureRow.commercialStop)
-          )
           .filter(filterPassedTrains)
           .sort(sortByTime)
           .map(timetableRow => (

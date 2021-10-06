@@ -13,7 +13,7 @@ import { MetadataContext } from '../../../App';
 export default ({ arrivalRow, departureRow }) => {
   const { stations } = useContext(MetadataContext);
 
-  const stationShortCode = (arrivalRow || departureRow).stationShortCode;
+  const stationShortCode = (arrivalRow || departureRow).station.shortCode;
 
   const stationName = <StationName stationShortCode={stationShortCode} />;
 
