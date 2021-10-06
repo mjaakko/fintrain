@@ -27,7 +27,8 @@ describe('<TrainTime />', () => {
   test('renders correct time for Finnish station', () => {
     const timetableRow = {
       scheduledTime: '2019-11-19T10:00:00.000Z',
-      countryCode: 'FI',
+      liveEstimateTime: '2019-11-19T10:00:00.000Z',
+      station: { countryCode: 'FI' },
       causes: [],
     };
 
@@ -42,7 +43,8 @@ describe('<TrainTime />', () => {
   test('renders correct time for Russian station', () => {
     const timetableRow = {
       scheduledTime: '2019-11-19T10:00:00.000Z',
-      countryCode: 'RU',
+      liveEstimateTime: '2019-11-19T10:00:00.000Z',
+      station: { countryCode: 'RU' },
       causes: [],
     };
 
@@ -57,7 +59,8 @@ describe('<TrainTime />', () => {
   test('renders with strikethrough if stop is cancelled', () => {
     const timetableRow = {
       scheduledTime: '2019-11-19T10:00:00.000Z',
-      countryCode: 'FI',
+      liveEstimateTime: '2019-11-19T10:00:00.000Z',
+      station: { countryCode: 'FI' },
       cancelled: true,
       causes: [],
     };
@@ -73,7 +76,8 @@ describe('<TrainTime />', () => {
   test('renders with correct styling if train is not delayed', () => {
     const timetableRow = {
       scheduledTime: '2019-11-19T10:00:00.000Z',
-      countryCode: 'FI',
+      liveEstimateTime: '2019-11-19T10:00:00.000Z',
+      station: { countryCode: 'FI' },
       differenceInMinutes: 0,
       causes: [],
     };
@@ -89,7 +93,8 @@ describe('<TrainTime />', () => {
   test('renders with correct styling if train is delayed by 5min', () => {
     const timetableRow = {
       scheduledTime: '2019-11-19T10:00:00.000Z',
-      countryCode: 'FI',
+      liveEstimateTime: '2019-11-19T10:05:00.000Z',
+      station: { countryCode: 'FI' },
       differenceInMinutes: 5,
       causes: [],
     };
@@ -100,12 +105,13 @@ describe('<TrainTime />', () => {
       </MetadataContext.Provider>
     );
 
-    expect(getByText(component.container, '12.00')).toHaveClass('minordelay');
+    expect(getByText(component.container, '12.05')).toHaveClass('minordelay');
   });
   test('renders with correct styling if train is delayed by 20min', () => {
     const timetableRow = {
       scheduledTime: '2019-11-19T10:00:00.000Z',
-      countryCode: 'FI',
+      liveEstimateTime: '2019-11-19T10:20:00.000Z',
+      station: { countryCode: 'FI' },
       differenceInMinutes: 20,
       causes: [],
     };
@@ -116,12 +122,13 @@ describe('<TrainTime />', () => {
       </MetadataContext.Provider>
     );
 
-    expect(getByText(component.container, '12.00')).toHaveClass('majordelay');
+    expect(getByText(component.container, '12.20')).toHaveClass('majordelay');
   });
   test('renders with question mark if train delay is unknown', () => {
     const timetableRow = {
       scheduledTime: '2019-11-19T10:00:00.000Z',
-      countryCode: 'FI',
+      liveEstimateTime: '2019-11-19T10:00:00.000Z',
+      station: { countryCode: 'FI' },
       unknownDelay: true,
       causes: [],
     };

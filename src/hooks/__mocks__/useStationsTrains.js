@@ -13,7 +13,7 @@ export default station => {
           operatorShortCode: 'test',
           timeTableRows: [
             {
-              stationShortCode: 'TEST1',
+              station: { shortCode: 'TEST1' },
               type: 'DEPARTURE',
               liveEstimateTime: null,
               scheduledTime: '2010-01-01T00:00:00.000Z',
@@ -27,7 +27,7 @@ export default station => {
               causes: [],
             },
             {
-              stationShortCode: 'TEST2',
+              station: { shortCode: 'TEST2' },
               type: 'ARRIVAL',
               liveEstimateTime: '2010-01-01T00:01:00.000Z',
               scheduledTime: '2010-01-01T00:01:00.000Z',
@@ -41,7 +41,7 @@ export default station => {
               causes: [],
             },
             {
-              stationShortCode: 'TEST2',
+              station: { shortCode: 'TEST2' },
               type: 'DEPARTURE',
               liveEstimateTime: '2010-01-01T00:02:00.000Z',
               scheduledTime: '2010-01-01T00:02:00.000Z',
@@ -55,7 +55,7 @@ export default station => {
               causes: [],
             },
             {
-              stationShortCode: 'TEST3',
+              station: { shortCode: 'TEST3' },
               type: 'ARRIVAL',
               liveEstimateTime: '2010-01-01T00:03:00.000Z',
               scheduledTime: '2010-01-01T00:03:00.000Z',
