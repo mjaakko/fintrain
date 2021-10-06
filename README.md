@@ -1,5 +1,4 @@
-# fintrain [![Build Status](https://travis-ci.org/mjaakko/fintrain.svg?branch=master)](https://travis-ci.org/mjaakko/fintrain)
-
+# fintrain [![Test and build site](https://github.com/mjaakko/fintrain/actions/workflows/test-and-publish.yml/badge.svg)](https://github.com/mjaakko/fintrain/actions/workflows/test-and-publish.yml)
 Sovellus Helsingin avoimen yliopiston kurssille [Full stack -websovelluskehitys harjoitustyö](https://courses.helsinki.fi/fi/aytkt21010/129098202).
 
 Sovellus tarjoaa käyttöliittymän [rata.digitraffic.fi:n rajapintoihin](https://www.digitraffic.fi/rautatieliikenne/).
