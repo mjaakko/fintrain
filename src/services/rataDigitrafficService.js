@@ -175,7 +175,7 @@ export const getCurrentlyRunningTrains = () => {
   `);
 
   return {
-    result: result.then(result => result.getCurrentlyRunningTrains),
+    result: result.then(result => result.currentlyRunningTrains),
     cancel,
   };
 };
