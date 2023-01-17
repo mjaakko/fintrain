@@ -7,7 +7,7 @@
     "i18next": "^19.1.0",
     "leaflet": "^1.5.1",
     "moment": "^2.24.0",
-    "moment-timezone": "^0.5.27",
+    "moment-timezone": "^0.5.35",
     "mqtt": "^3.0.0",
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
