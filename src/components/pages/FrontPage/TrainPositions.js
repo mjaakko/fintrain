@@ -12,7 +12,11 @@ import CustomMarker from '../../CustomMarker';
 import { MapContext } from './FrontPage';
 
 const TrainIcon = ({ train }) => {
-  let trainNumber = formatTrainNumber(train);
+  let trainNumber = formatTrainNumber({
+    trainType: train.trainType.name,
+    trainNumber: train.trainNumber,
+    commuterLineid: train.commuterLineid,
+  });
 
   if (trainNumber.length > 5) {
     trainNumber = trainNumber.replace('\u00a0', ' ');
@@ -88,7 +92,11 @@ const TrainPosition = ({ trainPosition, train }) => {
         onClose={() => setActivePopup(null)}
       >
         <Link to={`/train/${train.trainNumber}/${train.departureDate}`}>
-          {formatTrainNumber(train)}
+          {formatTrainNumber({
+            trainType: train.trainType.name,
+            trainNumber: train.trainNumber,
+            commuterLineid: train.commuterLineid,
+          })}
         </Link>
         <br />({trainPosition.speed} km/h)
       </Popup>
