@@ -1,4 +1,4 @@
-export default (url, options) => {
+const cancellableFetch = (url, options) => {
   if ('AbortController' in window) {
     const controller = new AbortController();
     const signal = controller.signal;
@@ -10,3 +10,5 @@ export default (url, options) => {
     return { result: fetch(url, options), cancel: () => {} };
   }
 };
+
+export default cancellableFetch;

@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { createRoot } from 'react-dom/client';
 import 'semantic-ui-css/semantic.min.css';
 import 'leaflet/dist/leaflet.css';

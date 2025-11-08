@@ -1,4 +1,4 @@
-export default (state, action) => {
+const loaderReducer = (state, action) => {
   switch (action.type) {
     case 'loading':
       return { loading: true, data: null, error: null };
@@ -10,3 +10,5 @@ export default (state, action) => {
       throw new Error('Invalid action type');
   }
 };
+
+export default loaderReducer;

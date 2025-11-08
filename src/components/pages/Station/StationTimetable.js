@@ -32,7 +32,7 @@ const sortByTime = (a, b) => {
   );
 };
 
-export default ({ trains, stationShortCode }) => {
+const StationTimetable = ({ trains, stationShortCode }) => {
   const { t } = useTranslation();
   const { stations } = useContext(MetadataContext);
 
@@ -163,3 +163,5 @@ export default ({ trains, stationShortCode }) => {
     </Table>
   );
 };
+
+export default StationTimetable;

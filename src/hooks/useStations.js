@@ -38,7 +38,7 @@ const FIXED_DATA = {
   },
 };
 
-export default () => {
+const useStations = () => {
   const [state, dispatch] = useReducer(loaderReducer, {
     loading: true,
     data: null,
@@ -86,3 +86,5 @@ export default () => {
     retry: loadData,
   };
 };
+
+export default useStations;

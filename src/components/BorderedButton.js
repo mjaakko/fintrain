@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button } from 'semantic-ui-react';
 
-export default ({ children, style, ...props }) => (
+const BorderedButton = ({ children, style, ...props }) => (
   <Button
     style={{
       ...style,
@@ -14,3 +14,5 @@ export default ({ children, style, ...props }) => (
     {children}
   </Button>
 );
+
+export default BorderedButton;

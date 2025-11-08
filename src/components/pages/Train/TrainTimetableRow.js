@@ -10,7 +10,7 @@ import { formatTrack } from '../../../utils/format';
 
 import { MetadataContext } from '../../../App';
 
-export default ({ arrivalRow, departureRow }) => {
+const TrainTimetableRow = ({ arrivalRow, departureRow }) => {
   const { stations } = useContext(MetadataContext);
 
   const stationShortCode = (arrivalRow || departureRow).station.shortCode;
@@ -41,3 +41,5 @@ export default ({ arrivalRow, departureRow }) => {
     </Table.Row>
   );
 };
+
+export default TrainTimetableRow;

@@ -10,7 +10,7 @@ const options = {
   reconnectPeriod: 5 * 1000,
 };
 
-export default (maxAgeSecs, trains) => {
+const useTrainPositions = (maxAgeSecs, trains) => {
   const [trainPositions, dispatch] = useReducer((state, action) => {
     switch (action.type) {
       case 'update_train_position':
@@ -95,3 +95,5 @@ export default (maxAgeSecs, trains) => {
 
   return { trainPositions: Object.values(trainPositions), error };
 };
+
+export default useTrainPositions;

@@ -12,7 +12,7 @@ import DocumentTitle from '../../DocumentTitle';
 import TrainComposition from '../../TrainComposition';
 import OperatorName from '../../OperatorName';
 
-export default () => {
+const Train = () => {
   const { t } = useTranslation();
   const { trainNumber, departureDate } = useParams();
   const { loading: loadingTrain, train, error: errorTrain } = useTrain(
@@ -116,3 +116,5 @@ export default () => {
     </>
   );
 };
+
+export default Train;

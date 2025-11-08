@@ -4,7 +4,7 @@ import { Menu, Sticky } from 'semantic-ui-react';
 
 import StationSearch from './StationSearch';
 
-export default ({ toggleSidebar }) => (
+const Header = ({ toggleSidebar }) => (
   <Sticky>
     <Menu inverted color="blue" size="large" style={{ borderRadius: 0 }}>
       <Menu.Item header as={Link} to="/">
@@ -19,3 +19,5 @@ export default ({ toggleSidebar }) => (
     </Menu>
   </Sticky>
 );
+
+export default Header;

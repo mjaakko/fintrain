@@ -48,7 +48,7 @@ const generateCausesString = (
     : null;
 };
 
-export default ({ timetableRow }) => {
+const TrainTime = ({ timetableRow }) => {
   const { detailedCauses } = useContext(MetadataContext);
   const { t, i18n } = useTranslation();
 
@@ -114,3 +114,5 @@ export default ({ timetableRow }) => {
     />
   );
 };
+
+export default TrainTime;

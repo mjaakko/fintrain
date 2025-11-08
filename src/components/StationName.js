@@ -4,7 +4,7 @@ import { MetadataContext } from '../App';
 
 import { formatStationName } from '../utils/format';
 
-export default ({ stationShortCode }) => {
+const StationName = ({ stationShortCode }) => {
   const { stations } = useContext(MetadataContext);
   if (stations) {
     return stations.has(stationShortCode)
@@ -14,3 +14,5 @@ export default ({ stationShortCode }) => {
     return null;
   }
 };
+
+export default StationName;

@@ -12,7 +12,7 @@ import StationTimetable from './StationTimetable';
 import StationName from '../../StationName';
 import DocumentTitle from '../../DocumentTitle';
 
-export default () => {
+const Station = () => {
   const { t } = useTranslation();
   const { stations } = useContext(MetadataContext);
 
@@ -52,3 +52,5 @@ export default () => {
     </>
   );
 };
+
+export default Station;

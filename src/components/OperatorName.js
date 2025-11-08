@@ -2,7 +2,7 @@ import { useContext } from 'react';
 
 import { MetadataContext } from '../App';
 
-export default ({ operatorShortCode }) => {
+const OperatorName = ({ operatorShortCode }) => {
   const { operators } = useContext(MetadataContext);
   if (operators) {
     return operators.has(operatorShortCode)
@@ -12,3 +12,5 @@ export default ({ operatorShortCode }) => {
     return null;
   }
 };
+
+export default OperatorName;

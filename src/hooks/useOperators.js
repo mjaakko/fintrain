@@ -6,7 +6,7 @@ import { getOperators } from '../services/rataDigitrafficService';
 
 import cacheWithSessionStorage from '../utils/cacheWithSessionStorage';
 
-export default () => {
+const useOperators = () => {
   const [state, dispatch] = useReducer(loaderReducer, {
     loading: true,
     data: null,
@@ -51,3 +51,5 @@ export default () => {
     retry: loadData,
   };
 };
+
+export default useOperators;

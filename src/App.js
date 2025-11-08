@@ -18,7 +18,7 @@ import SidebarMenu from './components/SidebarMenu';
 
 export const MetadataContext = React.createContext();
 
-export default () => {
+const App = () => {
   const { t } = useTranslation();
   const {
     loading: loadingStations,
@@ -127,3 +127,5 @@ export default () => {
     </>
   );
 };
+
+export default App;

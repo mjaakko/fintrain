@@ -2,7 +2,7 @@ import React from 'react';
 import { Modal, Menu, Icon } from 'semantic-ui-react';
 import { useTranslation, Trans } from 'react-i18next';
 
-export default ({ hideSidebar }) => {
+const Information = ({ hideSidebar }) => {
   const { t } = useTranslation();
 
   return (
@@ -29,3 +29,5 @@ export default ({ hideSidebar }) => {
     </Modal>
   );
 };
+
+export default Information;

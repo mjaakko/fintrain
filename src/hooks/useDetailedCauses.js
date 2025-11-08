@@ -6,7 +6,7 @@ import { getDetailedCauses } from '../services/rataDigitrafficService';
 
 import cacheWithSessionStorage from '../utils/cacheWithSessionStorage';
 
-export default () => {
+const useDetailedCauses = () => {
   const [state, dispatch] = useReducer(loaderReducer, {
     loading: true,
     data: null,
@@ -52,3 +52,5 @@ export default () => {
     retry: loadData,
   };
 };
+
+export default useDetailedCauses;

@@ -99,7 +99,7 @@ export const mergeJourneySections = journeySections => {
   return mergedJourneySections;
 };
 
-export default ({ trainComposition }) => {
+const TrainComposition = ({ trainComposition }) => {
   const { t } = useTranslation();
   const [openIndex, setOpenIndex] = useState(-1);
 
@@ -174,3 +174,5 @@ export default ({ trainComposition }) => {
     )
   );
 };
+
+export default TrainComposition;

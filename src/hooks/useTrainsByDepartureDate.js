@@ -4,7 +4,7 @@ import loaderReducer from '../reducers/loaderReducer';
 
 import { getTrainsByDepartureDate } from '../services/rataDigitrafficService';
 
-export default departureDate => {
+const useTrainsByDepartureDate = departureDate => {
   const [state, dispatch] = useReducer(loaderReducer, {
     loading: true,
     data: null,
@@ -23,3 +23,5 @@ export default departureDate => {
 
   return { loading: state.loading, trains: state.data, error: state.error };
 };
+
+export default useTrainsByDepartureDate;

@@ -50,7 +50,7 @@ const GEOLOCATION_OPTIONS = {
   enableHighAccuracy: false,
 };
 
-export default () => {
+const FrontPage = () => {
   const { t } = useTranslation();
 
   const {
@@ -128,3 +128,5 @@ export default () => {
     </Map>
   );
 };
+
+export default FrontPage;

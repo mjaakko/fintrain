@@ -6,7 +6,7 @@ import TrainTime from '../../TrainTime';
 
 import { formatTrainNumber, formatTrack } from '../../../utils/format';
 
-export default ({
+const stationTimetableRow = ({
   trainNumber,
   departureDate,
   trainType,
@@ -36,3 +36,5 @@ export default ({
     </Table.Cell>
   </Table.Row>
 );
+
+export default stationTimetableRow;

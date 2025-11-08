@@ -22,7 +22,7 @@ const mergeTimetableRows = (mergedTimetableRows, timetableRow) => {
   }
 };
 
-export default ({ train }) => {
+const TrainTimetable = ({ train }) => {
   const { t } = useTranslation();
 
   //Add missing actual times
@@ -79,3 +79,5 @@ export default ({ train }) => {
     </Table>
   );
 };
+
+export default TrainTimetable;
