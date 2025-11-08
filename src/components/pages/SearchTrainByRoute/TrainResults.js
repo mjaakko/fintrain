@@ -2,8 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Loader, Table } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
-import moment from 'moment';
-import 'moment-timezone/builds/moment-timezone-with-data-10-year-range';
+import dayjs from 'dayjs';
 
 import useTrainsByRoute from '../../../hooks/useTrainsByRoute';
 
@@ -15,7 +14,7 @@ import {
 import timezones from '../../../utils/timezones';
 
 const atMidnight = date => {
-  return moment(date)
+  return dayjs(date)
     .tz('Europe/Helsinki')
     .millisecond(0)
     .second(0)

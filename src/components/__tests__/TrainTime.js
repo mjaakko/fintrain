@@ -1,7 +1,8 @@
 import React from 'react';
 import { render, getByText } from '@testing-library/react';
 
-import moment from 'moment';
+import dayjs from 'dayjs';
+import 'dayjs/locale/fi';
 
 import { MetadataContext } from '../../App';
 import TrainTime from '../TrainTime';
@@ -17,11 +18,11 @@ const detailedCauseCodes = [
 
 describe('<TrainTime />', () => {
   beforeAll(() => {
-    moment.locale('fi');
+    dayjs.locale('fi');
   });
 
   afterAll(() => {
-    moment.locale('en');
+    dayjs.locale('en');
   });
 
   test('renders correct time for Finnish station', () => {

@@ -1,18 +1,17 @@
-import moment from 'moment';
-import 'moment-timezone/builds/moment-timezone-with-data-10-year-range';
+import dayjs from 'dayjs';
 
 export const formatTrainNumber = ({ trainType, trainNumber, commuterLineid }) =>
   commuterLineid ? commuterLineid : `${trainType}\u00a0${trainNumber}`;
 
 export const formatDate = date => {
-  return moment(date).format('L');
+  return dayjs(date).format('L');
 };
 
 export const formatTime = (time, timezone) => {
-  const momentTime = moment(time);
+  const dayjsTime = dayjs(time);
   return timezone
-    ? momentTime.tz(timezone).format('LT')
-    : momentTime.format('LT');
+    ? dayjsTime.tz(timezone).format('LT')
+    : dayjsTime.format('LT');
 };
 
 export const formatStationName = stationName => {

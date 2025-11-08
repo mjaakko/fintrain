@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Container, Form, Divider } from 'semantic-ui-react';
 import SemanticDatepicker from 'react-semantic-ui-datepickers';
 import 'react-semantic-ui-datepickers/dist/react-semantic-ui-datepickers.css';
-import moment from 'moment';
+import dayjs from 'dayjs';
 
 import TrainResults from './TrainResults';
 
@@ -65,7 +65,7 @@ const SearchTrain = () => {
           value={new Date(departureDate)}
           date={new Date(departureDate)}
           required
-          firstDayOfWeek={moment.localeData().firstDayOfWeek()}
+          firstDayOfWeek={dayjs.localeData().firstDayOfWeek()}
           onChange={onChangeDepartureDate}
           style={{ width: '15rem' }}
         />

@@ -1,7 +1,7 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
-import moment from 'moment';
-import 'moment/locale/fi';
+import dayjs from 'dayjs';
+import 'dayjs/locale/fi';
 
 const resources = {
   en: {
@@ -207,10 +207,10 @@ const getDefaultLanguage = () => {
   return 'en-US';
 };
 
-//Save selected language to localStorage and update moment locale
+//Save selected language to localStorage and update dayjs locale
 const onChangeLanguage = language => {
   localStorage.setItem('language', language);
-  moment.locale(language);
+  dayjs.locale(language);
 };
 
 i18n

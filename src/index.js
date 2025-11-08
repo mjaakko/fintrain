@@ -7,6 +7,12 @@ import App from './App';
 import './i18n';
 import * as serviceWorker from './serviceWorker';
 import L from 'leaflet';
+import dayjs from 'dayjs';
+
+const localeData = require('dayjs/plugin/localeData');
+const localizedFormat = require('dayjs/plugin/localizedFormat');
+const utc = require('dayjs/plugin/utc');
+const timezone = require('dayjs/plugin/timezone');
 
 //Fix Leaflet default icon not being visible
 delete L.Icon.Default.prototype._getIconUrl;
@@ -16,6 +22,11 @@ L.Icon.Default.mergeOptions({
   iconUrl: require('leaflet/dist/images/marker-icon.png'),
   shadowUrl: require('leaflet/dist/images/marker-shadow.png'),
 });
+
+dayjs.extend(localeData);
+dayjs.extend(localizedFormat);
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 const root = createRoot(document.getElementById('root'));
 root.render(<App />);
