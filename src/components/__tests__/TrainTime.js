@@ -3,9 +3,16 @@ import { render, getByText } from '@testing-library/react';
 
 import dayjs from 'dayjs';
 import 'dayjs/locale/fi';
+import timezone from 'dayjs/plugin/timezone';
+import utc from 'dayjs/plugin/utc';
+import localizedFormat from 'dayjs/plugin/localizedFormat';
 
 import { MetadataContext } from '../../App';
 import TrainTime from '../TrainTime';
+
+dayjs.extend(timezone);
+dayjs.extend(utc);
+dayjs.extend(localizedFormat);
 
 const detailedCauseCodes = [
   { detailedCategoryCode: 'TEST1', passengerTerm: { en: 'Test 1' } },
