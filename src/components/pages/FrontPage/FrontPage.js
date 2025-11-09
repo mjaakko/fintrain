@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, useRef } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { MapContainer, TileLayer } from 'react-leaflet';
 import { Icon, Checkbox, Popup } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
@@ -12,7 +12,7 @@ import BorderedButton from '../../BorderedButton';
 import useCachedGeolocation from '../../../hooks/useCachedGeolocation';
 import usePersistedState from '../../../hooks/usePersistedState';
 
-const DEFAULT_CENTER = [62.91, 26.32];
+const DEFAULT_CENTER = { lat: 62.91, lng: 26.32 };
 const DEFAULT_ZOOM = 6;
 
 const DEFAULT_ZOOM_IF_USER_LOCATION = 10;
@@ -24,7 +24,6 @@ export const MapContextProvider = ({ children }) => {
     center: DEFAULT_CENTER,
     zoom: DEFAULT_ZOOM,
   });
-  const [mapInteractedWith, setMapInteractedWith] = useState(false);
   const [activePopup, setActivePopup] = useState(null);
 
   return (
@@ -34,8 +33,6 @@ export const MapContextProvider = ({ children }) => {
         setViewport,
         activePopup,
         setActivePopup,
-        mapInteractedWith,
-        setMapInteractedWith,
       }}
     >
       {children}
@@ -52,56 +49,58 @@ const GEOLOCATION_OPTIONS = {
 const FrontPage = () => {
   const { t } = useTranslation();
 
-  const {
-    viewport,
-    setViewport,
-    mapInteractedWith,
-    setMapInteractedWith,
-  } = useContext(MapContext);
+  const { viewport, setViewport } = useContext(MapContext);
 
   const cachedGeolocation = useCachedGeolocation(GEOLOCATION_OPTIONS);
 
-  const leafletRef = useRef();
+  const [leaflet, setLeaflet] = useState();
 
   useEffect(() => {
-    const leaflet = leafletRef.current;
     if (!leaflet) return;
 
-    const onMoveEnd = () => {
+    const updateViewport = () => {
       const center = leaflet.getCenter();
       const zoom = leaflet.getZoom();
 
       if (
-        viewport.center[0] !== center[0] ||
-        viewport.center[1] !== center[1] ||
+        viewport.center.lat !== center.lat ||
+        viewport.center.lng !== center.lng ||
         viewport.zoom !== zoom
       ) {
         setViewport({ center: center, zoom: zoom });
       }
-      setMapInteractedWith(true);
     };
 
-    leaflet.on('moveend', onMoveEnd);
-    return () => leaflet.off('moveend', onMoveEnd);
-  }, [viewport, setViewport, setMapInteractedWith]);
+    leaflet.on('moveend', updateViewport);
+    leaflet.on('zoomend', updateViewport);
+    return () => {
+      leaflet.off('moveend', updateViewport);
+      leaflet.off('zoomend', updateViewport);
+    };
+  }, [leaflet, viewport, setViewport]);
 
   useEffect(() => {
-    if (leafletRef.current && viewport) {
-      leafletRef.current.setView(viewport.center, viewport.zoom);
+    if (leaflet && viewport) {
+      leaflet.setView(viewport.center, viewport.zoom);
     }
-  }, [viewport]);
+  }, [leaflet, viewport]);
 
   useEffect(() => {
-    if (!mapInteractedWith && !!cachedGeolocation) {
+    if (
+      cachedGeolocation &&
+      viewport.center.lat === DEFAULT_CENTER.lat &&
+      viewport.center.lng === DEFAULT_CENTER.lng &&
+      viewport.zoom === DEFAULT_ZOOM
+    ) {
       setViewport({
-        center: [
-          cachedGeolocation.coords.latitude,
-          cachedGeolocation.coords.longitude,
-        ],
+        center: {
+          lat: cachedGeolocation.coords.latitude,
+          lng: cachedGeolocation.coords.longitude,
+        },
         zoom: DEFAULT_ZOOM_IF_USER_LOCATION,
       });
     }
-  }, [setViewport, mapInteractedWith, cachedGeolocation]);
+  }, [viewport, setViewport, cachedGeolocation]);
 
   const [showTrainPositions, setShowTrainPositions] = usePersistedState(
     'show_train_positions',
@@ -114,7 +113,7 @@ const FrontPage = () => {
       center={viewport.center}
       zoom={viewport.zoom}
       style={{ height: '100%', width: '100%' }}
-      ref={leafletRef}
+      ref={setLeaflet}
     >
       <TileLayer
         attribution='Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
