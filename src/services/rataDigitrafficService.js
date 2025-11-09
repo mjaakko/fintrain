@@ -153,7 +153,16 @@ export const getStationsTrains = stationShortCode => {
   `);
 
   return {
-    result: result.then(result => result.trainsByStationAndQuantity),
+    result: result.then(result => {
+      const trains = result.trainsByStationAndQuantity;
+
+      // Filter trains which do not have a commercial stop on the station
+      return trains.filter(train =>
+        train.timeTableRows.some(
+          timeTableRow => timeTableRow.station.shortCode === stationShortCode
+        )
+      );
+    }),
     cancel,
   };
 };
