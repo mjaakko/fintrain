@@ -17,7 +17,7 @@ const resources = {
         info: 'Info',
         copyrightTitle: 'Copyright',
         copyrightText:
-          'Data sourced from Traffic Management Finland / <1>digitraffic.fi</1> under <3>CC 4.0 BY</3>',
+          'Data sourced from Fintraffic / <1>digitraffic.fi</1> under <3>CC 4.0 BY</3>',
       },
       frontPageSettings: {
         settings: 'Settings',
@@ -104,7 +104,7 @@ const resources = {
         info: 'Info',
         copyrightTitle: 'Käyttölupa',
         copyrightText:
-          'Datan tarjoaa Traffic Management Finland / <0>digitraffic.fi</0> lisenssillä <1>CC 4.0 BY</1>',
+          'Datan tarjoaa Fintraffic / <0>digitraffic.fi</0> lisenssillä <1>CC 4.0 BY</1>',
       },
       frontPageSettings: {
         settings: 'Asetukset',
