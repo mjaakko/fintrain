@@ -15,6 +15,19 @@ const FIXED_DATA = {
   HM: {
     passengerTraffic: true,
   },
+  // These stations no longer have passenger traffic
+  LAI: {
+    passengerTraffic: false,
+  },
+  IKY: {
+    passengerTraffic: false,
+  },
+  YST: {
+    passengerTraffic: false,
+  },
+  LVT: {
+    passengerTraffic: false,
+  },
   //Russian stations have incorrect coordinates in the API
   VYB: {
     latitude: 60.71585,
