@@ -1,6 +1,5 @@
-import React from 'react';
-import { CircleMarker, Popup, useLeaflet } from 'react-leaflet';
-import Control from 'react-leaflet-control';
+import React, { useEffect, useState } from 'react';
+import { CircleMarker, Popup, useMap, useMapEvents } from 'react-leaflet';
 import { Icon } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
 
@@ -17,10 +16,22 @@ const metersToPixels = (latitude, meters, zoom) => {
 
 const UserLocation = () => {
   const { position } = useGeolocation();
-  const { map } = useLeaflet();
   const { t } = useTranslation();
 
-  const zoom = map._zoom;
+  const [zoom, setZoom] = useState();
+  const leaflet = useMap();
+
+  useMapEvents({
+    zoom: event => {
+      setZoom(event.target._zoom);
+    },
+  });
+
+  useEffect(() => {
+    if (!zoom && leaflet?._zoom) {
+      setZoom(leaflet._zoom);
+    }
+  }, [zoom, setZoom, leaflet._zoom]);
 
   return (
     <>
@@ -39,23 +50,25 @@ const UserLocation = () => {
           <Popup>{t('map.yourLocation')}</Popup>
         </CircleMarker>
       )}
-      <Control position="topright">
-        <BorderedButton
-          style={{ backgroundColor: '#f4f4f4' }}
-          compact
-          icon
-          onClick={() => {
-            if (position) {
-              map.flyTo({
-                lat: position.coords.latitude,
-                lng: position.coords.longitude,
-              });
-            }
-          }}
-        >
-          <Icon name="location arrow" color="grey" fitted />
-        </BorderedButton>
-      </Control>
+      <div className="leaflet-top leaflet-right">
+        <div className="leaflet-control">
+          <BorderedButton
+            style={{ backgroundColor: '#f4f4f4' }}
+            compact
+            icon
+            onClick={() => {
+              if (position) {
+                leaflet.flyTo({
+                  lat: position.coords.latitude,
+                  lng: position.coords.longitude,
+                });
+              }
+            }}
+          >
+            <Icon name="location arrow" color="grey" fitted />
+          </BorderedButton>
+        </div>
+      </div>
     </>
   );
 };

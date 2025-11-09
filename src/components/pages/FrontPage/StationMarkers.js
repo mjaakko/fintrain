@@ -15,14 +15,14 @@ const StationMarker = ({
   const popupRef = useCallback(
     node => {
       if (
-        node !== null &&
-        node.leafletElement !== null &&
+        node &&
+        node.openPopup &&
         activePopup &&
         activePopup.type === 'STATION' &&
         activePopup.code === stationShortCode &&
-        !node.leafletElement.isPopupOpen()
+        !node.isPopupOpen()
       ) {
-        node.leafletElement.openPopup();
+        node.openPopup();
       }
     },
     [activePopup, stationShortCode]
@@ -37,12 +37,19 @@ const StationMarker = ({
   );
 
   return (
-    <Marker ref={popupRef} position={position}>
+    <Marker
+      ref={popupRef}
+      position={position}
+      eventHandlers={{
+        popupopen: () => {
+          setActivePopup({ type: 'STATION', code: stationShortCode });
+        },
+        popupclose: () => {
+          setActivePopup(null);
+        },
+      }}
+    >
       <Popup
-        onOpen={() =>
-          setActivePopup({ type: 'STATION', code: stationShortCode })
-        }
-        onClose={() => setActivePopup(null)}
         //Disable autoPan as it causes problems when map viewport is programmatically moved
         autoPan={false}
       >

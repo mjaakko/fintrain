@@ -50,15 +50,15 @@ const TrainPosition = ({ trainPosition, train }) => {
   const popupRef = useCallback(
     node => {
       if (
-        node !== null &&
-        node.leafletElement !== null &&
+        node &&
+        node.openPopup &&
         activePopup &&
         activePopup.type === 'TRAIN' &&
         activePopup.trainNumber === train.trainNumber &&
         activePopup.departureDate === train.departureDate &&
-        !node.leafletElement.isPopupOpen()
+        !node.isPopupOpen()
       ) {
-        node.leafletElement.openPopup();
+        node.openPopup();
       }
     },
     [activePopup, train.trainNumber, train.departureDate]

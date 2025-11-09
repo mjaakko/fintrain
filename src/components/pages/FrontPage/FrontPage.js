@@ -1,6 +1,5 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { Map, TileLayer } from 'react-leaflet';
-import Control from 'react-leaflet-control';
+import React, { useState, useEffect, useContext, useRef } from 'react';
+import { MapContainer, TileLayer } from 'react-leaflet';
 import { Icon, Checkbox, Popup } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
 
@@ -62,6 +61,36 @@ const FrontPage = () => {
 
   const cachedGeolocation = useCachedGeolocation(GEOLOCATION_OPTIONS);
 
+  const leafletRef = useRef();
+
+  useEffect(() => {
+    const leaflet = leafletRef.current;
+    if (!leaflet) return;
+
+    const onMoveEnd = () => {
+      const center = leaflet.getCenter();
+      const zoom = leaflet.getZoom();
+
+      if (
+        viewport.center[0] !== center[0] ||
+        viewport.center[1] !== center[1] ||
+        viewport.zoom !== zoom
+      ) {
+        setViewport({ center: center, zoom: zoom });
+      }
+      setMapInteractedWith(true);
+    };
+
+    leaflet.on('moveend', onMoveEnd);
+    return () => leaflet.off('moveend', onMoveEnd);
+  }, [viewport, setViewport, setMapInteractedWith]);
+
+  useEffect(() => {
+    if (leafletRef.current && viewport) {
+      leafletRef.current.setView(viewport.center, viewport.zoom);
+    }
+  }, [viewport]);
+
   useEffect(() => {
     if (!mapInteractedWith && !!cachedGeolocation) {
       setViewport({
@@ -81,51 +110,45 @@ const FrontPage = () => {
   );
 
   return (
-    <Map
-      viewport={viewport}
-      onViewportChange={() => {
-        if (!mapInteractedWith) {
-          setMapInteractedWith(true);
-        }
-      }}
-      onViewportChanged={newViewport => {
-        if (
-          viewport.center[0] !== newViewport.center[0] ||
-          viewport.center[1] !== newViewport.center[1] ||
-          viewport.zoom !== newViewport.zoom
-        ) {
-          setViewport(newViewport);
-        }
-      }}
+    <MapContainer
+      center={viewport.center}
+      zoom={viewport.zoom}
       style={{ height: '100%', width: '100%' }}
+      ref={leafletRef}
     >
       <TileLayer
         attribution='Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
-      <Control position="bottomleft">
-        <Popup
-          on="click"
-          trigger={
-            <BorderedButton style={{ backgroundColor: '#f4f4f4' }} compact icon>
-              <Icon name="sliders horizontal" color="grey" fitted />
-            </BorderedButton>
-          }
-        >
-          <Popup.Header>{t('frontPageSettings.settings')}</Popup.Header>
-          <Popup.Content>
-            <Checkbox
-              checked={showTrainPositions}
-              label={t('frontPageSettings.showTrainPositions')}
-              onChange={() => setShowTrainPositions(!showTrainPositions)}
-            />
-          </Popup.Content>
-        </Popup>
-      </Control>
+      <div className="leaflet-bottom leaflet-left">
+        <div className="leaflet-control">
+          <Popup
+            on="click"
+            trigger={
+              <BorderedButton
+                style={{ backgroundColor: '#f4f4f4' }}
+                compact
+                icon
+              >
+                <Icon name="sliders horizontal" color="grey" fitted />
+              </BorderedButton>
+            }
+          >
+            <Popup.Header>{t('frontPageSettings.settings')}</Popup.Header>
+            <Popup.Content>
+              <Checkbox
+                checked={showTrainPositions}
+                label={t('frontPageSettings.showTrainPositions')}
+                onChange={() => setShowTrainPositions(!showTrainPositions)}
+              />
+            </Popup.Content>
+          </Popup>
+        </div>
+      </div>
       <UserLocation />
       <StationMarkers />
       {showTrainPositions && <TrainPositions />}
-    </Map>
+    </MapContainer>
   );
 };
 
